@@ -34,11 +34,3 @@ const IncluirServidor = () => {
 };
 
 export default IncluirServidor;
-
-const h1Style =
-  "text-2xl font-semibold w-full text-center bg-sky-900 text-white p-2";
-
-const DivAreaStyle =
-  "flex items-center justify-center w-full h-16 bg-sky-900 text-white p-4 shadow-lg mb-4 hover:cursor-pointer transition duration-300 ease-in-out text-2xl";
-
-const DivFormStyle = "";
