@@ -96,7 +96,6 @@ const IncluirServidor = () => {
       if (response.ok) {
         const data = await response.json();
 
-        console.log("data", data.localidade);
         if (!data.erro) {
           setFormData((prevData) => ({
             ...prevData,
@@ -105,7 +104,11 @@ const IncluirServidor = () => {
             cidade: data.localidade || "",
             estado: data.uf || "",
           }));
-          setDataMunicipios([{label: data.localidade, value: data.localidade}]); // Ensure city is added to dropdown
+
+          // Atualiza os municípios com a cidade retornada pela API
+          setDataMunicipios([{label: data.localidade, value: data.localidade}]);
+
+          // Foca no campo "número" após preencher os dados
           setTimeout(() => {
             document.querySelector('input[name="numero"]').focus();
           }, 0);
@@ -129,10 +132,12 @@ const IncluirServidor = () => {
   useEffect(() => {
     fetchEstados();
 
-    if (formData.estado) {
-      fetchMunicipios(formData.estado);
+    if (formData.cep.length < 8) {
+      if (formData.estado) {
+        fetchMunicipios(formData.estado);
+      }
     }
-  }, [formData.estado]);
+  }, [formData.estado, formData.cep]);
 
   return (
     <div className="flex flex-col items-center justify-start h-[100%] bg-zinc-200">
