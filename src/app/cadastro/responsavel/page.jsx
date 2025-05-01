@@ -4,27 +4,144 @@ import {useRouter} from "next/navigation";
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
 import {HeaderH1} from "@/components/HeaderH1";
+import {useState} from "react";
 
 const IncluirResponsavel = () => {
   const router = useRouter();
 
+  // Estado para armazenar os valores do formulário
+  const [formData, setFormData] = useState({
+    nome: "João Silva",
+    cpf: "123.456.789-00",
+    endereco: "Rua das Flores",
+    numero: "123",
+    bairro: "Centro",
+    cidade: "São Paulo",
+    estado: "SP",
+    celular: "(11) 98765-4321",
+    email: "joao.silva@example.com",
+  });
+
+  // Função para atualizar o estado ao digitar nos campos
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Função para enviar os dados do formulário para a API
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Previne o comportamento padrão do formulário
+    try {
+      const response = await fetch("http://localhost:5000/api/responsaveis", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Responsável incluído com sucesso!");
+        setFormData({
+          nome: "",
+          cpf: "",
+          endereco: "",
+          numero: "",
+          bairro: "",
+          cidade: "",
+          estado: "",
+          celular: "",
+          email: "",
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`Erro ao incluir responsável: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Erro ao enviar os dados:", error);
+      alert("Erro ao incluir responsável. Tente novamente mais tarde.");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
       <HeaderH1 onClick={() => router.back()} title="Cadastro de Responsável" />
-      <form className="flex flex-col items-start justify-between w-full p-2">
+      <form
+        className="flex flex-col items-start justify-between w-full p-2"
+        onSubmit={handleSubmit} // Adicionado o evento onSubmit
+      >
         <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-white shadow-lg rounded-lg">
-          <Input label="Nome" type="text" />
-          <Input label="CPF" type="text" />
-          <Input label="Endereço" type="text" />
-          <Input label="N°" type="number" />
-          <Input label="Bairro" type="text" />
-          <Input label="Cidade" type="text" />
-          <Input label="Estado" type="text" />
-          <Input label="Celular" type="tel" />
-          <Input label="Email" type="email" />
+          <Input
+            label="Nome"
+            type="text"
+            name="nome"
+            value={formData.nome}
+            onChange={handleChange}
+          />
+          <Input
+            label="CPF"
+            type="text"
+            name="cpf"
+            value={formData.cpf}
+            onChange={handleChange}
+          />
+          <Input
+            label="Endereço"
+            type="text"
+            name="endereco"
+            value={formData.endereco}
+            onChange={handleChange}
+          />
+          <Input
+            label="N°"
+            type="number"
+            name="numero"
+            value={formData.numero}
+            onChange={handleChange}
+          />
+          <Input
+            label="Bairro"
+            type="text"
+            name="bairro"
+            value={formData.bairro}
+            onChange={handleChange}
+          />
+          <Input
+            label="Cidade"
+            type="text"
+            name="cidade"
+            value={formData.cidade}
+            onChange={handleChange}
+          />
+          <Input
+            label="Estado"
+            type="text"
+            name="estado"
+            value={formData.estado}
+            onChange={handleChange}
+          />
+          <Input
+            label="Celular"
+            type="tel"
+            name="celular"
+            value={formData.celular}
+            onChange={handleChange}
+          />
+          <Input
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
         </div>
+        <Button wfull type="submit">
+          Incluir Responsável
+        </Button>
       </form>
-      <Button wfull>Incluir Responsável</Button>
     </div>
   );
 };

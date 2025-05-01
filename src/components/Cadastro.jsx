@@ -20,9 +20,9 @@ export const Cadastro = ({router}) => {
         <Button onClick={() => router.push("cadastro/servidor")}>
           Incluir Servidor
         </Button>
-        <Button onClick={() => router.push("cadastro/unidade")}>
+        {/* <Button onClick={() => router.push("cadastro/unidade")}>
           Incluir Unidade
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
