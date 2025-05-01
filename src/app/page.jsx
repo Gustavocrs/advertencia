@@ -1,9 +1,8 @@
 "use client";
 import {useRouter} from "next/navigation";
-import {Button} from "@/components/Button";
-import {Cadastro} from "@/pages/Cadastro";
-import {Advertencia} from "@/pages/Advertencia";
-import {Consultas} from "@/pages/Consulta";
+import {Cadastro} from "@/page_components/Cadastro";
+import {Advertencia} from "@/page_components/Advertencia";
+import {Consultas} from "@/page_components/Consulta";
 
 export default function Home() {
   const router = useRouter();
