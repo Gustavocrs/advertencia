@@ -1,6 +1,6 @@
 import {Button} from "../components/Button";
 
-export const Consultas = ({router}) => {
+export default function Consultas({router}) {
   return (
     <div className="w-full">
       <h1
@@ -21,4 +21,4 @@ export const Consultas = ({router}) => {
       </div>
     </div>
   );
-};
+}

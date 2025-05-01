@@ -1,6 +1,6 @@
 import {Button} from "../components/Button";
 
-export const Advertencia = ({router}) => {
+export default function Advertencia({router}) {
   return (
     <div className="w-full">
       <h1
@@ -18,4 +18,4 @@ export const Advertencia = ({router}) => {
       </div>
     </div>
   );
-};
+}
