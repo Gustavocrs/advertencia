@@ -8,7 +8,9 @@ export const Advertencia = ({router}) => {
       >
         Advertências
       </h1>
-      <div className={`flex flex-wrap justify-center items-center`}>
+      <div
+        className={`w-full h-fit py-4 flex flex-wrap justify-center items-center gap-4`}
+      >
         <Button onClick={() => router.push("advertencias/criar")}>Criar</Button>
         <Button onClick={() => router.push("advertencias/consultar")}>
           Consultar

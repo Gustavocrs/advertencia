@@ -1,52 +1,54 @@
 const express = require("express");
-const Servidor = require("../models/ServidorSchema");
+const Turma = require("../models/TurmaSchema");
 const router = express.Router();
 
-// Criar um novo servidor
+// Criar uma nova turma
 router.post("/", async (req, res) => {
   try {
-    const servidor = await Servidor.create(req.body);
-    res.status(201).json(servidor);
+    const turma = await Turma.create(req.body);
+    res.status(201).json(turma);
   } catch (error) {
     res.status(400).json({message: error.message});
   }
 });
 
-// Obter todos os servidores
+// Obter todas as turmas
 router.get("/", async (req, res) => {
   try {
-    const servidores = await Servidor.find();
+    const turmas = await Turma.find()
+      .populate("alunos")
+      .populate("disciplinas");
     res.status(200).json({
       success: true,
-      message: "Lista de servidores obtida com sucesso",
-      data: servidores,
+      message: "Lista de turmas obtida com sucesso",
+      data: turmas,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Erro ao obter servidores",
+      message: "Erro ao obter turmas",
       error: error.message,
     });
   }
 });
 
-// Atualizar um servidor
+// Atualizar uma turma
 router.put("/:id", async (req, res) => {
   try {
-    const servidor = await Servidor.findByIdAndUpdate(req.params.id, req.body, {
+    const turma = await Turma.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    res.status(200).json(servidor);
+    res.status(200).json(turma);
   } catch (error) {
     res.status(400).json({message: error.message});
   }
 });
 
-// Deletar um servidor
+// Deletar uma turma
 router.delete("/:id", async (req, res) => {
   try {
-    await Servidor.findByIdAndDelete(req.params.id);
-    res.status(200).json({message: "Servidor deletado com sucesso"});
+    await Turma.findByIdAndDelete(req.params.id);
+    res.status(200).json({message: "Turma deletada com sucesso"});
   } catch (error) {
     res.status(500).json({message: error.message});
   }
