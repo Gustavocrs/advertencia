@@ -1,8 +1,9 @@
 "use client";
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/Button";
-import {Cadastro} from "@/components/Cadastro";
-import {Advertencia} from "@/components/Advertencia";
+import {Cadastro} from "@/pages/Cadastro";
+import {Advertencia} from "@/pages/Advertencia";
+import {Consultas} from "@/pages/Consulta";
 
 export default function Home() {
   const router = useRouter();
@@ -11,6 +12,7 @@ export default function Home() {
     <div className="flex flex-col items-center h-screen bg-zinc-200 w-full">
       <Advertencia router={router} />
       <Cadastro router={router} />
+      <Consultas router={router} />
     </div>
   );
 }

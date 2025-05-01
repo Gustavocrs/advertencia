@@ -6,10 +6,9 @@ import {useEffect, useState} from "react";
 
 const ConsultarAdvertencia = () => {
   const router = useRouter();
-  const [rows, setRows] = useState([]); // Estado para armazenar as advertências
-  const [loading, setLoading] = useState(true); // Estado para indicar carregamento
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Função para buscar as advertências
   useEffect(() => {
     const fetchAdvertencias = async () => {
       try {
@@ -19,14 +18,13 @@ const ConsultarAdvertencia = () => {
         }
         const data = await response.json();
 
-        // Formata os dados para o DataGrid
         const formattedData = data.data.map((advertencia, index) => ({
-          id: advertencia._id || index, // Usa o _id como ID ou o índice como fallback
+          id: advertencia._id || index,
           name: advertencia.aluno?.nome || "Aluno não informado",
           turma: advertencia.turma || "Turma não informada",
           servidor: advertencia.servidor?.nome || "Servidor não informado",
           data: advertencia.data
-            ? new Date(advertencia.data).toLocaleDateString("pt-BR") // Converte a data para o formato pt-BR
+            ? new Date(advertencia.data).toLocaleDateString("pt-BR")
             : "Data não informada",
         }));
 
@@ -34,7 +32,7 @@ const ConsultarAdvertencia = () => {
       } catch (error) {
         console.error("Erro ao buscar advertências:", error);
       } finally {
-        setLoading(false); // Finaliza o carregamento
+        setLoading(false);
       }
     };
 
@@ -48,6 +46,11 @@ const ConsultarAdvertencia = () => {
     {field: "data", headerName: "Data", width: 100},
   ];
 
+  // Função para lidar com o clique na linha
+  const handleRowClick = (params) => {
+    router.push(`/advertencias/imprimir/${params.id}`);
+  };
+
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
       <HeaderH1 onClick={() => router.back()} title="Consultar Advertência" />
@@ -57,7 +60,8 @@ const ConsultarAdvertencia = () => {
           columns={columns}
           density={"compact"}
           disableColumnMenu
-          loading={loading} // Exibe o indicador de carregamento
+          loading={loading}
+          onRowClick={handleRowClick} // Adiciona o evento de clique na linha
         />
       </div>
     </div>

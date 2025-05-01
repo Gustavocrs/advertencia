@@ -4,15 +4,19 @@ import {useRouter} from "next/navigation";
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
 import {HeaderH1} from "@/components/HeaderH1";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {fetchCepData} from "@/utils/fetchCepData";
+import {fetchEstados} from "@/utils/fetchEstados";
+import {fetchMunicipios} from "@/utils/fetchMunicipios";
 
 const IncluirResponsavel = () => {
   const router = useRouter();
-
-  // Estado para armazenar os valores do formulário
+  const [dataEstados, setDataEstados] = useState([]);
+  const [dataMunicipios, setDataMunicipios] = useState([]);
   const [formData, setFormData] = useState({
     nome: "",
     cpf: "",
+    cep: "",
     endereco: "",
     numero: "",
     bairro: "",
@@ -22,7 +26,6 @@ const IncluirResponsavel = () => {
     email: "",
   });
 
-  // Função para atualizar o estado ao digitar nos campos
   const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData((prev) => ({
@@ -30,7 +33,6 @@ const IncluirResponsavel = () => {
       [name]: value,
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
@@ -64,10 +66,28 @@ const IncluirResponsavel = () => {
       alert("Erro ao incluir responsável. Tente novamente mais tarde.");
     }
   };
+  useEffect(() => {
+    if (formData.cep.length === 8) {
+      fetchCepData(formData.cep, setDataMunicipios, setFormData);
+    }
+  }, [formData.cep]);
+
+  useEffect(() => {
+    fetchEstados(setDataEstados);
+
+    if (formData.cep.length < 8) {
+      if (formData.estado) {
+        fetchMunicipios(formData.estado, setDataMunicipios, setFormData);
+      }
+    }
+  }, [formData.estado, formData.cep]);
 
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
-      <HeaderH1 onClick={() => router.back()} title="Cadastro de Responsável" />
+      <HeaderH1
+        onClick={() => router.push("/")}
+        title="Cadastro de Responsável"
+      />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit}
@@ -85,6 +105,13 @@ const IncluirResponsavel = () => {
             type="text"
             name="cpf"
             value={formData.cpf}
+            onChange={handleChange}
+          />
+          <Input
+            label="CEP"
+            type="text"
+            name="cep"
+            value={formData.cep}
             onChange={handleChange}
           />
           <Input
@@ -114,6 +141,7 @@ const IncluirResponsavel = () => {
             name="cidade"
             value={formData.cidade}
             onChange={handleChange}
+            data={dataMunicipios}
           />
           <Input
             label="Estado"
@@ -121,6 +149,7 @@ const IncluirResponsavel = () => {
             name="estado"
             value={formData.estado}
             onChange={handleChange}
+            data={dataEstados}
           />
           <Input
             label="Celular"

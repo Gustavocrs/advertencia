@@ -1,0 +1,135 @@
+"use client";
+import {useEffect, useState} from "react";
+import {useRouter, useParams} from "next/navigation";
+
+const ImprimirAdvertencia = () => {
+  const {id} = useParams();
+  const router = useRouter();
+  const [advertencia, setAdvertencia] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAdvertencia = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/advertencias/${id}`
+        );
+        if (!response.ok) throw new Error("Erro ao buscar advertência");
+        const data = await response.json();
+        console.log("Dados da advertência:", data);
+        setAdvertencia(data);
+      } catch (error) {
+        console.error("Erro ao buscar advertência:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAdvertencia();
+  }, [id]);
+
+  if (loading) return <div>Carregando...</div>;
+  if (!advertencia) return <div>Advertência não encontrada</div>;
+
+  return (
+    <div className="p-8 bg-white text-black max-w-3xl mx-auto print:p-0 print:m-0 print:max-w-full">
+      {/* LOGO */}
+      <div className="flex justify-between items-center mb-6">
+        {/* 🔲 INSERIR IMAGEM DO LOGO AQUI */}
+        <img src="/logo_escola.png" alt="Logo da escola" className="h-20" />
+        <div className="text-center flex-1">
+          <h1 className="text-xl font-bold uppercase">
+            Instituição de Ensino Exemplo
+          </h1>
+          <p className="text-sm">
+            Endereço completo da escola - Telefone - CNPJ
+          </p>
+        </div>
+        <div style={{width: "80px"}}></div>
+      </div>
+
+      <hr className="border border-black my-4" />
+
+      <h2 className="text-center text-2xl font-bold underline mb-6">
+        TERMO DE ADVERTÊNCIA
+      </h2>
+
+      <p className="mb-4 text-justify leading-7">
+        Aos{" "}
+        <strong>
+          {advertencia.data
+            ? new Date(advertencia.data).toLocaleDateString("pt-BR")
+            : "___/___/____"}
+        </strong>
+        , o(a) aluno(a){" "}
+        <strong>{advertencia.aluno?.nome || "NOME DO ALUNO"}</strong>, turma{" "}
+        <strong>{advertencia.turma || "___"}</strong>, foi advertido(a) pelo
+        servidor{" "}
+        <strong>{advertencia.servidor?.nome || "NOME DO SERVIDOR"}</strong>,
+        pelos seguintes motivos:
+      </p>
+
+      <div className="border border-black p-4 mb-4 min-h-[80px]">
+        {advertencia.motivo || "Descrição da ocorrência não informada."}
+      </div>
+      <div className="border border-black p-4 mb-4 min-h-[80px]">
+        <p className="font-semibold mb-2">Ação Esperada do Responsável</p>
+        {advertencia.acaoEsperada || "Descrição da ocorrência não informada."}
+        {advertencia.dataComparecimento && (
+          <p>
+            Comparecer a unidade escolar em{" "}
+            {new Date(advertencia.dataComparecimento).toLocaleDateString(
+              "pt-BR"
+            )}
+            .
+          </p>
+        )}
+      </div>
+
+      <p className="mb-6 text-justify leading-7">
+        O aluno declara estar ciente da advertência e compromete-se a não
+        repetir o comportamento.
+      </p>
+
+      <div className="flex justify-between mt-12">
+        <div className="text-center">
+          <div className="border-t border-black w-48 mx-auto"></div>
+          {/* 🔲 INSERIR ESPAÇO PARA ASSINATURA DO ALUNO */}
+          <p className="mt-2">Assinatura do(a) Aluno(a) / Responsável</p>
+        </div>
+        <div className="text-center">
+          <div className="border-t border-black w-48 mx-auto"></div>
+          {/* 🔲 INSERIR ESPAÇO PARA ASSINATURA DO SERVIDOR */}
+          <p className="mt-2">Assinatura do(a) Servidor(a)</p>
+        </div>
+      </div>
+
+      <div className="mt-12 text-center">
+        {/* Local e data formatados para assinatura */}
+        <p className="italic">
+          Rio de Janeiro,{" "}
+          {advertencia.data
+            ? new Date(advertencia.data).toLocaleDateString("pt-BR")
+            : "___/___/____"}
+        </p>
+      </div>
+
+      <div className="mt-8 flex justify-center gap-4 print:hidden">
+        <button
+          onClick={() => window.print()}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Imprimir
+        </button>
+        <button
+          onClick={() => router.back()}
+          className="px-4 py-2 bg-gray-500 text-white rounded"
+        >
+          Voltar
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ImprimirAdvertencia;

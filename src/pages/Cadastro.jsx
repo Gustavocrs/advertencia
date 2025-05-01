@@ -1,4 +1,4 @@
-import {Button} from "./Button";
+import {Button} from "../components/Button";
 
 export const Cadastro = ({router}) => {
   return (
@@ -11,14 +11,12 @@ export const Cadastro = ({router}) => {
       <div
         className={`w-full h-fit py-4 flex flex-wrap justify-center items-center gap-4`}
       >
-        <Button onClick={() => router.push("cadastro/aluno")}>
-          Incluir Aluno
-        </Button>
+        <Button onClick={() => router.push("cadastro/aluno")}>Aluno</Button>
         <Button onClick={() => router.push("cadastro/responsavel")}>
-          Incluir Responsável
+          Responsável
         </Button>
         <Button onClick={() => router.push("cadastro/servidor")}>
-          Incluir Servidor
+          Servidor
         </Button>
         {/* <Button onClick={() => router.push("cadastro/unidade")}>
           Incluir Unidade

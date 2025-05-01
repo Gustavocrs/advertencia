@@ -5,6 +5,9 @@ import {useEffect, useState} from "react";
 import {Button} from "@/components/Button";
 import {HeaderH1} from "@/components/HeaderH1";
 import {Input} from "@/components/Input";
+import {fetchEstados} from "@/utils/fetchEstados";
+import {fetchMunicipios} from "@/utils/fetchMunicipios";
+import {fetchCepData} from "@/utils/fetchCepData";
 
 const IncluirServidor = () => {
   const router = useRouter();
@@ -65,100 +68,26 @@ const IncluirServidor = () => {
       alert("Erro ao incluir servidor.");
     }
   };
-  const fetchEstados = async () => {
-    try {
-      const response = await fetch(
-        "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
-      );
-      if (response.ok) {
-        const estados = await response.json();
-        const estadosFormatados = estados.map((estado) => ({
-          label: estado.sigla,
-          value: estado.sigla,
-        }));
-        setDataEstados(estadosFormatados);
-      } else {
-        console.error("Erro ao buscar os estados.");
-      }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-    }
-  };
-  const fetchMunicipios = async (estado) => {
-    try {
-      const response = await fetch(
-        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios`
-      );
-      if (response.ok) {
-        const municipios = await response.json();
-        const municipiosFormatados = municipios.map((municipio) => ({
-          label: municipio.nome,
-          value: municipio.nome,
-        }));
-        setFormData((prevData) => ({
-          ...prevData,
-          cidade: "",
-        }));
-        setDataMunicipios(municipiosFormatados);
-      } else {
-        console.error("Erro ao buscar os municípios.");
-      }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-    }
-  };
-  const fetchCepData = async (cep) => {
-    try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      if (response.ok) {
-        const data = await response.json();
-
-        if (!data.erro) {
-          setFormData((prevData) => ({
-            ...prevData,
-            endereco: data.logradouro || "",
-            bairro: data.bairro || "",
-            cidade: data.localidade || "",
-            estado: data.uf || "",
-          }));
-
-          // Atualiza os municípios com a cidade retornada pela API
-          setDataMunicipios([{label: data.localidade, value: data.localidade}]);
-
-          // Foca no campo "número" após preencher os dados
-          setTimeout(() => {
-            document.querySelector('input[name="numero"]').focus();
-          }, 0);
-        } else {
-          alert("CEP não encontrado.");
-        }
-      } else {
-        console.error("Erro ao buscar o CEP.");
-      }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-    }
-  };
 
   useEffect(() => {
     if (formData.cep.length === 8) {
-      fetchCepData(formData.cep);
+      fetchCepData(formData.cep, setDataMunicipios, setFormData);
     }
   }, [formData.cep]);
 
   useEffect(() => {
-    fetchEstados();
+    fetchEstados(setDataEstados);
 
     if (formData.cep.length < 8) {
       if (formData.estado) {
-        fetchMunicipios(formData.estado);
+        fetchMunicipios(formData.estado, setDataMunicipios, setFormData);
       }
     }
   }, [formData.estado, formData.cep]);
 
   return (
     <div className="flex flex-col items-center justify-start h-[100%] bg-zinc-200">
-      <HeaderH1 onClick={() => router.back()} title="Cadastro de Servidor" />
+      <HeaderH1 onClick={() => router.push("/")} title="Cadastro de Servidor" />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit}

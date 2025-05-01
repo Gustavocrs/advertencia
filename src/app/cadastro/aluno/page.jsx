@@ -4,15 +4,17 @@ import {useRouter} from "next/navigation";
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
 import {HeaderH1} from "@/components/HeaderH1";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {fetchCepData} from "@/utils/fetchCepData";
+import {fetchEstados} from "@/utils/fetchEstados";
+import {fetchMunicipios} from "@/utils/fetchMunicipios";
 
 const IncluirAluno = () => {
   const router = useRouter();
-
-  // Estado para armazenar os valores do formulário
   const [formData, setFormData] = useState({
     nome: "Pedro Silva",
     cpf: "123.456.789-00",
+    cep: "21235080",
     endereco: "Rua das Flores",
     numero: "123",
     bairro: "Centro",
@@ -24,8 +26,8 @@ const IncluirAluno = () => {
     dataNascimento: "2000-01-01",
     turma: "802",
   });
-
-  // Função para atualizar o estado ao digitar nos campos
+  const [dataEstados, setDataEstados] = useState([]);
+  const [dataMunicipios, setDataMunicipios] = useState([]);
   const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData((prev) => ({
@@ -33,8 +35,6 @@ const IncluirAluno = () => {
       [name]: value,
     }));
   };
-
-  // Função para enviar os dados do formulário para a API
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
@@ -72,9 +72,25 @@ const IncluirAluno = () => {
     }
   };
 
+  useEffect(() => {
+    if (formData.cep.length === 8) {
+      fetchCepData(formData.cep, setDataMunicipios, setFormData);
+    }
+  }, [formData.cep]);
+
+  useEffect(() => {
+    fetchEstados(setDataEstados);
+
+    if (formData.cep.length < 8) {
+      if (formData.estado) {
+        fetchMunicipios(formData.estado, setDataMunicipios, setFormData);
+      }
+    }
+  }, [formData.estado, formData.cep]);
+
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
-      <HeaderH1 onClick={() => router.back()} title="Cadastro de Aluno" />
+      <HeaderH1 onClick={() => router.push("/")} title="Cadastro de Aluno" />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit}
@@ -121,6 +137,7 @@ const IncluirAluno = () => {
             name="cidade"
             value={formData.cidade}
             onChange={handleChange}
+            data={dataMunicipios}
           />
           <Input
             label="Estado"
@@ -128,6 +145,7 @@ const IncluirAluno = () => {
             name="estado"
             value={formData.estado}
             onChange={handleChange}
+            data={dataEstados}
           />
           <Input
             label="Celular"

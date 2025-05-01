@@ -105,7 +105,6 @@ const CriarAdvertencia = () => {
     fetchAlunos();
   }, [formData.turma]);
 
-  // Função para enviar os dados do formulário para a API
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
 
@@ -140,7 +139,18 @@ const CriarAdvertencia = () => {
       alert("Erro ao criar advertência. Tente novamente mais tarde.");
     }
   };
-
+  const optionsAcaoEsperada = [
+    {
+      value: "0",
+      label:
+        "Dar ciência neste documento, devolvê-lo para arquivamento e tomar providências para que os fatos narrados não tornem a acontecer.",
+    },
+    {
+      value: "1",
+      label:
+        "Dar ciência e comparecer à unidade escolar dia e horário abaixo. Na impossibilidade de comparecimento, faça contato com a escola para agendar novo dia e horário.",
+    },
+  ];
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
       <HeaderH1 onClick={() => router.back()} title="Criar Advertência" />
@@ -199,26 +209,18 @@ const CriarAdvertencia = () => {
             name="acaoEsperada"
             value={formData.acaoEsperada}
             onChange={handleChange}
-            options={[
-              {
-                value: "0",
-                label:
-                  "Dar ciência neste documento, devolvê-lo para arquivamento e tomar providências para que os fatos narrados não tornem a acontecer.",
-              },
-              {
-                value: "1",
-                label:
-                  "Dar ciência e comparecer à unidade escolar dia e horário abaixo. Na impossibilidade de comparecimento, faça contato com a escola para agendar novo dia e horário.",
-              },
-            ]}
+            options={optionsAcaoEsperada}
           />
-          <Input
-            label="Data do Comparecimento"
-            type="date"
-            name="dataComparecimento"
-            value={formData.dataComparecimento}
-            onChange={handleChange}
-          />
+
+          {formData.acaoEsperada === optionsAcaoEsperada[1].label && (
+            <Input
+              label="Data do Comparecimento"
+              type="date"
+              name="dataComparecimento"
+              value={formData.dataComparecimento}
+              onChange={handleChange}
+            />
+          )}
         </div>
         <Button wfull type="submit">
           Incluir Advertência

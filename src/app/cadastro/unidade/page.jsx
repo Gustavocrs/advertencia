@@ -11,7 +11,7 @@ const IncluirUnidade = () => {
 
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
-      <HeaderH1 onClick={() => router.back()} title="Cadastro de Unidade" />
+      <HeaderH1 onClick={() => router.push("/")} title="Cadastro de Unidade" />
       <form className="flex flex-col items-start justify-between w-full p-2">
         <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-white shadow-lg rounded-lg">
           <Input label="Nome" type="text" />
