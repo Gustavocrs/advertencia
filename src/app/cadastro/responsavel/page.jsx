@@ -11,15 +11,15 @@ const IncluirResponsavel = () => {
 
   // Estado para armazenar os valores do formulário
   const [formData, setFormData] = useState({
-    nome: "João Silva",
-    cpf: "123.456.789-00",
-    endereco: "Rua das Flores",
-    numero: "123",
-    bairro: "Centro",
-    cidade: "São Paulo",
-    estado: "SP",
-    celular: "(11) 98765-4321",
-    email: "joao.silva@example.com",
+    nome: "",
+    cpf: "",
+    endereco: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    celular: "",
+    email: "",
   });
 
   // Função para atualizar o estado ao digitar nos campos
@@ -31,7 +31,6 @@ const IncluirResponsavel = () => {
     }));
   };
 
-  // Função para enviar os dados do formulário para a API
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
@@ -71,7 +70,7 @@ const IncluirResponsavel = () => {
       <HeaderH1 onClick={() => router.back()} title="Cadastro de Responsável" />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
-        onSubmit={handleSubmit} // Adicionado o evento onSubmit
+        onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-white shadow-lg rounded-lg">
           <Input
