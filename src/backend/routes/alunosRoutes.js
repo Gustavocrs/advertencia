@@ -5,10 +5,48 @@ const router = express.Router();
 // Criar um novo aluno
 router.post("/", async (req, res) => {
   try {
-    const aluno = await Aluno.create(req.body);
-    res.status(201).json(aluno);
+    const {
+      nome,
+      cpf,
+      endereco,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      celular,
+      email,
+      responsavelCpf,
+      dataNascimento,
+      turma,
+    } = req.body;
+
+    // Criação do aluno
+    const aluno = await Aluno.create({
+      nome,
+      cpf,
+      endereco,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      celular,
+      email,
+      responsavelCpf,
+      dataNascimento,
+      turma,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Aluno criado com sucesso",
+      data: aluno,
+    });
   } catch (error) {
-    res.status(400).json({message: error.message});
+    res.status(400).json({
+      success: false,
+      message: "Erro ao criar aluno",
+      error: error.message,
+    });
   }
 });
 

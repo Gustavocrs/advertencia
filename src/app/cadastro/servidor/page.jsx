@@ -44,6 +44,23 @@ const IncluirServidor = () => {
 
     if (response.ok) {
       alert("Servidor incluído com sucesso!");
+      setFormData({
+        nome: "",
+        cpf: "",
+        cep: "",
+        data_nascimento: "",
+        endereco: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        celular: "",
+        email: "",
+        disciplina: "",
+        matricula: "",
+        cargo: "",
+      });
     } else {
       alert("Erro ao incluir servidor.");
     }
