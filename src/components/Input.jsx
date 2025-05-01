@@ -5,6 +5,7 @@ export const Input = ({
   value,
   onChange,
   data = [],
+  disabled = false,
 }) => {
   const renderInput = () => {
     switch (type) {
@@ -15,10 +16,13 @@ export const Input = ({
               {label}
             </label>
             <select
-              className="border border-gray-300 rounded-md p-2 mb-2 w-full"
+              className={`border border-gray-300 rounded-md p-2 mb-2 w-full ${
+                disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
+              }`}
               name={name}
               value={value} // Exibe o valor do estado
               onChange={onChange} // Atualiza o estado ao selecionar
+              disabled={disabled} // Desabilita o campo se necessário
             >
               <option value="">Selecione uma opção</option>
               {data.map((item, index) => (
@@ -34,12 +38,15 @@ export const Input = ({
           <>
             <label className="text-gray-500 pb-2 text-left">{label}</label>
             <textarea
-              className="border border-gray-300 rounded-md p-2 mb-2 w-full"
+              className={`border border-gray-300 rounded-md p-2 mb-2 w-full ${
+                disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
+              }`}
               placeholder={label}
               name={name}
               value={value} // Exibe o valor do estado
               onChange={onChange} // Atualiza o estado ao digitar
               rows="4"
+              disabled={disabled} // Desabilita o campo se necessário
             ></textarea>
           </>
         );
@@ -51,11 +58,14 @@ export const Input = ({
             </label>
             <input
               type={type}
-              className="border border-gray-300 rounded-md p-2 mb-2 w-full"
+              className={`border border-gray-300 rounded-md p-2 mb-2 w-full ${
+                disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
+              }`}
               placeholder={label}
               name={name}
               value={value} // Exibe o valor do estado
               onChange={onChange} // Atualiza o estado ao digitar
+              disabled={disabled} // Desabilita o campo se necessário
             />
           </>
         );

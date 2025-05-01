@@ -11,7 +11,7 @@ const IncluirAluno = () => {
 
   // Estado para armazenar os valores do formulário
   const [formData, setFormData] = useState({
-    nome: "João Silva",
+    nome: "Pedro Silva",
     cpf: "123.456.789-00",
     endereco: "Rua das Flores",
     numero: "123",
@@ -22,7 +22,7 @@ const IncluirAluno = () => {
     email: "joao.silva@example.com",
     responsavelCpf: "123.456.789-11", // CPF do responsável
     dataNascimento: "2000-01-01",
-    turma: "A",
+    turma: "802",
   });
 
   // Função para atualizar o estado ao digitar nos campos
@@ -62,7 +62,6 @@ const IncluirAluno = () => {
           dataNascimento: "",
           turma: "",
         });
-        router.push("/cadastro"); // Redireciona para a página de cadastro
       } else {
         const errorData = await response.json();
         alert(`Erro ao incluir aluno: ${errorData.message}`);

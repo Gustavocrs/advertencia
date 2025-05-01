@@ -92,15 +92,17 @@ const CriarAdvertencia = () => {
             value: aluno._id,
             label: aluno.nome,
           }));
-          setAlunos(dataFormatada);
+          setAlunos(dataFormatada); // Atualiza o estado com os alunos da turma
         } catch (error) {
           console.error("Error fetching alunos:", error);
         }
+      } else {
+        setAlunos([]); // Limpa os alunos se a turma estiver vazia
       }
     };
 
     fetchAlunos();
-  }, [formData.turma]);
+  }, [formData.turma]); // Executa sempre que 'formData.turma' mudar
 
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
@@ -121,6 +123,7 @@ const CriarAdvertencia = () => {
             value={formData.aluno}
             onChange={handleChange}
             data={alunos}
+            disabled={formData.turma.length < 3} // Desabilita o campo se a turma estiver vazia
           />
           <Input
             label="Servidor"

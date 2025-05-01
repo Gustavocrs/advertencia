@@ -50,19 +50,20 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Obter todos os alunos
+// Obter alunos com filtro por turma
 router.get("/", async (req, res) => {
   try {
-    const alunos = await Aluno.find();
+    const {turma} = req.query; // Obtém o parâmetro 'turma' da query string
+    const query = turma ? {turma} : {}; // Filtra por turma, se fornecida
+    const alunos = await Aluno.find(query); // Busca os alunos no banco de dados
     res.status(200).json({
       success: true,
-      message: "Lista de alunos obtida com sucesso",
       data: alunos,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Erro ao obter alunos",
+      message: "Erro ao buscar alunos",
       error: error.message,
     });
   }
