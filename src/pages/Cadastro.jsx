@@ -1,6 +1,6 @@
 import {Button} from "../components/Button";
 
-export default function Cadastro({router}) {
+const Cadastro = ({router}) => {
   return (
     <div className="w-full">
       <h1
@@ -24,4 +24,6 @@ export default function Cadastro({router}) {
       </div>
     </div>
   );
-}
+};
+
+export default Cadastro;
