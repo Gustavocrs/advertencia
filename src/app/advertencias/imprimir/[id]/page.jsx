@@ -114,6 +114,22 @@ const ImprimirAdvertencia = () => {
         </p>
       </div>
 
+      <div className="border border-black p-4 mt-8 mb-4 min-h-[80px]">
+        <p className="font-semibold mb-2">Canhoto do Termo de Advertência</p>
+        <div className="flex flex-col gap-2">
+          <div>{advertencia.aluno?.nome || "NOME DO ALUNO"}</div>
+          <div>
+            {advertencia.motivo || "Descrição da ocorrência não informada."}
+          </div>
+          <div>
+            {advertencia.data
+              ? new Date(advertencia.data).toLocaleDateString("pt-BR")
+              : "___/___/____"}
+          </div>
+          <div>{advertencia.turma || "___"}</div>
+        </div>
+      </div>
+
       <div className="mt-8 flex justify-center gap-4 print:hidden">
         <button
           onClick={() => window.print()}
