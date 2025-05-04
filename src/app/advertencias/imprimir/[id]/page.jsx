@@ -95,7 +95,7 @@ const ImprimirAdvertencia = () => {
         <div className="text-center">
           <div className="border-t border-black w-48 mx-auto"></div>
           {/* 🔲 INSERIR ESPAÇO PARA ASSINATURA DO ALUNO */}
-          <p className="mt-2">Assinatura do(a) Aluno(a) / Responsável</p>
+          <p className="mt-2">Assinatura do(a) Responsável</p>
         </div>
         <div className="text-center">
           <div className="border-t border-black w-48 mx-auto"></div>
@@ -116,17 +116,19 @@ const ImprimirAdvertencia = () => {
 
       <div className="border border-black p-4 mt-8 mb-4 min-h-[80px]">
         <p className="font-semibold mb-2">Canhoto do Termo de Advertência</p>
-        <div className="flex flex-col gap-2">
-          <div>{advertencia.aluno?.nome || "NOME DO ALUNO"}</div>
+        <div className="flex justify-between">
+          <div>Aluno: {advertencia.aluno?.nome || "NOME DO ALUNO"}</div>
+          <div>Turma: {advertencia.turma || "___"}</div>
           <div>
-            {advertencia.motivo || "Descrição da ocorrência não informada."}
-          </div>
-          <div>
+            Data:
             {advertencia.data
               ? new Date(advertencia.data).toLocaleDateString("pt-BR")
               : "___/___/____"}
           </div>
-          <div>{advertencia.turma || "___"}</div>
+        </div>
+        <div>
+          Motivo:{" "}
+          {advertencia.motivo || "Descrição da ocorrência não informada."}
         </div>
       </div>
 

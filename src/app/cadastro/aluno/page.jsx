@@ -12,19 +12,19 @@ import {fetchMunicipios} from "@/utils/fetchMunicipios";
 const IncluirAluno = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    nome: "Pedro Silva",
-    cpf: "123.456.789-00",
-    cep: "21235080",
-    endereco: "Rua das Flores",
-    numero: "123",
-    bairro: "Centro",
-    cidade: "São Paulo",
-    estado: "SP",
-    celular: "(11) 98765-4321",
-    email: "joao.silva@example.com",
-    responsavelCpf: "123.456.789-11", // CPF do responsável
-    dataNascimento: "2000-01-01",
-    turma: "802",
+    nome: "",
+    cpf: "",
+    cep: "",
+    endereco: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    celular: "",
+    email: "",
+    responsavelCpf: "",
+    dataNascimento: "",
+    turma: "",
   });
   const [dataEstados, setDataEstados] = useState([]);
   const [dataMunicipios, setDataMunicipios] = useState([]);
