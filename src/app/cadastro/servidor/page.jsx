@@ -38,8 +38,10 @@ const IncluirServidor = () => {
   };
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
+    const url = process.env.NEXT_PUBLIC_API_URL;
+
     e.preventDefault(); // Previne o comportamento padrão do formulário
-    const response = await fetch("http://localhost:5000/api/servidores", {
+    const response = await fetch(url + "/api/servidores", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(formData),

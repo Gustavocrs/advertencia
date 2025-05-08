@@ -10,9 +10,11 @@ const ConsultarServidor = () => {
   const [loading, setLoading] = useState(true); // Estado para indicar carregamento
 
   useEffect(() => {
+    const url = process.env.NEXT_PUBLIC_API_URL;
+
     const fetchServidor = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/servidores");
+        const response = await fetch(url + "/api/servidores");
         if (!response.ok) {
           throw new Error("Erro ao buscar servidores");
         }
