@@ -13,7 +13,9 @@ const ConsultarAdvertencia = () => {
   useEffect(() => {
     const fetchAdvertencias = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/advertencias");
+        const response = await fetch(
+          `${import.meta.env.NEXT_PUBLIC_API_URL}/api/advertencias`
+        );
         if (!response.ok) {
           throw new Error("Erro ao buscar advertências");
         }
