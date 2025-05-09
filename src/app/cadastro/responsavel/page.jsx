@@ -36,13 +36,16 @@ const IncluirResponsavel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
-      const response = await fetch("http://localhost:5000/api/responsaveis", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/responsaveis`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         alert("Responsável incluído com sucesso!");

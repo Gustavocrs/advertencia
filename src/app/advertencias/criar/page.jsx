@@ -24,7 +24,9 @@ const CriarAdvertencia = () => {
   useEffect(() => {
     const fetchServidores = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/servidores");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/servidores`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch servidores");
         }
@@ -83,7 +85,7 @@ const CriarAdvertencia = () => {
       if (formData.turma) {
         try {
           const response = await fetch(
-            `http://localhost:5000/api/alunos?turma=${formData.turma}`
+            `${process.env.NEXT_PUBLIC_API_URL}/api/alunos?turma=${formData.turma}`
           );
           if (!response.ok) {
             throw new Error("Failed to fetch alunos");
@@ -107,17 +109,19 @@ const CriarAdvertencia = () => {
 
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
-    const url = process.env.NEXT_PUBLIC_API_URL;
 
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
-      const response = await fetch(url + "/api/advertencias", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         alert("Advertência criada com sucesso!");

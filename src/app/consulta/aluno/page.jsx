@@ -12,7 +12,9 @@ const ConsultarAluno = () => {
   useEffect(() => {
     const fetchAluno = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/alunos");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/alunos`
+        );
         if (!response.ok) {
           throw new Error("Erro ao buscar alunos");
         }

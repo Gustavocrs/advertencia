@@ -11,11 +11,11 @@ const ConsultarAdvertencia = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const url = process.env.NEXT_PUBLIC_API_URL;
-
     const fetchAdvertencias = async () => {
       try {
-        const response = await fetch(`${url}/api/advertencias`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias`
+        );
         if (!response.ok) {
           throw new Error("Erro ao buscar advertências");
         }
@@ -60,7 +60,7 @@ const ConsultarAdvertencia = () => {
             params.value === "true" || params.value === true ? "false" : "true";
           try {
             const response = await fetch(
-              `http://localhost:5000/api/advertencias/${params.id}`,
+              `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias/${params.id}`,
               {
                 method: "PUT",
                 headers: {

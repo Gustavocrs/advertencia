@@ -12,7 +12,7 @@ const ImprimirAdvertencia = () => {
     const fetchAdvertencia = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/advertencias/${id}`
+          url + `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias/${id}`
         );
         if (!response.ok) throw new Error("Erro ao buscar advertência");
         const data = await response.json();
