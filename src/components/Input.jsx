@@ -6,6 +6,7 @@ export const Input = ({
   onChange,
   data = [],
   disabled = false,
+  placeholder,
 }) => {
   const renderInput = () => {
     switch (type) {
@@ -53,15 +54,15 @@ export const Input = ({
       default:
         return (
           <>
-            <label className="text-gray-500 pb-2 text-left w-full">
+            <label className="text-gray-500 pb-2 text-center w-full uppercase font-semibold">
               {label}
             </label>
             <input
               type={type}
-              className={`border border-gray-300 rounded-md p-2 mb-2 w-full ${
+              className={`border border-gray-300 rounded-md p-2 mb-2 w-full text-center ${
                 disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
               }`}
-              placeholder={label}
+              placeholder={placeholder || label}
               name={name}
               value={value} // Exibe o valor do estado
               onChange={onChange} // Atualiza o estado ao digitar

@@ -11,8 +11,6 @@ import {fetchCepData} from "@/utils/fetchCepData";
 
 const IncluirServidor = () => {
   const router = useRouter();
-
-  // Estado para armazenar os valores do formulário
   const [formData, setFormData] = useState({
     nome: "",
     cpf: "",
@@ -41,7 +39,7 @@ const IncluirServidor = () => {
 
     e.preventDefault(); // Previne o comportamento padrão do formulário
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/servidores`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,
       {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -91,7 +89,7 @@ const IncluirServidor = () => {
 
   return (
     <div className="flex flex-col items-center justify-start h-[100%] bg-zinc-200">
-      <HeaderH1 onClick={() => router.push("/")} title="Cadastro de Servidor" />
+      <HeaderH1 onClick={() => router.push("/")} title="Cadastro de Usuário" />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit}

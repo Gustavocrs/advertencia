@@ -14,5 +14,4 @@ export const Button = ({children, wfull, style = "bg-sky-600 ", ...props}) => {
   );
 };
 
-const buttonStyle =
-  "h-16 text-white text-base p-2 my-2 shadow-lg transition duration-300 ease-in-out transform hover:cursor-pointer";
+const buttonStyle = `h-14 text-white text-lg p-2 my-2 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:cursor-pointer`;
