@@ -1,6 +1,5 @@
 "use client";
 import {useRouter} from "next/navigation";
-import {Login} from "@/pages/Login";
 import Advertencia from "@/pages/Advertencia";
 import Cadastro from "@/pages/Cadastro";
 import Consultas from "@/pages/Consulta";
