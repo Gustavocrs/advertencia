@@ -2,7 +2,7 @@ import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
 import {ToastContainer, toast} from "react-toastify";
 
-export const Login = ({router}) => {
+const Login = ({router}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -56,3 +56,4 @@ export const Login = ({router}) => {
     </div>
   );
 };
+export default Login;
