@@ -1,6 +1,9 @@
 import {Button} from "../components/Button";
+import {useRouter} from "next/navigation";
 
-const Consultas = ({router}) => {
+const Consultas = () => {
+  const router = useRouter();
+
   return (
     <div className="w-full">
       <h1

@@ -1,8 +1,11 @@
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
 import {ToastContainer, toast} from "react-toastify";
+import {useRouter} from "next/navigation";
 
-const Login = ({router}) => {
+export default function Login () {
+  const router = useRouter();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -56,4 +59,3 @@ const Login = ({router}) => {
     </div>
   );
 };
-export default Login;
