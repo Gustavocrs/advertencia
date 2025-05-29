@@ -1,29 +1,19 @@
 import {Button} from "../components/Button";
+import {FaUserCircle} from "react-icons/fa";
 import {useRouter} from "next/navigation";
+import {Card} from "@/components/Card";
 
 const Cadastro = () => {
   const router = useRouter();
 
   return (
     <div className="w-full">
-      <h1
-        className={`text-2xl font-semibold text-center bg-sky-900 text-white p-2`}
-      >
-        Cadastro
-      </h1>
-      <div
-        className={`w-full h-fit py-4 flex flex-wrap justify-center items-center gap-4`}
-      >
-        <Button onClick={() => router.push("cadastro/aluno")}>Aluno</Button>
-        <Button onClick={() => router.push("cadastro/responsavel")}>
-          Responsável
-        </Button>
-        <Button onClick={() => router.push("cadastro/servidor")}>
-          Servidor
-        </Button>
-        {/* <Button onClick={() => router.push("cadastro/unidade")}>
-          Incluir Unidade
-        </Button> */}
+      <div className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4`}>
+        <Card
+          title={"Novo Usuário"}
+          icon={<FaUserCircle />}
+          onClick={() => router.push("cadastro/usuario")}
+        />
       </div>
     </div>
   );

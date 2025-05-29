@@ -54,12 +54,12 @@ export const Input = ({
       default:
         return (
           <>
-            <label className="text-gray-500 pb-2 text-center w-full uppercase font-semibold">
+            <label className="text-gray-500 pb-2 text-start w-full uppercase font-semibold">
               {label}
             </label>
             <input
               type={type}
-              className={`border border-gray-300 rounded-md p-2 mb-2 w-full text-center ${
+              className={`border border-gray-300 rounded-md p-2 mb-2 w-full text-start ${
                 disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
               }`}
               placeholder={placeholder || label}
