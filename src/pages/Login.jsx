@@ -3,7 +3,7 @@ import {Input} from "@/components/Input";
 import {ToastContainer, toast} from "react-toastify";
 import {useRouter} from "next/navigation";
 
-export default function Login () {
+export default function Login() {
   const router = useRouter();
 
   const handleSubmit = (event) => {
@@ -13,6 +13,7 @@ export default function Login () {
       toast.error("Por favor, preencha todos os campos.");
       return;
     }
+
     router.push("/principal");
   };
 
@@ -58,4 +59,4 @@ export default function Login () {
       </form>
     </div>
   );
-};
+}
