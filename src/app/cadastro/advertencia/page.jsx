@@ -25,13 +25,21 @@ const CriarAdvertencia = () => {
   });
 
   useEffect(() => {
-    const fetchServidores = async () => {
+    const fetchUsuarios = async () => {
+      const token = localStorage.getItem("token");
+
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/servidores`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch servidores");
+          throw new Error("Failed to fetch usuarios");
         }
         const data = await response.json();
         const dataFormatada = data.data.map((servidor) => ({
@@ -45,7 +53,7 @@ const CriarAdvertencia = () => {
       }
     };
 
-    fetchServidores();
+    fetchUsuarios();
   }, []);
 
   useEffect(() => {
@@ -85,10 +93,17 @@ const CriarAdvertencia = () => {
 
   useEffect(() => {
     const fetchAlunos = async () => {
+      const token = localStorage.getItem("token");
       if (formData.turma) {
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/alunos?turma=${formData.turma}`
+            `${process.env.NEXT_PUBLIC_API_URL}/api/alunos?turma=${formData.turma}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           if (!response.ok) {
             throw new Error("Failed to fetch alunos");
@@ -112,7 +127,7 @@ const CriarAdvertencia = () => {
 
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
-
+    const token = localStorage.getItem("token");
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
       const response = await fetch(
@@ -121,6 +136,7 @@ const CriarAdvertencia = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
         }

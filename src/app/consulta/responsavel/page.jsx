@@ -11,9 +11,16 @@ const ConsultarResponsavel = () => {
 
   useEffect(() => {
     const fetchResponsavel = async () => {
+      const token = localStorage.getItem("token");
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/responsaveis`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/responsaveis`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Erro ao buscar responsáveis");

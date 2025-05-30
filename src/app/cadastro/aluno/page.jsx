@@ -37,6 +37,7 @@ const IncluirAluno = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/alunos`,
@@ -44,6 +45,7 @@ const IncluirAluno = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
         }

@@ -13,9 +13,8 @@ const ConsultarUsuario = () => {
   const [loading, setLoading] = useState(true); // Estado para indicar carregamento
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
     const fetchUsuarios = async () => {
+      const token = localStorage.getItem("token");
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,

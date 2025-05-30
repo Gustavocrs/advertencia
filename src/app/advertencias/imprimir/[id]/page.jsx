@@ -10,9 +10,17 @@ const ImprimirAdvertencia = () => {
 
   useEffect(() => {
     const fetchAdvertencia = async () => {
+      const token = localStorage.getItem("token");
+
       try {
         const response = await fetch(
-          url + `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias/${id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias/${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) throw new Error("Erro ao buscar advertência");
         const data = await response.json();

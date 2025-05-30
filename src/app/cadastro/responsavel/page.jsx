@@ -34,6 +34,7 @@ const IncluirResponsavel = () => {
     }));
   };
   const handleSubmit = async (e) => {
+    const token = localStorage.getItem("token");
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
       const response = await fetch(
@@ -42,6 +43,7 @@ const IncluirResponsavel = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
         }

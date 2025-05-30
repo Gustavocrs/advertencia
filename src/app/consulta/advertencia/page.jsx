@@ -15,9 +15,16 @@ const ConsultarAdvertencia = () => {
 
   useEffect(() => {
     const fetchAdvertencias = async () => {
+      const token = localStorage.getItem("token");
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Erro ao buscar advertências");
@@ -61,6 +68,8 @@ const ConsultarAdvertencia = () => {
         const handleToggle = async () => {
           const newValue =
             params.value === "true" || params.value === true ? "false" : "true";
+          const token = localStorage.getItem("token");
+
           try {
             const response = await fetch(
               `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias/${params.id}`,
@@ -68,6 +77,7 @@ const ConsultarAdvertencia = () => {
                 method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({situacao: newValue}),
               }
