@@ -12,7 +12,7 @@ export default function consulta() {
     <div className="flex flex-col h-screen bg-zinc-200 w-full">
       <SideBar />
       <NavBar />
-      <div className="ml-16 mt-14">
+      <div className="md:ml-16 mt-14">
         <div className="flex flex-col items-center justify-center h-full">
           <h1>Consultas</h1>
           <div className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4`}>

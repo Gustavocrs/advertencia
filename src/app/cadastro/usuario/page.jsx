@@ -98,7 +98,7 @@ const CadastroUsuario = () => {
     <div className="flex flex-col h-fit bg-zinc-200 w-full">
       <SideBar />
       <NavBar />
-      <div className="md:ml-16 mt-14 ">
+      <div className="md:ml-16 mt-14">
         <div className="flex justify-start items-center ml-2">
           <FaUserCircle className="text-4xl" />
           <h1 className="text-3xl p-4 font-bold uppercase text-slate-800 ">

@@ -13,13 +13,9 @@ export default function Principal() {
   return (
     <div className="flex flex-col h-screen bg-zinc-200 w-full">
       <SideBar />
-      <NavBar />
+      <NavBar user={user} />
       <div className="ml-16 mt-14">
-        <div className="flex flex-col items-center justify-center h-full">
-          <h1 className="text-lg">
-            {user && user ? `Bem vindo, ${user.nome}!` : ""}
-          </h1>
-        </div>
+        <div className="flex flex-col items-center justify-center h-full"></div>
       </div>
     </div>
   );

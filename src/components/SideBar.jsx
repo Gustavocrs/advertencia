@@ -39,21 +39,6 @@ export const SideBar = () => {
     },
   ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setIsOpen(true);
-      } else {
-        setIsOpen(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <div
       className={`bg-slate-400 flex flex-col fixed z-50 md:h-full self-start  ${
@@ -83,7 +68,10 @@ export const SideBar = () => {
           <li
             key={index}
             className="w-full flex items-center gap-4"
-            onClick={() => router.push(item.route)}
+            onClick={() => {
+              router.push(item.route);
+              setIsOpen(false);
+            }}
           >
             <div className="text-2xl">{item.icon}</div>
             <span
