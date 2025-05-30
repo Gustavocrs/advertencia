@@ -3,15 +3,21 @@ import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
 import {ToastContainer, toast} from "react-toastify";
 import {useRouter} from "next/navigation";
+import {useState} from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Home() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
 
     if (!event.target.login.value || !event.target.senha.value) {
       toast.error("Por favor, preencha todos os campos.");
+      setLoading(false);
+
       return;
     }
 
@@ -32,12 +38,16 @@ export default function Home() {
       const data = await response.json();
       if (data && data.token) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.usuario));
         router.push("/principal");
       } else {
         toast.error("Login ou senha inválidos");
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,7 +89,7 @@ export default function Home() {
             //   onChange={handleChange}
           />
           <Button wfull type="submit">
-            Entrar
+            {loading ? <CircularProgress /> : "Entrar"}
           </Button>
         </form>
       </div>

@@ -17,9 +17,7 @@ export const NavBar = () => {
       font-semibold select-none
     `}
     >
-      {/* <p className="text-sm ml-8 md:text-lg">
-        Sistema de Gerenciamento de Alunos
-      </p> */}
+      {/* <p>{user.nome}</p> */}
       <div className="w-full flex justify-end items-center gap-4 mr-20 text-2xl">
         <IoMdNotifications />
         <MdHelp />
