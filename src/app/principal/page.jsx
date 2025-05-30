@@ -1,9 +1,6 @@
 "use client";
 import {NavBar} from "@/components/NavBar";
 import {SideBar} from "@/components/SideBar";
-import Advertencia from "@/pages/Advertencia";
-import Cadastro from "@/pages/Cadastro";
-import Consultas from "@/pages/Consulta";
 
 export default function Principal() {
   return (

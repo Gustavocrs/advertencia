@@ -1,7 +1,15 @@
 import {FaUserCircle} from "react-icons/fa";
 import {IoMdNotifications} from "react-icons/io";
 import {MdHelp} from "react-icons/md";
+
+import {useRouter} from "next/navigation";
 export const NavBar = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+  };
   return (
     <div
       className={`w-full ml-13 h-14 bg-slate-400 fixed z-50
@@ -15,7 +23,7 @@ export const NavBar = () => {
       <div className="w-full flex justify-end items-center gap-4 mr-20 text-2xl">
         <IoMdNotifications />
         <MdHelp />
-        <FaUserCircle />
+        <FaUserCircle onClick={handleLogout} />
       </div>
     </div>
   );

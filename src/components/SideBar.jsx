@@ -35,7 +35,7 @@ export const SideBar = () => {
     {
       name: "Advertências",
       icon: <CgNotes />,
-      route: "/advertencias",
+      route: "/cadastro/advertencia",
     },
   ];
 

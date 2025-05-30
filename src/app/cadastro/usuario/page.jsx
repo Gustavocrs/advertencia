@@ -15,6 +15,8 @@ import {SideBar} from "@/components/SideBar";
 const CadastroUsuario = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    email: "",
+    password: "",
     nome: "",
     cpf: "",
     cep: "",
@@ -26,7 +28,6 @@ const CadastroUsuario = () => {
     cidade: "",
     estado: "",
     celular: "",
-    email: "",
     disciplina: "",
     matricula: "",
     cargo: "",
@@ -39,13 +40,16 @@ const CadastroUsuario = () => {
   };
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
-
-    e.preventDefault(); // Previne o comportamento padrão do formulário
+    const token = localStorage.getItem("token");
+    e.preventDefault();
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,
       {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(formData),
       }
     );
@@ -104,6 +108,21 @@ const CadastroUsuario = () => {
         <div className="flex flex-col items-center justify-center h-full">
           <form className="flex flex-col  w-full p-2" onSubmit={handleSubmit}>
             <div className="flex flex-col w-full h-full p-4 bg-white shadow-lg rounded-lg">
+              <Input
+                label="Email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <Input
+                label="Senha"
+                type="password"
+                name="password"
+                placeholder="********"
+                value={formData.password}
+                onChange={handleChange}
+              />
               <Input
                 label="Nome"
                 type="text"
@@ -184,13 +203,7 @@ const CadastroUsuario = () => {
                 value={formData.celular}
                 onChange={handleChange}
               />
-              <Input
-                label="Email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
+
               <Input
                 label="Disciplina"
                 type="text"
