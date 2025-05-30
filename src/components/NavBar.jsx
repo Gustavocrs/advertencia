@@ -18,22 +18,22 @@ export const NavBar = ({user}) => {
     `}
     >
       {user && (
-        <div className="md:flex w-full gap-10 items-center justify-center hidden">
-          <div className="flex flex-col justify-center items-center">
-            <span className="text-slate-900 font-bold">Usuário</span>
+        <div className="md:flex w-full gap-10 items-center justify-start hidden ml-10">
+          <div className="flex justify-around items-center gap-2">
+            <span className="text-slate-900 font-bold">Usuário: </span>
             <span>{user.nome}</span>
           </div>
-          <div className="flex flex-col justify-center items-center">
-            <span className="text-slate-900 font-bold">E-mail</span>
+          <div className="flex justify-around items-center gap-2">
+            <span className="text-slate-900 font-bold">E-mail: </span>
             <span>{user.email}</span>
           </div>
-          <div className="flex flex-col justify-center items-center">
-            <span className="text-slate-900 font-bold">Matrícula</span>
+          <div className="flex justify-around items-center gap-2">
+            <span className="text-slate-900 font-bold">Matrícula: </span>
             <span>{user.matricula}</span>
           </div>
         </div>
       )}
-      <div className="w-full md:w-0 flex justify-end items-center gap-4 mr-20 text-2xl">
+      <div className="w-full flex justify-end items-center gap-4 mr-20 text-2xl">
         <IoMdNotifications />
         <MdHelp />
         <FaUserCircle onClick={handleLogout} />
