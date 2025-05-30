@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 export default function Login() {
   const router = useRouter();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!event.target.login.value || !event.target.senha.value) {
@@ -14,7 +14,30 @@ export default function Login() {
       return;
     }
 
-    router.push("/principal");
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: event.target.login.value,
+            password: event.target.senha.value,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.token) {
+        router.push("/principal");
+      } else {
+        router.push("/");
+        toast.error("Login ou senha inválidos");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
