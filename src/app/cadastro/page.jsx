@@ -5,6 +5,7 @@ import {FaUserCircle} from "react-icons/fa";
 import {useRouter} from "next/navigation";
 import {Card} from "@/components/Card";
 import {useEffect} from "react";
+import {HeaderH1} from "@/components/HeaderH1";
 
 export default function cadastro() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function cadastro() {
       <NavBar />
       <div className="md:ml-16 mt-14 ">
         <div className="flex flex-col items-center justify-center h-full">
-          <h1>Cadastros</h1>
+          <HeaderH1 title="Cadastros" />
           <div className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4`}>
             <Card
               title={"Novo Usuário"}

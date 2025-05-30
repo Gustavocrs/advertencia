@@ -71,7 +71,7 @@ export default function Home() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="max-w-md flex flex-col justify-center items-center gap-4 p-8 bg-white rounded-lg shadow-md sm:p-12 sm:w-full"
+          className="flex flex-col justify-center items-center gap-4 p-8 bg-white rounded-lg shadow-md sm:p-12 w-[90%] md:w-[40%]"
         >
           <Input
             label="Usuario"
