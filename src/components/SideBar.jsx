@@ -8,7 +8,7 @@ import {CgNotes} from "react-icons/cg";
 import {CgMenuGridR} from "react-icons/cg";
 import {useRouter} from "next/navigation";
 
-export const SideBar = () => {
+export const SideBar = ({user}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();

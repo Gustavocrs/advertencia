@@ -34,7 +34,6 @@ export const NavBar = ({user}) => {
         </div>
       )}
       <div className="w-full flex justify-end items-center gap-4 mr-20 text-2xl">
-        <IoMdNotifications />
         <MdHelp />
         <FaUserCircle onClick={handleLogout} />
       </div>

@@ -47,11 +47,14 @@ const ImprimirAdvertencia = () => {
         <img src="/logo_escola.png" alt="Logo da escola" className="h-20" />
         <div className="text-center flex-1">
           <h1 className="text-xl font-bold uppercase">
-            Instituição de Ensino Exemplo
+            Prefeitura da Cidade do Rio de Janeiro Secretaria Municipal de
+            Educação 5ª Coordenadoria Regional de Educação Escola Municipal
+            05.14.029 Malba Tahan
           </h1>
           <p className="text-sm">
-            Endereço completo da escola - Telefone - CNPJ
+            Av. Brasil, 17.221 – Irajá – Rio de Janeiro/RJ – Tel.: 3373-2003
           </p>
+          <p className="text-sm">E-mail: emtahan@rioeduca.net</p>
         </div>
         <div style={{width: "80px"}}></div>
       </div>
