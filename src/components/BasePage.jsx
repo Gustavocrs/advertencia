@@ -14,7 +14,7 @@ export default function BasePage({children, title}) {
     <div className="flex flex-col h-screen bg-zinc-200 text-slate-800 w-full">
       <SideBar user={user} />
       <NavBar user={user} />
-      <div className="ml-14 mt-14">
+      <div className="md:ml-14 mt-14">
         <HeaderH1 title={title} />
         <div className="flex flex-col h-[90%] ml-4 text-lg">{children}</div>
       </div>
