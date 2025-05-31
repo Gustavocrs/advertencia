@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import {fetchCepData} from "@/utils/fetchCepData";
 import {fetchEstados} from "@/utils/fetchEstados";
 import {fetchMunicipios} from "@/utils/fetchMunicipios";
+import BaseFormPage from "@/components/BaseFormPage";
+import BaseFormCadastro from "@/components/BaseFormCadastro";
 
 const IncluirAluno = () => {
   const router = useRouter();
@@ -94,105 +96,39 @@ const IncluirAluno = () => {
   }, [formData.estado, formData.cep]);
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
-      <HeaderH1 onClick={() => router.push("/")} title="Cadastro de Aluno" />
+    <BaseFormPage title="Cadastro de Aluno">
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-white shadow-lg rounded-lg">
-          <Input
-            label="Nome"
-            type="text"
-            name="nome"
-            value={formData.nome}
-            onChange={handleChange}
-          />
-          <Input
-            label="CPF"
-            type="text"
-            name="cpf"
-            value={formData.cpf}
-            onChange={handleChange}
-          />
-          <Input
-            label="Endereço"
-            type="text"
-            name="endereco"
-            value={formData.endereco}
-            onChange={handleChange}
-          />
-          <Input
-            label="N°"
-            type="number"
-            name="numero"
-            value={formData.numero}
-            onChange={handleChange}
-          />
-          <Input
-            label="Bairro"
-            type="text"
-            name="bairro"
-            value={formData.bairro}
-            onChange={handleChange}
-          />
-          <Input
-            label="Cidade"
-            type="text"
-            name="cidade"
-            value={formData.cidade}
-            onChange={handleChange}
-            data={dataMunicipios}
-          />
-          <Input
-            label="Estado"
-            type="text"
-            name="estado"
-            value={formData.estado}
-            onChange={handleChange}
-            data={dataEstados}
-          />
-          <Input
-            label="Celular"
-            type="tel"
-            name="celular"
-            value={formData.celular}
-            onChange={handleChange}
-          />
-          <Input
-            label="Email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <Input
-            label="CPF do Responsável"
-            type="text"
-            name="responsavelCpf"
-            value={formData.responsavelCpf}
-            onChange={handleChange}
-          />
-          <Input
-            label="Data de Nascimento"
-            type="date"
-            name="dataNascimento"
-            value={formData.dataNascimento}
-            onChange={handleChange}
-          />
-          <Input
-            label="Turma"
-            type="text"
-            name="turma"
-            value={formData.turma}
-            onChange={handleChange}
-          />
-        </div>
+        <BaseFormCadastro
+          otherFields={
+            <>
+              <Input
+                label="Turma"
+                type="text"
+                name="turma"
+                value={formData.turma}
+                onChange={handleChange}
+              />
+              <Input
+                label="CPF do Responsável"
+                type="text"
+                name="responsavelCpf"
+                value={formData.responsavelCpf}
+                onChange={handleChange}
+              />
+            </>
+          }
+          formData={formData}
+          setFormData={setFormData}
+          onChange={handleChange}
+        />
         <Button wfull type="submit">
           Incluir Aluno
         </Button>
       </form>
-    </div>
+    </BaseFormPage>
   );
 };
 

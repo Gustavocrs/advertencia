@@ -5,7 +5,6 @@ import {FaUserCircle} from "react-icons/fa";
 import {useRouter} from "next/navigation";
 import {Card} from "@/components/Card";
 import {useEffect} from "react";
-import {HeaderH1} from "@/components/HeaderH1";
 import BasePage from "@/components/BasePage";
 
 export default function cadastro() {
@@ -22,6 +21,11 @@ export default function cadastro() {
           title={"Novo Usuário"}
           icon={<FaUserCircle />}
           onClick={() => router.push("cadastro/usuario")}
+        />
+        <Card
+          title={"Novo Aluno"}
+          icon={<FaUserCircle />}
+          onClick={() => router.push("cadastro/aluno")}
         />
       </div>
     </BasePage>

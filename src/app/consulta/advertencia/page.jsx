@@ -36,7 +36,7 @@ const ConsultarAdvertencia = () => {
           name: advertencia.aluno?.nome || "Aluno não informado",
           turma: advertencia.turma || "Turma não informada",
           motivo: advertencia.motivo || "Motivo não informado",
-          servidor: advertencia.servidor?.nome || "Servidor não informado",
+          usuario: advertencia.usuario?.nome || "Usuario não informado",
           data: advertencia.data
             ? new Date(advertencia.data).toLocaleDateString("pt-BR")
             : "Data não informada",
@@ -58,7 +58,7 @@ const ConsultarAdvertencia = () => {
     {field: "name", headerName: "Aluno", width: 200},
     {field: "turma", headerName: "Turma", width: 100},
     {field: "motivo", headerName: "Motivo", width: 300},
-    {field: "servidor", headerName: "Servidor", width: 250},
+    {field: "usuario", headerName: "Servidor", width: 250},
     {field: "data", headerName: "Data", width: 100},
     {
       field: "situacao",
@@ -97,7 +97,11 @@ const ConsultarAdvertencia = () => {
             console.error("Erro ao atualizar situação:", error);
           }
         };
-        return <Switch params={params} onChange={handleToggle} />;
+        return (
+          <div className="flex justify-center items-center h-full">
+            <Switch params={params} onChange={handleToggle} />
+          </div>
+        );
       },
     },
   ];

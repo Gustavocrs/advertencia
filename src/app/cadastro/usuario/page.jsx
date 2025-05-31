@@ -11,6 +11,7 @@ import {fetchCepData} from "@/utils/fetchCepData";
 import {NavBar} from "@/components/NavBar";
 import {FaUserCircle} from "react-icons/fa";
 import {SideBar} from "@/components/SideBar";
+import BaseFormPage from "@/components/BaseFormPage";
 
 const CadastroUsuario = () => {
   const router = useRouter();
@@ -95,144 +96,132 @@ const CadastroUsuario = () => {
   }, [formData.estado, formData.cep]);
 
   return (
-    <div className="flex flex-col h-fit bg-zinc-200 w-full">
-      <SideBar />
-      <NavBar />
-      <div className="md:ml-16 mt-14">
-        <div className="flex justify-start items-center ml-2">
-          <FaUserCircle className="text-4xl" />
-          <h1 className="text-3xl p-4 font-bold uppercase text-slate-800 ">
-            Cadastro de Usuário
-          </h1>
-        </div>
-        <div className="flex flex-col items-center justify-center h-full">
-          <form className="flex flex-col  w-full p-2" onSubmit={handleSubmit}>
-            <div className="flex flex-col w-full h-full p-4 bg-white shadow-lg rounded-lg">
-              <Input
-                label="Email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-              <Input
-                label="Senha"
-                type="password"
-                name="password"
-                placeholder="********"
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <Input
-                label="Nome"
-                type="text"
-                name="nome"
-                value={formData.nome}
-                onChange={handleChange}
-              />
-              <Input
-                label="CPF"
-                type="text"
-                name="cpf"
-                value={formData.cpf}
-                onChange={handleChange}
-              />
+    <BaseFormPage title="Cadastro de Usuário">
+      <form className="flex flex-col  w-full p-2" onSubmit={handleSubmit}>
+        <div className="flex flex-col w-full h-full p-4 bg-white shadow-lg rounded-lg">
+          <Input
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <Input
+            label="Senha"
+            type="password"
+            name="password"
+            placeholder="********"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <Input
+            label="Nome"
+            type="text"
+            name="nome"
+            value={formData.nome}
+            onChange={handleChange}
+          />
+          <Input
+            label="CPF"
+            type="text"
+            name="cpf"
+            value={formData.cpf}
+            onChange={handleChange}
+          />
 
-              <Input
-                label="Data de Nascimento"
-                type="date"
-                name="data_nascimento"
-                value={formData.data_nascimento}
-                onChange={handleChange}
-              />
-              <Input
-                label="CEP"
-                type="text"
-                name="cep"
-                value={formData.cep}
-                onChange={handleChange}
-              />
-              <Input
-                label="Endereço"
-                type="text"
-                name="endereco"
-                value={formData.endereco}
-                onChange={handleChange}
-              />
-              <Input
-                label="N°"
-                type="number"
-                name="numero"
-                value={formData.numero}
-                onChange={handleChange}
-              />
-              <Input
-                label="Complemento"
-                type="text"
-                name="complemento"
-                value={formData.complemento}
-                onChange={handleChange}
-              />
-              <Input
-                label="Bairro"
-                type="text"
-                name="bairro"
-                value={formData.bairro}
-                onChange={handleChange}
-              />
-              <Input
-                label="Estado"
-                type="select"
-                name="estado"
-                value={formData.estado}
-                onChange={handleChange}
-                data={dataEstados}
-              />
-              <Input
-                label="Cidade"
-                type="select"
-                name="cidade"
-                value={formData.cidade}
-                onChange={handleChange}
-                data={dataMunicipios}
-              />
-              <Input
-                label="Celular"
-                type="tel"
-                name="celular"
-                value={formData.celular}
-                onChange={handleChange}
-              />
+          <Input
+            label="Data de Nascimento"
+            type="date"
+            name="data_nascimento"
+            value={formData.data_nascimento}
+            onChange={handleChange}
+          />
+          <Input
+            label="CEP"
+            type="text"
+            name="cep"
+            value={formData.cep}
+            onChange={handleChange}
+          />
+          <Input
+            label="Endereço"
+            type="text"
+            name="endereco"
+            value={formData.endereco}
+            onChange={handleChange}
+          />
+          <Input
+            label="N°"
+            type="number"
+            name="numero"
+            value={formData.numero}
+            onChange={handleChange}
+          />
+          <Input
+            label="Complemento"
+            type="text"
+            name="complemento"
+            value={formData.complemento}
+            onChange={handleChange}
+          />
+          <Input
+            label="Bairro"
+            type="text"
+            name="bairro"
+            value={formData.bairro}
+            onChange={handleChange}
+          />
+          <Input
+            label="Estado"
+            type="select"
+            name="estado"
+            value={formData.estado}
+            onChange={handleChange}
+            data={dataEstados}
+          />
+          <Input
+            label="Cidade"
+            type="select"
+            name="cidade"
+            value={formData.cidade}
+            onChange={handleChange}
+            data={dataMunicipios}
+          />
+          <Input
+            label="Celular"
+            type="tel"
+            name="celular"
+            value={formData.celular}
+            onChange={handleChange}
+          />
 
-              <Input
-                label="Disciplina"
-                type="text"
-                name="disciplina"
-                value={formData.disciplina}
-                onChange={handleChange}
-              />
-              <Input
-                label="Matricula"
-                type="text"
-                name="matricula"
-                value={formData.matricula}
-                onChange={handleChange}
-              />
-              <Input
-                label="Cargo"
-                type="text"
-                name="cargo"
-                value={formData.cargo}
-                onChange={handleChange}
-              />
-            </div>
-            <Button wfull type="submit">
-              Incluir Usuário
-            </Button>
-          </form>
+          <Input
+            label="Disciplina"
+            type="text"
+            name="disciplina"
+            value={formData.disciplina}
+            onChange={handleChange}
+          />
+          <Input
+            label="Matricula"
+            type="text"
+            name="matricula"
+            value={formData.matricula}
+            onChange={handleChange}
+          />
+          <Input
+            label="Cargo"
+            type="text"
+            name="cargo"
+            value={formData.cargo}
+            onChange={handleChange}
+          />
         </div>
-      </div>
-    </div>
+        <Button wfull type="submit">
+          Incluir Usuário
+        </Button>
+      </form>
+    </BaseFormPage>
   );
 };
 

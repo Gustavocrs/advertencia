@@ -19,6 +19,11 @@ export default function consulta() {
           onClick={() => router.push("consulta/usuarios")}
         />
         <Card
+          title={"Alunos"}
+          icon={<FaUserCircle />}
+          onClick={() => router.push("consulta/aluno")}
+        />
+        <Card
           title={"Advertências"}
           icon={<FaUserCircle />}
           onClick={() => router.push("consulta/advertencia")}

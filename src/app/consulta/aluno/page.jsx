@@ -3,11 +3,12 @@ import {HeaderH1} from "@/components/HeaderH1";
 import {useRouter} from "next/navigation";
 import {DataGrid} from "@mui/x-data-grid";
 import {useEffect, useState} from "react";
+import BaseTableSearch from "@/components/BaseTableSearch";
 
 const ConsultarAluno = () => {
   const router = useRouter();
-  const [rows, setRows] = useState([]); // Estado para armazenar os dados
-  const [loading, setLoading] = useState(true); // Estado para indicar carregamento
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAluno = async () => {
@@ -76,18 +77,14 @@ const ConsultarAluno = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen bg-zinc-200">
-      <HeaderH1 onClick={() => router.back()} title="Consultar Aluno" />
-      <div style={{height: "100%", width: "100%"}}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          density={"compact"}
-          disableColumnMenu
-          loading={loading} // Exibe o indicador de carregamento
-        />
-      </div>
-    </div>
+    <BaseTableSearch
+      columns={columns}
+      title="Consulta de Aluno"
+      rows={rows}
+      setRows={setRows}
+      loading={loading}
+      setLoading={setLoading}
+    />
   );
 };
 

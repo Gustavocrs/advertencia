@@ -11,12 +11,12 @@ import {FaUserCircle} from "react-icons/fa";
 
 const CriarAdvertencia = () => {
   const router = useRouter();
-  const [servidores, setServidores] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const [alunos, setAlunos] = useState([]);
   const [formData, setFormData] = useState({
     turma: "",
     aluno: "",
-    servidor: "",
+    usuario: "",
     cargo: "",
     data: "",
     motivo: "",
@@ -42,14 +42,14 @@ const CriarAdvertencia = () => {
           throw new Error("Failed to fetch usuarios");
         }
         const data = await response.json();
-        const dataFormatada = data.data.map((servidor) => ({
-          value: servidor._id,
-          label: servidor.nome,
-          cargo: servidor.cargo,
+        const dataFormatada = data.data.map((usuario) => ({
+          value: usuario._id,
+          label: usuario.nome,
+          cargo: usuario.cargo,
         }));
-        setServidores(dataFormatada);
+        setUsuarios(dataFormatada);
       } catch (error) {
-        console.error("Error fetching servidores:", error);
+        console.error("Error fetching usarios:", error);
       }
     };
 
@@ -58,18 +58,18 @@ const CriarAdvertencia = () => {
 
   useEffect(() => {
     const fetchCargo = async () => {
-      if (formData.servidor) {
+      if (formData.usuario) {
         setFormData((prev) => ({
           ...prev,
           cargo:
-            servidores.find((servidor) => servidor.value === formData.servidor)
+            usuarios.find((usuario) => usuario.value === formData.usuario)
               ?.cargo || "",
         }));
       }
     };
 
     fetchCargo();
-  }, [formData.servidor]);
+  }, [formData.usuario]);
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -147,7 +147,7 @@ const CriarAdvertencia = () => {
         setFormData({
           turma: "",
           aluno: "",
-          servidor: "",
+          usuario: "",
           cargo: "",
           data: "",
           motivo: "",
@@ -209,12 +209,12 @@ const CriarAdvertencia = () => {
                 disabled={formData.turma.length < 3}
               />
               <Input
-                label="Servidor"
+                label="Usuario"
                 type="select"
-                name="servidor"
-                value={formData.servidor}
+                name="usuario"
+                value={formData.usuario}
                 onChange={handleChange}
-                data={servidores}
+                data={usuarios}
               />
               <Input
                 label="Cargo"

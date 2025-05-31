@@ -1,11 +1,18 @@
 "use client";
-import BaseTableSearch from "@/components/BaseTableSearch";
-import {useEffect, useState} from "react";
+import {DataGrid} from "@mui/x-data-grid";
+import {useEffect} from "react";
+import {SideBar} from "@/components/SideBar";
+import {NavBar} from "@/components/NavBar";
+import {FaUserCircle} from "react-icons/fa";
 
-const ConsultarUsuario = () => {
-  const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+const BaseTableSearch = ({
+  columns,
+  title,
+  rows,
+  setRows,
+  loading,
+  setLoading,
+}) => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       const token = localStorage.getItem("token");
@@ -47,7 +54,7 @@ const ConsultarUsuario = () => {
           password: usuario.password || "",
         }));
 
-        setRows(formattedData);
+        setRows && setRows(formattedData);
       } catch (error) {
         console.error("Erro ao buscar usuario:", error);
       } finally {
@@ -57,27 +64,31 @@ const ConsultarUsuario = () => {
     fetchUsuarios();
   }, []);
 
-  const columns = [
-    {field: "nome", headerName: "Nome", width: 200},
-    {field: "cpf", headerName: "CPF", width: 150},
-    {field: "data_nascimento", headerName: "Data de Nascimento", width: 180},
-    {field: "celular", headerName: "Celular", width: 150},
-    {field: "email", headerName: "Email", width: 200},
-    {field: "disciplina", headerName: "Disciplina", width: 150},
-    {field: "matricula", headerName: "Matrícula", width: 150},
-    {field: "cargo", headerName: "Cargo", width: 150},
-  ];
-
   return (
-    <BaseTableSearch
-      columns={columns}
-      title="Consulta de Usuários"
-      rows={rows}
-      setRows={setRows}
-      loading={loading}
-      setLoading={setLoading}
-    />
+    <div className="flex flex-col h-screen bg-zinc-200 w-full">
+      <SideBar />
+      <NavBar />
+      <div className="md:ml-16 mt-14 ">
+        <div className="flex justify-start items-center ml-2">
+          <FaUserCircle className="text-4xl" />
+          <h1 className="text-3xl p-4 font-bold uppercase text-slate-800 ">
+            {title}
+          </h1>
+        </div>
+        <div className="flex flex-col items-center justify-center h-full">
+          <div style={{height: "100%", width: "95%"}}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              density={"compact"}
+              disableColumnMenu
+              loading={loading}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default ConsultarUsuario;
+export default BaseTableSearch;
