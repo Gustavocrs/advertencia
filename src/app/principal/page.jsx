@@ -28,7 +28,7 @@ export default function Principal() {
 <p>Registre ocorrências com detalhes, acompanhe o histórico do aluno e gere relatórios com facilidade.</p>
 
 <p>🧑‍🎓 Gerenciamento de alunos</p>
-Mantenha informações atualizadas de cada estudante, com acesso rápido a dados importantes.</p>
+<p>Mantenha informações atualizadas de cada estudante, com acesso rápido a dados importantes.</p>
 
 <p>🗂️ Organização de turmas e disciplinas</p>
 <p>Visualize e edite a estrutura da escola de forma prática, com controle completo sobre turmas, séries e professores.</p>
