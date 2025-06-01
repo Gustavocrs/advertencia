@@ -1,12 +1,14 @@
-import {use, useEffect, useState} from "react";
+import {useState} from "react";
 import {MdHome} from "react-icons/md";
-import {IoMdMenu, IoMdClose} from "react-icons/io";
-import {MdAppRegistration} from "react-icons/md";
-import {MdManageSearch} from "react-icons/md";
-import {MdViewModule} from "react-icons/md";
-import {CgNotes} from "react-icons/cg";
+import {IoMdClose} from "react-icons/io";
+import {MdOutlineSettings} from "react-icons/md";
 import {CgMenuGridR} from "react-icons/cg";
 import {useRouter} from "next/navigation";
+import {
+  VscNewFile,
+  VscGitPullRequestGoToChanges,
+  VscGoToSearch,
+} from "react-icons/vsc";
 
 export const SideBar = ({user}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,17 +26,17 @@ export const SideBar = ({user}) => {
     },
     {
       name: "Cadastros",
-      icon: <MdAppRegistration />,
+      icon: <VscGitPullRequestGoToChanges />,
       route: "/cadastro",
     },
     {
       name: "Consultas",
-      icon: <MdManageSearch />,
+      icon: <VscGoToSearch />,
       route: "/consulta",
     },
     {
       name: "Advertências",
-      icon: <CgNotes />,
+      icon: <VscNewFile />,
       route: "/cadastro/advertencia",
     },
   ];
@@ -42,8 +44,8 @@ export const SideBar = ({user}) => {
   return (
     <div
       className={`bg-slate-400 flex flex-col fixed z-50 md:h-full self-start  ${
-        isOpen ? "w-[160px] h-fit" : " h-14 w-14"
-      } transition-all duration-300 ease-in-out text-slate-800 select-none
+        isOpen ? "w-full h-full md:w-[160px] md:h-fit" : "h-14 md:w-14"
+      }text-slate-800 select-none
 
     `}
     >
@@ -75,7 +77,7 @@ export const SideBar = ({user}) => {
           >
             <div className="text-2xl">{item.icon}</div>
             <span
-              className={`text-sm ml-1 transition-all duration-300 ${
+              className={`text-sm ml-1 ${
                 !isOpen ? "w-[0] opacity-0" : "w-[100px] opacity-100 "
               }`}
             >

@@ -187,7 +187,7 @@ const CriarAdvertencia = () => {
             disabled={formData.turma.length < 3}
           />
           <Input
-            label="Usuário"
+            label="Servidor"
             type="text"
             name="usuario_nome"
             value={user ? user.nome : ""}

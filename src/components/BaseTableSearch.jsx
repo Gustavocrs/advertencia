@@ -12,6 +12,7 @@ const BaseTableSearch = ({
   setRows,
   loading,
   setLoading,
+  style,
   ...props
 }) => {
   const [user, setUser] = useState(null);
@@ -83,13 +84,13 @@ const BaseTableSearch = ({
         </div>
         <div className="flex flex-col items-center justify-center h-full">
           <div style={{height: "100%", width: "95%"}}>
-            <span>Duplo clique para imprimir</span>
             <DataGrid
               rows={rows}
               columns={columns}
               density={"compact"}
               disableColumnMenu
               loading={loading}
+              style={style}
               {...props}
             />
           </div>
