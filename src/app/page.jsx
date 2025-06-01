@@ -39,11 +39,11 @@ export default function Home() {
       if (data && data.token) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.usuario));
-        router.push("/principal");
       } else {
         toast.error("Login ou senha inválidos");
         setLoading(false);
       }
+      router.push("/principal");
     } catch (error) {
       console.log(error);
     } finally {

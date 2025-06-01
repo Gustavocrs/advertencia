@@ -7,6 +7,7 @@ import {Switch} from "@/components/Switch";
 import {SideBar} from "@/components/SideBar";
 import {NavBar} from "@/components/NavBar";
 import {FaUserCircle} from "react-icons/fa";
+import BaseTableSearch from "@/components/BaseTableSearch";
 
 const ConsultarAdvertencia = () => {
   const router = useRouter();
@@ -111,31 +112,15 @@ const ConsultarAdvertencia = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-200 w-full">
-      <SideBar />
-      <NavBar />
-      <div className="md:ml-16 mt-14 ">
-        <div className="flex justify-start items-center ml-2">
-          <FaUserCircle className="text-4xl" />
-          <h1 className="text-3xl p-4 font-bold uppercase text-slate-800 ">
-            Consulta de Advertências
-          </h1>
-        </div>
-        <div className="flex flex-col items-center justify-center h-full">
-          <div style={{height: "100%", width: "95%"}}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              density={"compact"}
-              disableColumnMenu
-              loading={loading}
-              // onRowClick={handleRowClick}
-              onRowDoubleClick={handleRowClick}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <BaseTableSearch
+      columns={columns}
+      title="Consulta de Advertências"
+      rows={rows}
+      setRows={setRows}
+      loading={loading}
+      setLoading={setLoading}
+      onRowDoubleClick={handleRowClick}
+    />
   );
 };
 

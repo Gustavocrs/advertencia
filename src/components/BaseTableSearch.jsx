@@ -1,6 +1,6 @@
 "use client";
 import {DataGrid} from "@mui/x-data-grid";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {SideBar} from "@/components/SideBar";
 import {NavBar} from "@/components/NavBar";
 import {FaUserCircle} from "react-icons/fa";
@@ -12,7 +12,13 @@ const BaseTableSearch = ({
   setRows,
   loading,
   setLoading,
+  ...props
 }) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
   useEffect(() => {
     const fetchUsuarios = async () => {
       const token = localStorage.getItem("token");
@@ -66,8 +72,8 @@ const BaseTableSearch = ({
 
   return (
     <div className="flex flex-col h-screen bg-zinc-200 w-full">
-      <SideBar />
-      <NavBar />
+      <SideBar user={user} />
+      <NavBar user={user} />
       <div className="md:ml-16 mt-14 ">
         <div className="flex justify-start items-center ml-2">
           <FaUserCircle className="text-4xl" />
@@ -77,12 +83,14 @@ const BaseTableSearch = ({
         </div>
         <div className="flex flex-col items-center justify-center h-full">
           <div style={{height: "100%", width: "95%"}}>
+            <span>Duplo clique para imprimir</span>
             <DataGrid
               rows={rows}
               columns={columns}
               density={"compact"}
               disableColumnMenu
               loading={loading}
+              {...props}
             />
           </div>
         </div>

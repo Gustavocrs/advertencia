@@ -2,12 +2,18 @@
 import {NavBar} from "@/components/NavBar";
 import {FaUserCircle} from "react-icons/fa";
 import {SideBar} from "@/components/SideBar";
+import {useEffect, useState} from "react";
 
 const BaseFormPage = ({children, title}) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
   return (
     <div className="flex flex-col h-fit bg-zinc-200 w-full">
-      <SideBar />
-      <NavBar />
+      <SideBar user={user} />
+      <NavBar user={user} />
       <div className="md:ml-16 mt-14">
         <div className="flex justify-start items-center ml-2">
           <FaUserCircle className="text-4xl" />
