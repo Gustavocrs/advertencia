@@ -43,7 +43,7 @@ export const SideBar = ({user}) => {
 
   return (
     <div
-      className={`bg-slate-400 flex flex-col fixed z-50 md:h-full self-start  ${
+      className={`bg-slate-400 flex flex-col fixed z-50 md:h-full self-start ${
         isOpen ? "w-full h-full md:w-[160px] md:h-fit" : "h-14 md:w-14"
       }text-slate-800 select-none
 
@@ -51,33 +51,33 @@ export const SideBar = ({user}) => {
     >
       {isOpen ? (
         <IoMdClose
-          className="cursor-pointer mx-2 mt-2 text-4xl"
+          className="cursor-pointer mx-3 mt-2 text-4xl"
           onClick={toggleMenuOpen}
         />
       ) : (
         <CgMenuGridR
-          className="cursor-pointer mx-2 mt-2 text-4xl"
+          className="cursor-pointer mx-3 mt-2 text-4xl"
           onClick={toggleMenuOpen}
         />
       )}
 
       <ul
-        className={`flex-col cursor-pointer mt-8 gap-4 ml-3.5 py-5 ${
+        className={`md:flex-col flex-wrap cursor-pointer mt-3 gap-4 ml-3.5 py-5 items-center justify-around ${
           isOpen ? "flex" : "hidden md:flex"
         }`}
       >
         {ItemsMenu.map((item, index) => (
           <li
             key={index}
-            className="w-full flex items-center gap-4"
+            className="flex-col md:w-full flex items-center gap-4 md:flex-row"
             onClick={() => {
               router.push(item.route);
               setIsOpen(false);
             }}
           >
-            <div className="text-2xl">{item.icon}</div>
+            <div className="text-6xl md:text-3xl">{item.icon}</div>
             <span
-              className={`text-sm ml-1 ${
+              className={`text-center text-sm md:text-left ${
                 !isOpen ? "w-[0] opacity-0" : "w-[100px] opacity-100 "
               }`}
             >
