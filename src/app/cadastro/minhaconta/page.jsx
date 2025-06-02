@@ -44,7 +44,6 @@ const MinhaConta = () => {
     const userStorage = localStorage.getItem("user");
     if (userStorage) {
       const userObj = JSON.parse(userStorage);
-      console.log(userObj);
       setUser(userObj);
 
       const fetchUserData = async () => {
@@ -63,6 +62,9 @@ const MinhaConta = () => {
           setFormData({
             ...formData,
             ...data,
+            data_nascimento: data.data_nascimento
+              ? data.data_nascimento.split("T")[0]
+              : "",
             password: "",
           });
         }
@@ -77,41 +79,29 @@ const MinhaConta = () => {
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
     const token = localStorage.getItem("token");
-    e.preventDefault();
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+    const userStorage = localStorage.getItem("user");
 
-    if (response.ok) {
-      alert("Usuário incluído com sucesso!");
-      setFormData({
-        nome: "",
-        cpf: "",
-        cep: "",
-        data_nascimento: "",
-        endereco: "",
-        numero: "",
-        complemento: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
-        celular: "",
-        email: "",
-        disciplina: "",
-        matricula: "",
-        cargo: "",
-        password: "",
-      });
-    } else {
-      alert("Erro ao incluir usuário.");
+    if (userStorage) {
+      const userObj = JSON.parse(userStorage);
+
+      e.preventDefault();
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios/${userObj.value}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        alert("Usuário alterado com sucesso!");
+      } else {
+        alert("Erro ao incluir usuário.");
+      }
     }
   };
 
@@ -130,6 +120,10 @@ const MinhaConta = () => {
       }
     }
   }, [formData.estado, formData.cep]);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   return (
     <BaseFormPage title="Minha Conta">

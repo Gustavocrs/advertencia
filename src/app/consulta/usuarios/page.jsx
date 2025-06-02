@@ -1,5 +1,6 @@
 "use client";
 import BaseTableSearch from "@/components/BaseTableSearch";
+import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
 import {useEffect, useState} from "react";
 
 const ConsultarUsuario = () => {
@@ -30,9 +31,7 @@ const ConsultarUsuario = () => {
           nome: usuario.nome || "",
           cpf: usuario.cpf || "",
           cep: usuario.cep || "",
-          data_nascimento: usuario.data_nascimento
-            ? new Date(usuario.data_nascimento).toLocaleDateString("pt-BR") // Converte a data para o formato pt-BR
-            : "Data não informada",
+          data_nascimento: convertToBrazilianDate(usuario.data_nascimento),
           endereco: usuario.endereco || "",
           numero: usuario.numero || "",
           complemento: usuario.complemento || "",

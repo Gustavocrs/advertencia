@@ -83,14 +83,14 @@ export default function Profile() {
         transformOrigin={{horizontal: "right", vertical: "top"}}
         anchorOrigin={{horizontal: "right", vertical: "bottom"}}
       >
-        <MenuItem onClick={handleClose}>
+        {/* <MenuItem onClick={handleClose}>
           <Avatar /> Perfil
-        </MenuItem>
-        <MenuItem onClick={() => router.push("/minhaconta")}>
+        </MenuItem> */}
+        <MenuItem onClick={() => router.push("/cadastro/minhaconta")}>
           <Avatar /> Minha Conta
         </MenuItem>
         <Divider />
-        <MenuItem onClick={() => router.push("cadastro/usuario")}>
+        <MenuItem onClick={() => router.push("/cadastro/usuario")}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
