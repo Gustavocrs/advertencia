@@ -43,7 +43,9 @@ export default function Home() {
         toast.error("Login ou senha inválidos");
         setLoading(false);
       }
-      router.push("/principal");
+      if (response.ok) {
+        router.push("/principal");
+      }
     } catch (error) {
       console.log(error);
     } finally {

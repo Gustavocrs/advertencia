@@ -1,6 +1,4 @@
 "use client";
-
-import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
@@ -10,14 +8,6 @@ import {fetchCepData} from "@/utils/fetchCepData";
 import BaseFormPage from "@/components/BaseFormPage";
 
 const MinhaConta = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      router.push("/");
-    }
-  }, []);
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
