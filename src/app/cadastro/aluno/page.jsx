@@ -10,6 +10,7 @@ import {fetchEstados} from "@/utils/fetchEstados";
 import {fetchMunicipios} from "@/utils/fetchMunicipios";
 import BaseFormPage from "@/components/BaseFormPage";
 import BaseFormCadastro from "@/components/BaseFormCadastro";
+import {toast, ToastContainer} from "react-toastify";
 
 const IncluirAluno = () => {
   const router = useRouter();
@@ -54,7 +55,7 @@ const IncluirAluno = () => {
       );
 
       if (response.ok) {
-        alert("Aluno incluído com sucesso!");
+        toast.success("Aluno incluído com sucesso!");
         setFormData({
           nome: "",
           cpf: "",
@@ -71,11 +72,11 @@ const IncluirAluno = () => {
         });
       } else {
         const errorData = await response.json();
-        alert(`Erro ao incluir aluno: ${errorData.message}`);
+        toast.success(`Erro ao incluir aluno: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Erro ao enviar os dados:", error);
-      alert("Erro ao incluir aluno. Tente novamente mais tarde.");
+      toast.error("Erro ao incluir aluno. Tente novamente mais tarde.");
     }
   };
 
@@ -97,6 +98,18 @@ const IncluirAluno = () => {
 
   return (
     <BaseFormPage title="Cadastro de Aluno">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit}

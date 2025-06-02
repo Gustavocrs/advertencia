@@ -1,3 +1,5 @@
+import {toast} from "react-toastify";
+
 export const fetchCepData = async (cep, setState, setFormData) => {
   try {
     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -21,12 +23,14 @@ export const fetchCepData = async (cep, setState, setFormData) => {
           document.querySelector('input[name="numero"]').focus();
         }, 0);
       } else {
-        alert("CEP não encontrado.");
+        toast.error("CEP não encontrado.");
       }
     } else {
       console.error("Erro ao buscar o CEP.");
+      toast.error("Erro ao buscar o CEP.");
     }
   } catch (error) {
     console.error("Erro na requisição:", error);
+    toast.error("Erro na requisição:", error);
   }
 };

@@ -12,6 +12,7 @@ import {NavBar} from "@/components/NavBar";
 import {FaUserCircle} from "react-icons/fa";
 import {SideBar} from "@/components/SideBar";
 import BaseFormPage from "@/components/BaseFormPage";
+import {toast} from "react-toastify";
 
 const CadastroUsuario = () => {
   const router = useRouter();
@@ -56,7 +57,7 @@ const CadastroUsuario = () => {
     );
 
     if (response.ok) {
-      alert("Usuário incluído com sucesso!");
+      toast.success("Usuário incluído com sucesso!");
       setFormData({
         nome: "",
         cpf: "",
@@ -75,7 +76,7 @@ const CadastroUsuario = () => {
         cargo: "",
       });
     } else {
-      alert("Erro ao incluir usuário.");
+      toast.error("Erro ao incluir usuário.");
     }
   };
 
@@ -97,6 +98,18 @@ const CadastroUsuario = () => {
 
   return (
     <BaseFormPage title="Cadastro de Usuário">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <form className="flex flex-col  w-full p-2" onSubmit={handleSubmit}>
         <div className="flex flex-col w-full h-full p-4 bg-white shadow-lg rounded-lg">
           <Input

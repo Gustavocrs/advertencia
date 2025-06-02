@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {fetchCepData} from "@/utils/fetchCepData";
 import {fetchEstados} from "@/utils/fetchEstados";
 import {fetchMunicipios} from "@/utils/fetchMunicipios";
+import {toast} from "react-toastify";
 
 const IncluirResponsavel = () => {
   const router = useRouter();
@@ -50,7 +51,7 @@ const IncluirResponsavel = () => {
       );
 
       if (response.ok) {
-        alert("Responsável incluído com sucesso!");
+        toast.sucess("Responsável incluído com sucesso!");
         setFormData({
           nome: "",
           cpf: "",
@@ -64,11 +65,11 @@ const IncluirResponsavel = () => {
         });
       } else {
         const errorData = await response.json();
-        alert(`Erro ao incluir responsável: ${errorData.message}`);
+        toast.error(`Erro ao incluir responsável: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Erro ao enviar os dados:", error);
-      alert("Erro ao incluir responsável. Tente novamente mais tarde.");
+      toast.error("Erro ao incluir responsável. Tente novamente mais tarde.");
     }
   };
   useEffect(() => {

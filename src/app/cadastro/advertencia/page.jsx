@@ -5,6 +5,7 @@ import {Input} from "@/components/Input";
 import {RadioGroup} from "@/components/RadioGroup";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
+import {toast, ToastContainer} from "react-toastify";
 
 const CriarAdvertencia = () => {
   const router = useRouter();
@@ -129,7 +130,7 @@ const CriarAdvertencia = () => {
       );
 
       if (response.ok) {
-        alert("Advertência criada com sucesso!");
+        toast.success("Advertência criada com sucesso!");
         setFormData((prev) => ({
           ...prev,
           turma: "",
@@ -143,11 +144,11 @@ const CriarAdvertencia = () => {
         }));
       } else {
         const errorData = await response.json();
-        alert(`Erro ao criar advertência: ${errorData.message}`);
+        toast.error(`Erro ao criar advertência: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Erro ao enviar os dados:", error);
-      alert("Erro ao criar advertência. Tente novamente mais tarde.");
+      toast.error("Erro ao criar advertência. Tente novamente mais tarde.");
     }
   };
   const optionsAcaoEsperada = [
@@ -165,6 +166,18 @@ const CriarAdvertencia = () => {
 
   return (
     <BaseFormPage title="Aplicar Advertência">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit} // Adicionado o evento onSubmit

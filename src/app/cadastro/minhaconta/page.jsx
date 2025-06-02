@@ -6,6 +6,7 @@ import {fetchEstados} from "@/utils/fetchEstados";
 import {fetchMunicipios} from "@/utils/fetchMunicipios";
 import {fetchCepData} from "@/utils/fetchCepData";
 import BaseFormPage from "@/components/BaseFormPage";
+import {ToastContainer, toast} from "react-toastify";
 
 const MinhaConta = () => {
   const [formData, setFormData] = useState({
@@ -67,7 +68,7 @@ const MinhaConta = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
   const handleSubmit = async (e) => {
-    console.log("FormData", formData);
+    // console.log("FormData", formData);
     const token = localStorage.getItem("token");
     const userStorage = localStorage.getItem("user");
 
@@ -88,9 +89,9 @@ const MinhaConta = () => {
       );
 
       if (response.ok) {
-        alert("Usuário alterado com sucesso!");
+        toast.success("Usuário alterado com sucesso!");
       } else {
-        alert("Erro ao incluir usuário.");
+        toast.error("Erro ao incluir usuário.");
       }
     }
   };
@@ -111,12 +112,20 @@ const MinhaConta = () => {
     }
   }, [formData.estado, formData.cep]);
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   return (
     <BaseFormPage title="Minha Conta">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <h1 className="text-left w-full">Aqui você pode alterar sua senha.</h1>
       <form className="flex flex-col  w-full p-2" onSubmit={handleSubmit}>
         <div className="flex flex-col w-full h-full p-4 bg-white shadow-lg rounded-lg">
