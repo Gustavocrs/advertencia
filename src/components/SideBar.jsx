@@ -2,7 +2,10 @@ import {useState} from "react";
 import {MdHome} from "react-icons/md";
 import {IoMdClose} from "react-icons/io";
 import {MdOutlineSettings} from "react-icons/md";
+import {IoSearchSharp} from "react-icons/io5";
+import {BsDatabaseFillAdd} from "react-icons/bs";
 import {CgMenuGridR} from "react-icons/cg";
+import {BsFileEarmarkBarGraphFill} from "react-icons/bs";
 import {useRouter} from "next/navigation";
 import {
   VscNewFile,
@@ -26,17 +29,17 @@ export const SideBar = ({user}) => {
     },
     {
       name: "Cadastros",
-      icon: <VscGitPullRequestGoToChanges />,
+      icon: <BsDatabaseFillAdd />,
       route: "/cadastro",
     },
     {
       name: "Consultas",
-      icon: <VscGoToSearch />,
+      icon: <IoSearchSharp />,
       route: "/consulta",
     },
     {
       name: "Advertências",
-      icon: <VscNewFile />,
+      icon: <BsFileEarmarkBarGraphFill />,
       route: "/cadastro/advertencia",
     },
   ];
@@ -62,7 +65,7 @@ export const SideBar = ({user}) => {
       )}
 
       <ul
-        className={`md:flex-col flex-wrap cursor-pointer mt-3 gap-4 ml-3.5 py-5 items-center justify-around ${
+        className={`h-full md:flex-col flex-wrap cursor-pointer mt-3 gap-7 ml-4 py-5 items-center justify-around md:justify-start ${
           isOpen ? "flex" : "hidden md:flex"
         }`}
       >
@@ -75,7 +78,9 @@ export const SideBar = ({user}) => {
               setIsOpen(false);
             }}
           >
-            <div className="text-6xl md:text-3xl">{item.icon}</div>
+            <div className="text-6xl md:text-2xl hover:scale-150 transform transition-all ease-in-out">
+              {item.icon}
+            </div>
             <span
               className={`text-center text-sm md:text-left ${
                 !isOpen ? "w-[0] opacity-0" : "w-[100px] opacity-100 "
