@@ -17,11 +17,11 @@ export default function cadastro() {
   return (
     <BasePage title="Cadastros">
       <div className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4`}>
-        <Card
+        {/* <Card
           title={"Novo Usuário"}
           icon={<FaUserCircle />}
           onClick={() => router.push("cadastro/usuario")}
-        />
+        /> */}
         <Card
           title={"Novo Aluno"}
           icon={<FaUserCircle />}

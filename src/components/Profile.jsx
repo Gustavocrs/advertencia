@@ -86,11 +86,11 @@ export default function Profile() {
         <MenuItem onClick={handleClose}>
           <Avatar /> Perfil
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => router.push("/minhaconta")}>
           <Avatar /> Minha Conta
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => router.push("cadastro/usuario")}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
