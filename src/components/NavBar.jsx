@@ -11,16 +11,16 @@ export const NavBar = ({user}) => {
       font-semibold select-none
     `}
     >
-      {user && (
+      {/* {user && (
         <div className="md:flex w-full gap-10 items-center justify-start hidden ml-10">
           <div className="flex justify-around items-center gap-2">
             <span className="text-slate-900 font-bold">Usuário: </span>
             <span>{user.nome}</span>
           </div>
         </div>
-      )}
+      )} */}
       <div className="w-full flex justify-end items-center gap-4 mr-20 text-2xl">
-        <Profile />
+        <Profile user={user} />
       </div>
     </div>
   );

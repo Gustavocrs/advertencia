@@ -65,7 +65,7 @@ export const SideBar = ({user}) => {
       )}
 
       <ul
-        className={`h-full md:flex-col flex-wrap cursor-pointer mt-3 gap-7 ml-4 py-5 items-center justify-around md:justify-start ${
+        className={`h-[50%] md:flex-col flex-wrap cursor-pointer mt-3 gap-7 ml-4 py-5 items-center justify-around md:justify-start ${
           isOpen ? "flex" : "hidden md:flex"
         }`}
       >

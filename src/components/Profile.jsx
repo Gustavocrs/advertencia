@@ -14,7 +14,7 @@ import Logout from "@mui/icons-material/Logout";
 import {useRouter} from "next/navigation";
 import {FaUserCircle} from "react-icons/fa";
 
-export default function Profile() {
+export default function Profile({user}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const router = useRouter();
   const open = Boolean(anchorEl);
@@ -28,12 +28,19 @@ export default function Profile() {
     localStorage.removeItem("token");
     router.push("/");
   };
+  const getFirstNameAndInitial = (nomeCompleto) => {
+    if (!nomeCompleto) return "";
+    const partes = nomeCompleto.trim().split(" ");
+    if (partes.length === 1) return partes[0];
+    return `${partes[0]} ${partes[1][0]}.`;
+  };
+
   return (
     <React.Fragment>
       <Box sx={{display: "flex", alignItems: "center", textAlign: "center"}}>
         {/* <Typography sx={{minWidth: 100}}>Contato</Typography> */}
         {/* <Typography sx={{minWidth: 100}}>Perfil</Typography> */}
-        <Tooltip title="Configurações de Conta">
+        <Tooltip title="Gerenciar usuário">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -85,7 +92,8 @@ export default function Profile() {
         anchorOrigin={{horizontal: "right", vertical: "bottom"}}
       >
         <MenuItem onClick={() => router.push("/cadastro/minhaconta")}>
-          <Avatar /> Minha Conta
+          <Avatar />{" "}
+          {user?.nome ? getFirstNameAndInitial(user.nome) : "Minha Conta"}
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => router.push("/cadastro/usuario")}>

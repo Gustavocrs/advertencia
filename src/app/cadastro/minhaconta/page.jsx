@@ -126,7 +126,6 @@ const MinhaConta = () => {
         pauseOnHover
         theme="light"
       />
-      <h1 className="text-left w-full">Aqui você pode alterar sua senha.</h1>
       <form className="flex flex-col  w-full p-2" onSubmit={handleSubmit}>
         <div className="flex flex-col w-full h-full p-4 bg-white shadow-lg rounded-lg">
           <Input

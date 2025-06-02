@@ -14,7 +14,7 @@ export default function Home() {
     setLoading(true);
     event.preventDefault();
 
-    if (!event.target.login.value || !event.target.senha.value) {
+    if (!event.target.login.value.trim() || !event.target.senha.value.trim()) {
       toast.error("Por favor, preencha todos os campos.");
       setLoading(false);
 
