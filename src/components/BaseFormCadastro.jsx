@@ -1,14 +1,10 @@
 "use client";
 
-import {useRouter} from "next/navigation";
-import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
-import {HeaderH1} from "@/components/HeaderH1";
 import {useEffect, useState} from "react";
 import {fetchCepData} from "@/utils/fetchCepData";
 import {fetchEstados} from "@/utils/fetchEstados";
 import {fetchMunicipios} from "@/utils/fetchMunicipios";
-import BaseFormPage from "@/components/BaseFormPage";
 
 const BaseFormCadastro = ({otherFields, formData, setFormData, onChange}) => {
   const [dataEstados, setDataEstados] = useState([]);

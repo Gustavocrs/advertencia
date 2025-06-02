@@ -12,7 +12,7 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import {useRouter} from "next/navigation";
-import {VscAccount, VscGear} from "react-icons/vsc";
+import {FaUserCircle} from "react-icons/fa";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -42,7 +42,7 @@ export default function Profile() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <VscAccount className="text-2xl font-black "></VscAccount>
+            <FaUserCircle className="text-2xl text-slate-900" />
           </IconButton>
         </Tooltip>
       </Box>
@@ -52,6 +52,7 @@ export default function Profile() {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
+        disableScrollLock
         slotProps={{
           paper: {
             elevation: 0,
@@ -83,9 +84,6 @@ export default function Profile() {
         transformOrigin={{horizontal: "right", vertical: "top"}}
         anchorOrigin={{horizontal: "right", vertical: "bottom"}}
       >
-        {/* <MenuItem onClick={handleClose}>
-          <Avatar /> Perfil
-        </MenuItem> */}
         <MenuItem onClick={() => router.push("/cadastro/minhaconta")}>
           <Avatar /> Minha Conta
         </MenuItem>
