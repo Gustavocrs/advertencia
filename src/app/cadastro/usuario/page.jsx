@@ -12,7 +12,7 @@ import {NavBar} from "@/components/NavBar";
 import {FaUserCircle} from "react-icons/fa";
 import {SideBar} from "@/components/SideBar";
 import BaseFormPage from "@/components/BaseFormPage";
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 
 const CadastroUsuario = () => {
   const router = useRouter();
