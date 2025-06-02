@@ -1,15 +1,9 @@
 import {VscAccount, VscGear} from "react-icons/vsc";
 import {IoMdNotifications} from "react-icons/io";
 import {MdHelp} from "react-icons/md";
+import Profile from "./Profile";
 
-import {useRouter} from "next/navigation";
 export const NavBar = ({user}) => {
-  const router = useRouter();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
-  };
   return (
     <div
       className={`w-full ml-13 h-14 bg-slate-400 fixed z-50
@@ -26,9 +20,7 @@ export const NavBar = ({user}) => {
         </div>
       )}
       <div className="w-full flex justify-end items-center gap-4 mr-20 text-2xl">
-        <MdHelp />
-        <VscGear />
-        <VscAccount onClick={handleLogout} />
+        <Profile />
       </div>
     </div>
   );
