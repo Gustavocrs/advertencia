@@ -1,5 +1,4 @@
 import {useContext, useEffect} from "react";
-import KeycloakContext from "../contexts/KeycloakContext";
 import {useTimestamp} from "./useTimestamp";
 
 /**
@@ -18,15 +17,11 @@ export const useHttp = (
   dir,
   fields
 ) => {
-  const {tokenKeycloak} = useContext(KeycloakContext);
   const d = domain;
   let timestamp = new Date();
   timestamp = useTimestamp(timestamp);
 
-  // useEffect(() => {
-  //   console.log("useHttp - DOMAIN:", domain);
-  //   console.table([busca, page, start, stop, sort, dir, fields]);
-  // }, [domain, busca, page, start, stop, sort, dir, fields]);
+  const token = localStorage.getItem("token");
 
   const verificaValor = (domainValue, paramValue) => {
     if (paramValue !== undefined && paramValue !== null && paramValue !== "") {
@@ -55,16 +50,16 @@ export const useHttp = (
         sort: verificaValor(d !== null ? d.sort : "", sort),
         dir: verificaValor(d !== null ? d.dir : "", dir),
       },
-      headers: {Authorization: `Bearer ${tokenKeycloak}`},
+      headers: {Authorization: `Bearer ${token}`},
     },
 
     defaultParams: {
       params: {_dc: timestamp},
-      headers: {Authorization: `Bearer ${tokenKeycloak}`},
+      headers: {Authorization: `Bearer ${token}`},
     },
 
     dataParams: {
-      headers: {Authorization: `Bearer ${tokenKeycloak}`},
+      headers: {Authorization: `Bearer ${token}`},
       data: [],
     },
   };
