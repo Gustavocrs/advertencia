@@ -83,10 +83,10 @@ const CriarAdvertencia = () => {
         const turmaSelecionada = turmas.find(
           (turma) => turma.value === formData.turma
         );
-        const labelTurma = turmaSelecionada ? turmaSelecionada.label : "";
-
         try {
-          const response = await get(`api/alunos?turma=${labelTurma}`);
+          const response = await get(
+            `api/alunos?turma=${turmaSelecionada.value}`
+          );
           if (response?.data) {
             const dataFormatada = response.data.data.map((aluno) => ({
               value: aluno._id,

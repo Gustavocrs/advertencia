@@ -12,24 +12,24 @@ const IncluirAluno = () => {
   const {post, get, error, loading} = useRequest();
   const [turmas, setTurmas] = useState([]);
   const [formData, setFormData] = useState({
-    nome: "João Pereira",
-    data_nascimento: "2012-05-15",
-    cpf: "12345678901", // somente números
-    cep: "30140071", // somente números, válido de BH (Centro)
-    endereco: "Avenida Afonso Pena", // endereço correspondente ao CEP 30140071
-    numero: "1000",
-    complemento: "Apto 202",
-    bairro: "Centro",
-    cidade: "Belo Horizonte",
-    estado: "MG",
-    celular: "31987654321", // somente números
+    nome: "",
+    data_nascimento: "",
+    cpf: "",
+    cep: "",
+    endereco: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    celular: "",
     turma: "",
-    matricula: "20253456",
+    matricula: "",
     responsavel: {
-      nome: "Carlos Pereira",
-      celular1: "31991234567", // somente números
-      celular2: "31992345678", // somente números
-      email: "carlos.pereira@email.com",
+      nome: "",
+      celular1: "",
+      celular2: "",
+      email: "",
     },
   });
 

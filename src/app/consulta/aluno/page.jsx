@@ -4,7 +4,7 @@ import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
 
 const ConsultarAluno = () => {
-  const {get, error, loading} = useRequest();
+  const {get, loading} = useRequest();
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ const ConsultarAluno = () => {
         }));
 
         setRows(formattedData);
-      } catch {
-        console.error(error);
+      } catch (error) {
+        console.log(error);
       }
     };
     fetchAlunos();
