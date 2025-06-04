@@ -25,24 +25,21 @@ const CriarAdvertencia = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")));
-  }, []);
-
-  useEffect(() => {
     const userStorage = localStorage.getItem("user");
     if (userStorage) {
       const userObj = JSON.parse(userStorage);
       setUser(userObj);
+      console.log("userObj", userObj);
       setUsuarios([
         {
-          value: userObj.id || userObj._id,
+          value: userObj.value,
           label: userObj.nome,
           cargo: userObj.cargo,
         },
       ]);
       setFormData((prev) => ({
         ...prev,
-        usuario: userObj.id || userObj._id,
+        usuario: userObj.value,
         cargo: userObj.cargo || "",
       }));
     }
@@ -199,7 +196,7 @@ const CriarAdvertencia = () => {
             value={formData.aluno}
             onChange={handleChange}
             data={alunos}
-            // disabled={formData.turma.length < 3}
+            disabled={formData.turma === ""}
           />
           <Input
             label="Servidor"
