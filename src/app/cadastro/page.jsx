@@ -1,6 +1,4 @@
 "use client";
-import {NavBar} from "@/components/NavBar";
-import {SideBar} from "@/components/SideBar";
 import {FaUserCircle} from "react-icons/fa";
 import {useRouter} from "next/navigation";
 import {Card} from "@/components/Card";
@@ -17,15 +15,16 @@ export default function cadastro() {
   return (
     <BasePage title="Cadastros">
       <div className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4`}>
-        {/* <Card
-          title={"Novo Usuário"}
-          icon={<FaUserCircle />}
-          onClick={() => router.push("cadastro/usuario")}
-        /> */}
         <Card
           title={"Novo Aluno"}
           icon={<FaUserCircle />}
           onClick={() => router.push("cadastro/aluno")}
+        />
+
+        <Card
+          title={"Nova Turma"}
+          icon={<FaUserCircle />}
+          onClick={() => router.push("cadastro/turmas")}
         />
       </div>
     </BasePage>

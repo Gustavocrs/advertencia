@@ -2,13 +2,14 @@
 import BaseFormPage from "@/components/BaseFormPage";
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
+import {Notify, notifyError, notifySuccess} from "@/components/Notify";
 import {RadioGroup} from "@/components/RadioGroup";
-import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
-import {toast, ToastContainer} from "react-toastify";
+import useRequest from "@/hooks/useRequest";
 
 const CriarAdvertencia = () => {
-  const router = useRouter();
+  const {get} = useRequest();
+  const [turmas, setTurmas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [alunos, setAlunos] = useState([]);
   const [formData, setFormData] = useState({
@@ -112,6 +113,22 @@ const CriarAdvertencia = () => {
     fetchAlunos();
   }, [formData.turma]);
 
+  useEffect(() => {
+    const fetchTurmas = async () => {
+      try {
+        const response = await get("api/turmas");
+        const turmasFormatadas = response.data.data.map((turma) => ({
+          value: turma._id,
+          label: turma.nome,
+        }));
+        setTurmas(turmasFormatadas);
+      } catch (error) {
+        console.error("Erro ao buscar turmas:", error);
+      }
+    };
+    fetchTurmas();
+  }, []);
+
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
     const token = localStorage.getItem("token");
@@ -130,7 +147,7 @@ const CriarAdvertencia = () => {
       );
 
       if (response.ok) {
-        toast.success("Advertência criada com sucesso!");
+        notifySuccess("Advertência criada com sucesso!");
         setFormData((prev) => ({
           ...prev,
           turma: "",
@@ -144,11 +161,11 @@ const CriarAdvertencia = () => {
         }));
       } else {
         const errorData = await response.json();
-        toast.error(`Erro ao criar advertência: ${errorData.message}`);
+        notifyError(`Erro ao criar advertência: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Erro ao enviar os dados:", error);
-      toast.error("Erro ao criar advertência. Tente novamente mais tarde.");
+      notifyError("Erro ao criar advertência. Tente novamente mais tarde.");
     }
   };
   const optionsAcaoEsperada = [
@@ -166,18 +183,7 @@ const CriarAdvertencia = () => {
 
   return (
     <BaseFormPage title="Aplicar Advertência">
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <Notify />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit} // Adicionado o evento onSubmit
@@ -185,10 +191,11 @@ const CriarAdvertencia = () => {
         <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-white shadow-lg rounded-lg">
           <Input
             label="Turma"
-            type="text"
+            type="select"
             name="turma"
             value={formData.turma}
             onChange={handleChange}
+            data={turmas}
           />
           <Input
             label="Aluno"
@@ -197,7 +204,7 @@ const CriarAdvertencia = () => {
             value={formData.aluno}
             onChange={handleChange}
             data={alunos}
-            disabled={formData.turma.length < 3}
+            // disabled={formData.turma.length < 3}
           />
           <Input
             label="Servidor"
