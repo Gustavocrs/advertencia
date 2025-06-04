@@ -58,13 +58,6 @@ export default function useRequest(
         Authorization: `Bearer ${token}`,
       },
     },
-    dataParams: {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      data: [],
-    },
   };
 
   const get = useCallback(
@@ -89,16 +82,15 @@ export default function useRequest(
     },
     [token, busca, page, start, stop, sort, dir, fields]
   );
-
   const post = useCallback(
-    async (url, data = null, customConfig = config.dataParams) => {
+    async (url, data = "") => {
       setLoading(true);
       setError(null);
       try {
         const response = await axios.post(
           `${baseUrl}/${url}`,
           data,
-          customConfig
+          config.defaultParams
         );
         return {data: response.data};
       } catch (error) {
@@ -110,16 +102,35 @@ export default function useRequest(
     },
     [token, baseUrl]
   );
-
+  const patch = useCallback(
+    async (url, data = "") => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.patch(
+          `${baseUrl}/${url}`,
+          data,
+          config.defaultParams
+        );
+        return {data: response.data};
+      } catch (error) {
+        setError(error?.response?.data);
+        throw error?.response?.data;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [token, baseUrl]
+  );
   const put = useCallback(
-    async (url, data = null, customConfig = config.dataParams) => {
+    async (url, data = "") => {
       setLoading(true);
       setError(null);
       try {
         const response = await axios.put(
           `${baseUrl}/${url}`,
           data,
-          customConfig
+          config.defaultParams
         );
         return {data: response.data};
       } catch (error) {
@@ -131,16 +142,15 @@ export default function useRequest(
     },
     [token, baseUrl]
   );
-
   const del = useCallback(
-    async (url, data = null, customConfig = config.dataParams) => {
+    async (url) => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.delete(`${baseUrl}/${url}`, {
-          ...customConfig,
-          data,
-        });
+        const response = await axios.delete(
+          `${baseUrl}/${url}`,
+          config.defaultParams
+        );
         return {data: response.data};
       } catch (error) {
         setError(error?.response?.data);
@@ -151,6 +161,5 @@ export default function useRequest(
     },
     [token, baseUrl]
   );
-
-  return {get, post, put, del, loading, error, config};
+  return {get, post, patch, put, del, loading, error, config};
 }

@@ -15,7 +15,7 @@ const ConsultarAluno = () => {
           id: aluno._id || index,
           nome: aluno.nome || "",
           matricula: aluno.matricula || "",
-          turma: aluno.turma || "",
+          turma: aluno.turma?.nome || "",
           data_nascimento: aluno.data_nascimento
             ? new Date(aluno.data_nascimento).toLocaleDateString("pt-BR")
             : "Data não informada",

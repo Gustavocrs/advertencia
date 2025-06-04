@@ -2,35 +2,53 @@
 
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import BaseFormPage from "@/components/BaseFormPage";
 import BaseFormCadastro from "@/components/BaseFormCadastro";
 import useRequest from "@/hooks/useRequest";
 import {Notify, notifySuccess, notifyError} from "@/components/Notify";
 
 const IncluirAluno = () => {
-  const {post, error, loading} = useRequest();
+  const {post, get, error, loading} = useRequest();
+  const [turmas, setTurmas] = useState([]);
   const [formData, setFormData] = useState({
-    nome: "",
-    data_nascimento: "",
-    cpf: "",
-    cep: "",
-    endereco: "",
-    numero: "",
-    complemento: "",
-    bairro: "",
-    cidade: "",
-    estado: "",
-    celular: "",
+    nome: "João Pereira",
+    data_nascimento: "2012-05-15",
+    cpf: "12345678901", // somente números
+    cep: "30140071", // somente números, válido de BH (Centro)
+    endereco: "Avenida Afonso Pena", // endereço correspondente ao CEP 30140071
+    numero: "1000",
+    complemento: "Apto 202",
+    bairro: "Centro",
+    cidade: "Belo Horizonte",
+    estado: "MG",
+    celular: "31987654321", // somente números
     turma: "",
-    matricula: "",
+    matricula: "20253456",
     responsavel: {
-      nome: "",
-      celular1: "",
-      celular2: "",
-      email: "",
+      nome: "Carlos Pereira",
+      celular1: "31991234567", // somente números
+      celular2: "31992345678", // somente números
+      email: "carlos.pereira@email.com",
     },
   });
+
+  useEffect(() => {
+    const fetchTurmas = async () => {
+      try {
+        const response = await get("api/turmas");
+        const turmasFormatadas = response.data.data.map((turma) => ({
+          value: turma._id,
+          label: turma.nome,
+        }));
+        setTurmas(turmasFormatadas);
+      } catch {
+        notifyError(`${error?.message}`);
+        console.log("Error: ", error);
+      }
+    };
+    fetchTurmas();
+  }, []);
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -54,7 +72,7 @@ const IncluirAluno = () => {
     e.preventDefault();
     try {
       const response = await post("api/alunos", JSON.stringify(formData));
-      if (response?.ok) {
+      if (response?.data) {
         notifySuccess("Aluno incluído com sucesso!");
         setFormData({
           nome: "",
@@ -79,7 +97,7 @@ const IncluirAluno = () => {
         });
       }
     } catch {
-      notifyError(`${error?.message} - ${error?.error}`);
+      notifyError(`${error?.message}`);
       console.log("Error: ", error);
     }
   };
@@ -96,10 +114,11 @@ const IncluirAluno = () => {
             <>
               <Input
                 label="Turma"
-                type="text"
+                type="select"
                 name="turma"
                 value={formData.turma}
                 onChange={handleChange}
+                data={turmas}
               />
 
               <Input

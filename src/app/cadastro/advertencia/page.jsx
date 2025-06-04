@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import useRequest from "@/hooks/useRequest";
 
 const CriarAdvertencia = () => {
-  const {get} = useRequest();
+  const {get, error} = useRequest();
   const [turmas, setTurmas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [alunos, setAlunos] = useState([]);
@@ -48,6 +48,64 @@ const CriarAdvertencia = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const setDefaultDate = () => {
+      const today = new Date().toISOString().split("T")[0];
+      setFormData((prev) => ({
+        ...prev,
+        data: today,
+      }));
+    };
+
+    setDefaultDate();
+  }, []);
+
+  useEffect(() => {
+    const fetchTurmas = async () => {
+      try {
+        const response = await get("api/turmas");
+        const turmasFormatadas = response.data.data.map((turma) => ({
+          value: turma._id,
+          label: turma.nome,
+        }));
+        setTurmas(turmasFormatadas);
+      } catch {
+        notifyError(`${error?.message}`);
+        console.log("Error: ", error);
+      }
+    };
+    fetchTurmas();
+  }, []);
+
+  useEffect(() => {
+    const fetchAlunos = async () => {
+      if (turmas && formData.turma) {
+        const turmaSelecionada = turmas.find(
+          (turma) => turma.value === formData.turma
+        );
+        const labelTurma = turmaSelecionada ? turmaSelecionada.label : "";
+
+        try {
+          const response = await get(`api/alunos?turma=${labelTurma}`);
+          if (response?.data) {
+            const dataFormatada = response.data.data.map((aluno) => ({
+              value: aluno._id,
+              label: aluno.nome,
+            }));
+            setAlunos(dataFormatada);
+          }
+        } catch {
+          notifyError(`${error?.message}`);
+          console.log("Error: ", error);
+        }
+      } else {
+        setAlunos([]);
+      }
+    };
+
+    fetchAlunos();
+  }, [formData.turma, turmas]);
+
   const handleChange = (e) => {
     const {name, value} = e.target;
     if (name === "usuario") {
@@ -66,69 +124,6 @@ const CriarAdvertencia = () => {
       }));
     }
   };
-
-  useEffect(() => {
-    const setDefaultDate = () => {
-      const today = new Date().toISOString().split("T")[0];
-      setFormData((prev) => ({
-        ...prev,
-        data: today,
-      }));
-    };
-
-    setDefaultDate();
-  }, []);
-
-  useEffect(() => {
-    const fetchAlunos = async () => {
-      const token = localStorage.getItem("token");
-      if (formData.turma) {
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/alunos?turma=${formData.turma}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (!response.ok) {
-            throw new Error("Failed to fetch alunos");
-          }
-          const data = await response.json();
-          const dataFormatada = data.data.map((aluno) => ({
-            value: aluno._id,
-            label: aluno.nome,
-          }));
-          setAlunos(dataFormatada);
-        } catch (error) {
-          console.error("Error fetching alunos:", error);
-        }
-      } else {
-        setAlunos([]);
-      }
-    };
-
-    fetchAlunos();
-  }, [formData.turma]);
-
-  useEffect(() => {
-    const fetchTurmas = async () => {
-      try {
-        const response = await get("api/turmas");
-        const turmasFormatadas = response.data.data.map((turma) => ({
-          value: turma._id,
-          label: turma.nome,
-        }));
-        setTurmas(turmasFormatadas);
-      } catch (error) {
-        console.error("Erro ao buscar turmas:", error);
-      }
-    };
-    fetchTurmas();
-  }, []);
-
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
     const token = localStorage.getItem("token");

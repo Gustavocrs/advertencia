@@ -3,17 +3,21 @@ import {useEffect, useState} from "react";
 import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
 import {notifyError, notifySuccess} from "@/components/Notify";
+import AlertDialog from "@/components/AlertDialog";
 
 const ConsultarTurmas = () => {
   const {get, error, loading} = useRequest();
   const [rows, setRows] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [itemId, setItemId] = useState("");
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchTurmas = async () => {
       try {
         const response = await get("api/turmas");
         if (response.data) {
-          notifySuccess(response.data.message);
+          // notifySuccess(response.data.message);
           const formattedData = response.data.data.map((aluno, index) => ({
             id: aluno._id || index,
             nome: aluno.nome || "",
@@ -25,10 +29,12 @@ const ConsultarTurmas = () => {
       } catch {
         notifyError(`${error?.message}`);
         console.log("Error: ", error);
+      } finally {
+        setReload(false);
       }
     };
     fetchTurmas();
-  }, []);
+  }, [reload]);
 
   const columns = [
     {field: "nome", headerName: "Turma", width: 200},
@@ -36,18 +42,29 @@ const ConsultarTurmas = () => {
   ];
 
   const onRowDoubleClick = (row) => {
-    console.log("row", row.id);
+    if (row.id) {
+      setItemId(row.id);
+      setOpenDialog(true);
+    }
   };
 
   return (
-    <BaseTableSearch
-      columns={columns}
-      title="Consulta de Turmas"
-      rows={rows}
-      setRows={setRows}
-      loading={loading}
-      onRowDoubleClick={(row) => onRowDoubleClick(row)}
-    />
+    <>
+      <BaseTableSearch
+        columns={columns}
+        title="Consulta de Turmas"
+        rows={rows}
+        setRows={setRows}
+        loading={loading}
+        onRowDoubleClick={(row) => onRowDoubleClick(row)}
+      />
+      <AlertDialog
+        state={openDialog}
+        setState={setOpenDialog}
+        itemId={itemId}
+        setReload={setReload}
+      />
+    </>
   );
 };
 
