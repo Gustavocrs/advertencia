@@ -1,10 +1,7 @@
 "use client";
-import {NavBar} from "@/components/NavBar";
-import {SideBar} from "@/components/SideBar";
 import {FaUserCircle} from "react-icons/fa";
 import {useRouter} from "next/navigation";
 import {Card} from "@/components/Card";
-import {HeaderH1} from "@/components/HeaderH1";
 import BasePage from "@/components/BasePage";
 
 export default function consulta() {
@@ -22,6 +19,11 @@ export default function consulta() {
           title={"Alunos"}
           icon={<FaUserCircle />}
           onClick={() => router.push("consulta/aluno")}
+        />
+        <Card
+          title={"Turmas"}
+          icon={<FaUserCircle />}
+          onClick={() => router.push("consulta/turmas")}
         />
         <Card
           title={"Advertências"}

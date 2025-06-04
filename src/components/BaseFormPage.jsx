@@ -11,7 +11,7 @@ const BaseFormPage = ({children, title}) => {
     setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
   return (
-    <div className="flex flex-col h-fit bg-zinc-200 w-full">
+    <div className="flex flex-col h-full min-h-screen bg-zinc-200 w-full">
       <SideBar user={user} />
       <NavBar user={user} />
       <div className="md:ml-16 mt-14">
