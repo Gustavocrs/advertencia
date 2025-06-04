@@ -204,7 +204,7 @@ const MinhaConta = () => {
           />
           <Input
             label="Celular"
-            type="tel"
+            type="cel"
             name="celular"
             value={formData.celular}
             onChange={handleChange}

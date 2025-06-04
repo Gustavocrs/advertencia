@@ -1,8 +1,12 @@
 "use client";
+
+import {CircularProgress} from "@mui/material";
+
 export const Button = ({
   children,
   wfull,
   style = "bg-slate-800 text-slate-200",
+  loading,
   ...props
 }) => {
   return (
@@ -14,7 +18,7 @@ export const Button = ({
       }
       {...props}
     >
-      {children}
+      {loading ? <CircularProgress /> : children}
     </button>
   );
 };

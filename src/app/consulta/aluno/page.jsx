@@ -1,58 +1,45 @@
 "use client";
-import {HeaderH1} from "@/components/HeaderH1";
-import {useRouter} from "next/navigation";
-import {DataGrid} from "@mui/x-data-grid";
 import {useEffect, useState} from "react";
 import BaseTableSearch from "@/components/BaseTableSearch";
+import useRequest from "@/hooks/useRequest";
 
 const ConsultarAluno = () => {
-  const router = useRouter();
+  const {get, error, loading} = useRequest();
   const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAluno = async () => {
-      const token = localStorage.getItem("token");
+    const fetchAlunos = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/alunos`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Erro ao buscar alunos");
-        }
-        const data = await response.json();
-
-        // Formata os dados para o DataGrid
-        const formattedData = data.data.map((aluno, index) => ({
-          id: aluno._id || index, // Usa o _id como ID ou o índice como fallback
+        const response = await get("api/alunos");
+        const formattedData = response.data.data.map((aluno, index) => ({
+          id: aluno._id || index,
           nome: aluno.nome || "",
           matricula: aluno.matricula || "",
           turma: aluno.turma || "",
           data_nascimento: aluno.data_nascimento
             ? new Date(aluno.data_nascimento).toLocaleDateString("pt-BR")
             : "Data não informada",
+          cpf: aluno.cpf || "",
+          cep: aluno.cep || "",
           endereco: aluno.endereco || "",
+          numero: aluno.numero || "",
+          complemento: aluno.complemento || "",
+          bairro: aluno.bairro || "",
           cidade: aluno.cidade || "",
           estado: aluno.estado || "",
+          celular: aluno.celular || "",
           responsavel_nome: aluno.responsavel?.nome || "",
-          responsavel_celular: aluno.responsavel?.celular || "",
+          responsavel_celular1: aluno.responsavel?.celular1 || "",
+          responsavel_celular2: aluno.responsavel?.celular2 || "",
           responsavel_email: aluno.responsavel?.email || "",
         }));
 
         setRows(formattedData);
-      } catch (error) {
-        console.error("Erro ao buscar alunos:", error);
-      } finally {
-        setLoading(false); // Finaliza o carregamento
+      } catch {
+        console.error(error);
       }
     };
-    fetchAluno();
+    fetchAlunos();
   }, []);
 
   const columns = [
@@ -60,13 +47,24 @@ const ConsultarAluno = () => {
     {field: "matricula", headerName: "Matrícula", width: 150},
     {field: "turma", headerName: "Turma", width: 150},
     {field: "data_nascimento", headerName: "Data de Nascimento", width: 180},
+    {field: "cpf", headerName: "CPF", width: 150},
+    {field: "cep", headerName: "CEP", width: 120},
     {field: "endereco", headerName: "Endereço", width: 200},
+    {field: "numero", headerName: "Número", width: 100},
+    {field: "complemento", headerName: "Complemento", width: 120},
+    {field: "bairro", headerName: "Bairro", width: 150},
     {field: "cidade", headerName: "Cidade", width: 150},
     {field: "estado", headerName: "Estado", width: 100},
+    {field: "celular", headerName: "Celular do Aluno", width: 150},
     {field: "responsavel_nome", headerName: "Nome do Responsável", width: 200},
     {
-      field: "responsavel_celular",
-      headerName: "Celular do Responsável",
+      field: "responsavel_celular1",
+      headerName: "Celular 1 do Responsável",
+      width: 180,
+    },
+    {
+      field: "responsavel_celular2",
+      headerName: "Celular 2 do Responsável",
       width: 180,
     },
     {
@@ -76,6 +74,10 @@ const ConsultarAluno = () => {
     },
   ];
 
+  const onRowDoubleClick = (row) => {
+    console.log("row", row.id);
+  };
+
   return (
     <BaseTableSearch
       columns={columns}
@@ -83,7 +85,7 @@ const ConsultarAluno = () => {
       rows={rows}
       setRows={setRows}
       loading={loading}
-      setLoading={setLoading}
+      onRowDoubleClick={(row) => onRowDoubleClick(row)}
     />
   );
 };

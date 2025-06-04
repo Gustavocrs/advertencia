@@ -92,8 +92,11 @@ export default function Profile({user}) {
         anchorOrigin={{horizontal: "right", vertical: "bottom"}}
       >
         <MenuItem onClick={() => router.push("/cadastro/minhaconta")}>
-          <Avatar />{" "}
-          {user?.nome ? getFirstNameAndInitial(user.nome) : "Minha Conta"}
+          <Avatar />
+          <div className="flex flex-col">
+            {user?.nome ? getFirstNameAndInitial(user.nome) : "Minha Conta"}
+            <span className=" text-xs">Meu perfil</span>
+          </div>
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => router.push("/cadastro/usuario")}>
@@ -102,12 +105,12 @@ export default function Profile({user}) {
           </ListItemIcon>
           Adicionar Usuários
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        {/* <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Configurações
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />

@@ -11,7 +11,6 @@ const BaseTableSearch = ({
   rows,
   setRows,
   loading,
-  setLoading,
   style,
   ...props
 }) => {
@@ -19,56 +18,6 @@ const BaseTableSearch = ({
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
-  }, []);
-  useEffect(() => {
-    const fetchUsuarios = async () => {
-      const token = localStorage.getItem("token");
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Erro ao buscar usuario");
-        }
-        const data = await response.json();
-
-        // Formata os dados para o DataGrid
-        const formattedData = data.data.map((usuario, index) => ({
-          id: usuario._id || index, // Usa o _id como ID ou o índice como fallback
-          nome: usuario.nome || "",
-          cpf: usuario.cpf || "",
-          cep: usuario.cep || "",
-          data_nascimento: usuario.data_nascimento
-            ? new Date(usuario.data_nascimento).toLocaleDateString("pt-BR") // Converte a data para o formato pt-BR
-            : "Data não informada",
-          endereco: usuario.endereco || "",
-          numero: usuario.numero || "",
-          complemento: usuario.complemento || "",
-          bairro: usuario.bairro || "",
-          cidade: usuario.cidade || "",
-          estado: usuario.estado || "",
-          celular: usuario.celular || "",
-          email: usuario.email || "",
-          disciplina: usuario.disciplina || "",
-          matricula: usuario.matricula || "",
-          cargo: usuario.cargo || "",
-          password: usuario.password || "",
-        }));
-
-        setRows && setRows(formattedData);
-      } catch (error) {
-        console.error("Erro ao buscar usuario:", error);
-      } finally {
-        setLoading(false); // Finaliza o carregamento
-      }
-    };
-    fetchUsuarios();
   }, []);
 
   return (

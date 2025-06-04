@@ -1,3 +1,5 @@
+import {IMaskInput} from "react-imask";
+
 export const Input = ({
   label,
   type = "text",
@@ -5,8 +7,8 @@ export const Input = ({
   value,
   onChange,
   data = [],
-  disabled = false,
   placeholder,
+  disabled = false,
 }) => {
   const renderInput = () => {
     switch (type) {
@@ -21,9 +23,9 @@ export const Input = ({
                 disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
               }`}
               name={name}
-              value={value} // Exibe o valor do estado
-              onChange={onChange} // Atualiza o estado ao selecionar
-              disabled={disabled} // Desabilita o campo se necessário
+              value={value}
+              onChange={onChange}
+              disabled={disabled}
             >
               <option value="">Selecione uma opção</option>
               {data.map((item, index) => (
@@ -44,11 +46,49 @@ export const Input = ({
               }`}
               placeholder={label}
               name={name}
-              value={value} // Exibe o valor do estado
-              onChange={onChange} // Atualiza o estado ao digitar
+              value={value}
+              onChange={onChange}
               rows="4"
-              disabled={disabled} // Desabilita o campo se necessário
+              disabled={disabled}
             ></textarea>
+          </>
+        );
+      case "cpf":
+        return (
+          <>
+            <label className="text-gray-500 pb-2 text-start w-full uppercase font-semibold">
+              {label}
+            </label>
+            <IMaskInput
+              mask="000.000.000-00"
+              value={value}
+              onAccept={(value) => onChange({target: {name, value}})}
+              disabled={disabled}
+              className={`border border-gray-300 rounded-md p-2 mb-2 w-full text-start ${
+                disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
+              }`}
+              placeholder={placeholder || label}
+              name={name}
+            />
+          </>
+        );
+      case "cel":
+        return (
+          <>
+            <label className="text-gray-500 pb-2 text-start w-full uppercase font-semibold">
+              {label}
+            </label>
+            <IMaskInput
+              mask="(00) 00000-0000"
+              value={value}
+              onAccept={(value) => onChange({target: {name, value}})}
+              disabled={disabled}
+              className={`border border-gray-300 rounded-md p-2 mb-2 w-full text-start ${
+                disabled ? "bg-gray-100 text-gray-500 cursor-not-allowed" : ""
+              }`}
+              placeholder={placeholder || label}
+              name={name}
+            />
           </>
         );
       default:
@@ -64,9 +104,9 @@ export const Input = ({
               }`}
               placeholder={placeholder || label}
               name={name}
-              value={value} // Exibe o valor do estado
-              onChange={onChange} // Atualiza o estado ao digitar
-              disabled={disabled} // Desabilita o campo se necessário
+              value={value}
+              onChange={onChange}
+              disabled={disabled}
             />
           </>
         );

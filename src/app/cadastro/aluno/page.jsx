@@ -1,115 +1,92 @@
 "use client";
 
-import {useRouter} from "next/navigation";
 import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
-import {HeaderH1} from "@/components/HeaderH1";
-import {useEffect, useState} from "react";
-import {fetchCepData} from "@/utils/fetchCepData";
-import {fetchEstados} from "@/utils/fetchEstados";
-import {fetchMunicipios} from "@/utils/fetchMunicipios";
+import {useState} from "react";
 import BaseFormPage from "@/components/BaseFormPage";
 import BaseFormCadastro from "@/components/BaseFormCadastro";
-import {toast, ToastContainer} from "react-toastify";
+import useRequest from "@/hooks/useRequest";
+import {Notify, notifySuccess, notifyError} from "@/components/Notify";
 
 const IncluirAluno = () => {
-  const router = useRouter();
+  const {post, error, loading} = useRequest();
   const [formData, setFormData] = useState({
     nome: "",
+    data_nascimento: "",
     cpf: "",
     cep: "",
     endereco: "",
     numero: "",
+    complemento: "",
     bairro: "",
     cidade: "",
     estado: "",
     celular: "",
-    email: "",
-    responsavelCpf: "",
-    dataNascimento: "",
     turma: "",
+    matricula: "",
+    responsavel: {
+      nome: "",
+      celular1: "",
+      celular2: "",
+      email: "",
+    },
   });
-  const [dataEstados, setDataEstados] = useState([]);
-  const [dataMunicipios, setDataMunicipios] = useState([]);
+
   const handleChange = (e) => {
     const {name, value} = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name.startsWith("responsavel.")) {
+      const field = name.split(".")[1];
+      setFormData((prev) => ({
+        ...prev,
+        responsavel: {
+          ...prev.responsavel,
+          [field]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/alunos`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      if (response.ok) {
-        toast.success("Aluno incluído com sucesso!");
+      const response = await post("api/alunos", JSON.stringify(formData));
+      if (response?.ok) {
+        notifySuccess("Aluno incluído com sucesso!");
         setFormData({
           nome: "",
+          data_nascimento: "",
           cpf: "",
+          cep: "",
           endereco: "",
           numero: "",
+          complemento: "",
           bairro: "",
           cidade: "",
           estado: "",
           celular: "",
-          email: "",
-          responsavelCpf: "",
-          dataNascimento: "",
           turma: "",
+          matricula: "",
+          responsavel: {
+            nome: "",
+            celular1: "",
+            celular2: "",
+            email: "",
+          },
         });
-      } else {
-        const errorData = await response.json();
-        toast.success(`Erro ao incluir aluno: ${errorData.message}`);
       }
-    } catch (error) {
-      console.error("Erro ao enviar os dados:", error);
-      toast.error("Erro ao incluir aluno. Tente novamente mais tarde.");
+    } catch {
+      notifyError(`${error?.message} - ${error?.error}`);
+      console.log("Error: ", error);
     }
   };
 
-  useEffect(() => {
-    if (formData.cep.length === 8) {
-      fetchCepData(formData.cep, setDataMunicipios, setFormData);
-    }
-  }, [formData.cep]);
-
-  useEffect(() => {
-    fetchEstados(setDataEstados);
-
-    if (formData.cep.length < 8) {
-      if (formData.estado) {
-        fetchMunicipios(formData.estado, setDataMunicipios, setFormData);
-      }
-    }
-  }, [formData.estado, formData.cep]);
-
   return (
     <BaseFormPage title="Cadastro de Aluno">
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <Notify />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
         onSubmit={handleSubmit}
@@ -124,11 +101,43 @@ const IncluirAluno = () => {
                 value={formData.turma}
                 onChange={handleChange}
               />
+
               <Input
-                label="CPF do Responsável"
+                label="Matrícula"
                 type="text"
-                name="responsavelCpf"
-                value={formData.responsavelCpf}
+                name="matricula"
+                value={formData.matricula}
+                onChange={handleChange}
+              />
+              <div className="mt-4 mb-2 font-bold uppercase text-slate-900 text-xl">
+                Dados do Responsável
+              </div>
+              <Input
+                label="Nome"
+                type="text"
+                name="responsavel.nome"
+                value={formData.responsavel.nome}
+                onChange={handleChange}
+              />
+              <Input
+                label="Celular 1 (Whatsapp)"
+                type="cel"
+                name="responsavel.celular1"
+                value={formData.responsavel.celular1}
+                onChange={handleChange}
+              />
+              <Input
+                label="Celular 2"
+                type="cel"
+                name="responsavel.celular2"
+                value={formData.responsavel.celular2}
+                onChange={handleChange}
+              />
+              <Input
+                label="E-mail"
+                type="email"
+                name="responsavel.email"
+                value={formData.responsavel.email}
                 onChange={handleChange}
               />
             </>
@@ -137,7 +146,7 @@ const IncluirAluno = () => {
           setFormData={setFormData}
           onChange={handleChange}
         />
-        <Button wfull type="submit">
+        <Button wfull type="submit" loading={loading}>
           Incluir Aluno
         </Button>
       </form>

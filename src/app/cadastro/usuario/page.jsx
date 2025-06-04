@@ -136,7 +136,7 @@ const CadastroUsuario = () => {
           />
           <Input
             label="CPF"
-            type="text"
+            type="cpf"
             name="cpf"
             value={formData.cpf}
             onChange={handleChange}
@@ -202,7 +202,7 @@ const CadastroUsuario = () => {
           />
           <Input
             label="Celular"
-            type="tel"
+            type="cel"
             name="celular"
             value={formData.celular}
             onChange={handleChange}

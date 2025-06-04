@@ -35,7 +35,7 @@ const BaseFormCadastro = ({otherFields, formData, setFormData, onChange}) => {
       />
       <Input
         label="CPF"
-        type="text"
+        type="cpf"
         name="cpf"
         value={formData.cpf || ""}
         onChange={onChange}
@@ -101,7 +101,7 @@ const BaseFormCadastro = ({otherFields, formData, setFormData, onChange}) => {
       />
       <Input
         label="Celular"
-        type="tel"
+        type="cel"
         name="celular"
         value={formData.celular || ""}
         onChange={onChange}
