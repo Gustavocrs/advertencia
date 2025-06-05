@@ -6,9 +6,11 @@ import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
 
 const ConsultarAdvertencia = () => {
-  const router = useRouter();
   const {get, loading} = useRequest();
   const [rows, setRows] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [itemId, setItemId] = useState("");
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchAdvertencias = async () => {
@@ -28,12 +30,14 @@ const ConsultarAdvertencia = () => {
 
         setRows(formattedData);
       } catch (error) {
-        console.error("Erro ao buscar advertências:", error);
+        notifyError(`${error?.message}`);
+        console.log("Error: ", error);
+      } finally {
+        setReload(false);
       }
     };
-
     fetchAdvertencias();
-  }, []);
+  }, [reload]);
 
   const columns = [
     {field: "name", headerName: "Aluno", width: 200},
@@ -87,8 +91,15 @@ const ConsultarAdvertencia = () => {
     },
   ];
 
-  const handleRowClick = (params) => {
-    router.push(`/advertencias/imprimir/${params.row.id}`);
+  const onRowDoubleClick = (row) => {
+    if (row.id) {
+      setItemId(row.id);
+      setOpenDialog(true);
+    }
+  };
+
+  const onRowClick = (row) => {
+    console.log(row);
   };
 
   return (
@@ -98,7 +109,14 @@ const ConsultarAdvertencia = () => {
       rows={rows}
       setRows={setRows}
       loading={loading}
-      onRowDoubleClick={handleRowClick}
+      onRowDoubleClick={(row) => onRowDoubleClick(row)}
+      onRowClick={(row) => onRowClick(row)}
+      state={openDialog}
+      setState={setOpenDialog}
+      itemId={itemId}
+      setReload={setReload}
+      isPrint={true}
+      url={`api/advertencias/${itemId}`}
     />
   );
 };

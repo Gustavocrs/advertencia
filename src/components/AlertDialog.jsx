@@ -7,6 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useRequest from "@/hooks/useRequest";
 import {Notify, notifyError, notifySuccess} from "./Notify";
+import {useRouter} from "next/navigation";
 
 export default function AlertDialog({
   state,
@@ -14,20 +15,23 @@ export default function AlertDialog({
   itemId,
   itemData,
   setReload,
+  isPrint,
+  url,
 }) {
   const {del, patch, error, loading} = useRequest();
+  const router = useRouter();
+
   const handleClose = () => {
     setState(false);
   };
   const handleEditarRegistro = async (itemId, itemData) => {
+    console.log(itemId, itemData);
     setState(false);
     setReload(true);
   };
-  const handleExcluirRegistro = async (itemId) => {
-    console.log(itemId);
-
+  const handleExcluirRegistro = async (url) => {
     try {
-      const response = await del(`api/turmas/${itemId}`);
+      const response = await del(`${url}`);
       console.log(response.data);
       setReload(true);
 
@@ -36,11 +40,15 @@ export default function AlertDialog({
         notifySuccess(response.data.message);
       }
     } catch {
-      console.error("Erro ao buscar turmas:", error);
+      console.error("Erro ao buscar:", error);
       notifyError(error?.message);
     }
   };
-
+  const handleImprimir = (itemId) => {
+    if (itemId) {
+      router.push(`/advertencias/imprimir/${itemId}`);
+    }
+  };
   return (
     <React.Fragment>
       <Notify />
@@ -57,10 +65,23 @@ export default function AlertDialog({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleExcluirRegistro(itemId)}>Excluir</Button>
-          {/* <Button onClick={()=>handleEditarRegistro(itemId,itemData)} autoFocus>
+          <Button onClick={() => handleExcluirRegistro(url)} color="error">
+            Excluir
+          </Button>
+          <Button
+            onClick={() => handleEditarRegistro(itemId, itemData)}
+            color="text-slate-900"
+          >
             Editar
-          </Button> */}
+          </Button>
+          {isPrint && (
+            <Button
+              onClick={() => handleImprimir(itemId)}
+              color="text-slate-900"
+            >
+              Imprimir
+            </Button>
+          )}
           <Button onClick={handleClose} autoFocus>
             Fechar
           </Button>

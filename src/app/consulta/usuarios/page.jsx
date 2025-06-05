@@ -1,60 +1,53 @@
 "use client";
 import BaseTableSearch from "@/components/BaseTableSearch";
+import useRequest from "@/hooks/useRequest";
 import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
 import {useEffect, useState} from "react";
+import AlertDialog from "@/components/AlertDialog";
+import {notifyError} from "@/components/Notify";
 
 const ConsultarUsuario = () => {
+  const {get, error, loading} = useRequest();
   const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [itemId, setItemId] = useState("");
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchUsuarios = async () => {
-      const token = localStorage.getItem("token");
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Erro ao buscar usuario");
+        const response = await get(`api/usuarios`);
+        if (response.data) {
+          const formattedData = response.data.data.map((usuario, index) => ({
+            id: usuario._id || index, // Usa o _id como ID ou o índice como fallback
+            nome: usuario.nome || "",
+            cpf: usuario.cpf || "",
+            cep: usuario.cep || "",
+            data_nascimento: convertToBrazilianDate(usuario.data_nascimento),
+            endereco: usuario.endereco || "",
+            numero: usuario.numero || "",
+            complemento: usuario.complemento || "",
+            bairro: usuario.bairro || "",
+            cidade: usuario.cidade || "",
+            estado: usuario.estado || "",
+            celular: usuario.celular || "",
+            email: usuario.email || "",
+            disciplina: usuario.disciplina || "",
+            matricula: usuario.matricula || "",
+            cargo: usuario.cargo || "",
+          }));
+
+          setRows(formattedData);
         }
-        const data = await response.json();
-
-        // Formata os dados para o DataGrid
-        const formattedData = data.data.map((usuario, index) => ({
-          id: usuario._id || index, // Usa o _id como ID ou o índice como fallback
-          nome: usuario.nome || "",
-          cpf: usuario.cpf || "",
-          cep: usuario.cep || "",
-          data_nascimento: convertToBrazilianDate(usuario.data_nascimento),
-          endereco: usuario.endereco || "",
-          numero: usuario.numero || "",
-          complemento: usuario.complemento || "",
-          bairro: usuario.bairro || "",
-          cidade: usuario.cidade || "",
-          estado: usuario.estado || "",
-          celular: usuario.celular || "",
-          email: usuario.email || "",
-          disciplina: usuario.disciplina || "",
-          matricula: usuario.matricula || "",
-          cargo: usuario.cargo || "",
-          password: usuario.password || "",
-        }));
-
-        setRows(formattedData);
       } catch (error) {
-        console.error("Erro ao buscar usuario:", error);
+        notifyError(`${error?.message}`);
+        console.log("Error: ", error);
       } finally {
-        setLoading(false); // Finaliza o carregamento
+        setReload(false);
       }
     };
     fetchUsuarios();
-  }, []);
+  }, [reload]);
 
   const columns = [
     {field: "nome", headerName: "Nome", width: 200},
@@ -66,16 +59,34 @@ const ConsultarUsuario = () => {
     {field: "matricula", headerName: "Matrícula", width: 150},
     {field: "cargo", headerName: "Cargo", width: 150},
   ];
+  const onRowDoubleClick = (row) => {
+    console.log(row.row.cargo);
+
+    if (row.id) {
+      setItemId(row.id);
+
+      if (row?.row?.cargo === "Desenvolvedor" || row?.row?.cargo === "Diretor")
+        setOpenDialog(true);
+    }
+  };
 
   return (
-    <BaseTableSearch
-      columns={columns}
-      title="Consulta de Usuários"
-      rows={rows}
-      setRows={setRows}
-      loading={loading}
-      setLoading={setLoading}
-    />
+    <>
+      <BaseTableSearch
+        columns={columns}
+        title="Consulta de Usuários"
+        rows={rows}
+        setRows={setRows}
+        loading={loading}
+        onRowDoubleClick={(row) => onRowDoubleClick(row)}
+      />
+      <AlertDialog
+        state={openDialog}
+        setState={setOpenDialog}
+        itemId={itemId}
+        setReload={setReload}
+      />
+    </>
   );
 };
 

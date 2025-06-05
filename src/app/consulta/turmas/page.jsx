@@ -17,7 +17,6 @@ const ConsultarTurmas = () => {
       try {
         const response = await get("api/turmas");
         if (response.data) {
-          // notifySuccess(response.data.message);
           const formattedData = response.data.data.map((aluno, index) => ({
             id: aluno._id || index,
             nome: aluno.nome || "",
@@ -57,8 +56,6 @@ const ConsultarTurmas = () => {
         setRows={setRows}
         loading={loading}
         onRowDoubleClick={(row) => onRowDoubleClick(row)}
-      />
-      <AlertDialog
         state={openDialog}
         setState={setOpenDialog}
         itemId={itemId}

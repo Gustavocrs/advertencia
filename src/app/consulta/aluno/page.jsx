@@ -6,6 +6,9 @@ import useRequest from "@/hooks/useRequest";
 const ConsultarAluno = () => {
   const {get, loading} = useRequest();
   const [rows, setRows] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [itemId, setItemId] = useState("");
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchAlunos = async () => {
@@ -36,11 +39,14 @@ const ConsultarAluno = () => {
 
         setRows(formattedData);
       } catch (error) {
-        console.log(error);
+        notifyError(`${error?.message}`);
+        console.log("Error: ", error);
+      } finally {
+        setReload(false);
       }
     };
     fetchAlunos();
-  }, []);
+  }, [reload]);
 
   const columns = [
     {field: "nome", headerName: "Nome do Aluno", width: 200},
@@ -75,18 +81,27 @@ const ConsultarAluno = () => {
   ];
 
   const onRowDoubleClick = (row) => {
-    console.log("row", row.id);
+    if (row.id) {
+      setItemId(row.id);
+      setOpenDialog(true);
+    }
   };
 
   return (
-    <BaseTableSearch
-      columns={columns}
-      title="Consulta de Aluno"
-      rows={rows}
-      setRows={setRows}
-      loading={loading}
-      onRowDoubleClick={(row) => onRowDoubleClick(row)}
-    />
+    <>
+      <BaseTableSearch
+        columns={columns}
+        title="Consulta de Aluno"
+        rows={rows}
+        setRows={setRows}
+        loading={loading}
+        onRowDoubleClick={(row) => onRowDoubleClick(row)}
+        state={openDialog}
+        setState={setOpenDialog}
+        itemId={itemId}
+        setReload={setReload}
+      />
+    </>
   );
 };
 

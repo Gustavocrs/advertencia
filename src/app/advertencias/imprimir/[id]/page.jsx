@@ -1,30 +1,24 @@
 "use client";
-import {useEffect, useState} from "react";
-import {useRouter, useParams} from "next/navigation";
+import {useEffect, useState, useParams} from "react";
+import {useRouter} from "next/navigation";
+// import useRequest from "@/hooks/useRequest";
 
-const ImprimirAdvertencia = () => {
-  const {id} = useParams();
+const ImprimirAdvertencia = (id) => {
+  // const {id} = useParams();
   const router = useRouter();
   const [advertencia, setAdvertencia] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAdvertencia = async () => {
-      const token = localStorage.getItem("token");
-
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias/${id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) throw new Error("Erro ao buscar advertência");
-        const data = await response.json();
-        console.log("Dados da advertência:", data);
+        const response = await get(`/api/advertencias/${id}`);
+        if (!response.data) {
+          console.log("Erro ao buscar advertência");
+        }
+
+        console.log("Dados da advertência:", response);
+
         setAdvertencia(data);
       } catch (error) {
         console.error("Erro ao buscar advertência:", error);
@@ -33,11 +27,8 @@ const ImprimirAdvertencia = () => {
       }
     };
 
-    fetchAdvertencia();
+    // fetchAdvertencia();
   }, [id]);
-
-  if (loading) return <div>Carregando...</div>;
-  if (!advertencia) return <div>Advertência não encontrada</div>;
 
   return (
     <div className="p-8 bg-white text-black max-w-3xl mx-auto print:p-0 print:m-0 print:max-w-full">
@@ -68,28 +59,28 @@ const ImprimirAdvertencia = () => {
       <p className="mb-4 text-justify leading-7">
         Aos{" "}
         <strong>
-          {advertencia.data
-            ? new Date(advertencia.data).toLocaleDateString("pt-BR")
+          {advertencia?.data
+            ? new Date(advertencia?.data).toLocaleDateString("pt-BR")
             : "___/___/____"}
         </strong>
         , o(a) aluno(a){" "}
-        <strong>{advertencia.aluno?.nome || "NOME DO ALUNO"}</strong>, turma{" "}
-        <strong>{advertencia.turma || "___"}</strong>, foi advertido(a) pelo
+        <strong>{advertencia?.aluno?.nome || "NOME DO ALUNO"}</strong>, turma{" "}
+        <strong>{advertencia?.turma || "___"}</strong>, foi advertido(a) pelo
         servidor{" "}
-        <strong>{advertencia.servidor?.nome || "NOME DO SERVIDOR"}</strong>,
+        <strong>{advertencia?.servidor?.nome || "NOME DO SERVIDOR"}</strong>,
         pelos seguintes motivos:
       </p>
 
       <div className="border border-black p-4 mb-4 min-h-[80px]">
-        {advertencia.motivo || "Descrição da ocorrência não informada."}
+        {advertencia?.motivo || "Descrição da ocorrência não informada."}
       </div>
       <div className="border border-black p-4 mb-4 min-h-[80px]">
         <p className="font-semibold mb-2">Ação Esperada do Responsável</p>
-        {advertencia.acaoEsperada || "Descrição da ocorrência não informada."}
-        {advertencia.dataComparecimento && (
+        {advertencia?.acaoEsperada || "Descrição da ocorrência não informada."}
+        {advertencia?.dataComparecimento && (
           <p>
             Comparecer a unidade escolar em{" "}
-            {new Date(advertencia.dataComparecimento).toLocaleDateString(
+            {new Date(advertencia?.dataComparecimento).toLocaleDateString(
               "pt-BR"
             )}
             .
@@ -119,8 +110,8 @@ const ImprimirAdvertencia = () => {
         {/* Local e data formatados para assinatura */}
         <p className="italic">
           Rio de Janeiro,{" "}
-          {advertencia.data
-            ? new Date(advertencia.data).toLocaleDateString("pt-BR")
+          {advertencia?.data
+            ? new Date(advertencia?.data).toLocaleDateString("pt-BR")
             : "___/___/____"}
         </p>
       </div>
@@ -128,18 +119,18 @@ const ImprimirAdvertencia = () => {
       <div className="border border-black p-4 mt-8 mb-4 min-h-[80px]">
         <p className="font-semibold mb-2">Canhoto do Termo de Advertência</p>
         <div className="flex justify-between">
-          <div>Aluno: {advertencia.aluno?.nome || "NOME DO ALUNO"}</div>
-          <div>Turma: {advertencia.turma || "___"}</div>
+          <div>Aluno: {advertencia?.aluno?.nome || "NOME DO ALUNO"}</div>
+          <div>Turma: {advertencia?.turma || "___"}</div>
           <div>
             Data:
-            {advertencia.data
-              ? new Date(advertencia.data).toLocaleDateString("pt-BR")
+            {advertencia?.data
+              ? new Date(advertencia?.data).toLocaleDateString("pt-BR")
               : "___/___/____"}
           </div>
         </div>
         <div>
           Motivo:{" "}
-          {advertencia.motivo || "Descrição da ocorrência não informada."}
+          {advertencia?.motivo || "Descrição da ocorrência não informada."}
         </div>
       </div>
 

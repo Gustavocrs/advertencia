@@ -4,14 +4,21 @@ import {useEffect, useState} from "react";
 import {SideBar} from "@/components/SideBar";
 import {NavBar} from "@/components/NavBar";
 import {FaUserCircle} from "react-icons/fa";
+import AlertDialog from "./AlertDialog";
 
 const BaseTableSearch = ({
   columns,
   title,
   rows,
   setRows,
+  setReload,
   loading,
   style,
+  state,
+  setState,
+  itemId,
+  isPrint,
+  url,
   ...props
 }) => {
   const [user, setUser] = useState(null);
@@ -40,11 +47,20 @@ const BaseTableSearch = ({
               disableColumnMenu
               loading={loading}
               style={style}
+              sx={{cursor: "pointer"}}
               {...props}
             />
           </div>
         </div>
       </div>
+      <AlertDialog
+        state={state}
+        setState={setState}
+        itemId={itemId}
+        setReload={setReload}
+        isPrint={isPrint}
+        url={url}
+      />
     </div>
   );
 };
