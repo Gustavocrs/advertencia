@@ -3,7 +3,6 @@ import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
 import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
 import {useEffect, useState} from "react";
-import AlertDialog from "@/components/AlertDialog";
 import {notifyError} from "@/components/Notify";
 
 const ConsultarUsuario = () => {
@@ -79,8 +78,6 @@ const ConsultarUsuario = () => {
         setRows={setRows}
         loading={loading}
         onRowDoubleClick={(row) => onRowDoubleClick(row)}
-      />
-      <AlertDialog
         state={openDialog}
         setState={setOpenDialog}
         itemId={itemId}
