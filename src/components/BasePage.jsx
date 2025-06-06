@@ -11,7 +11,7 @@ export default function BasePage({children, title}) {
   }, []);
 
   return (
-    <div className="flex flex-col md:h-screen bg-zinc-200 text-slate-800 w-full">
+    <div className="flex flex-col md:h-screen bg-zinc-200 text-slate-800 w-full h-screen">
       <SideBar user={user} />
       <NavBar user={user} />
       <div className="md:ml-14 mt-14">
