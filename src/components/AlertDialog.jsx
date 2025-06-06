@@ -32,7 +32,7 @@ export default function AlertDialog({
   const handleExcluirRegistro = async (url) => {
     try {
       const response = await del(`${url}`);
-      console.log(response.data);
+      // console.log(response.data);
       setReload(true);
 
       if (response.data) {
@@ -47,6 +47,7 @@ export default function AlertDialog({
   const handleImprimir = (itemId) => {
     if (itemId) {
       router.push(`/advertencias/imprimir/${itemId}`);
+      handleClose();
     }
   };
   return (
