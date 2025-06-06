@@ -1,34 +1,32 @@
 "use client";
-import {useEffect, useState, useParams} from "react";
-import {useRouter} from "next/navigation";
-// import useRequest from "@/hooks/useRequest";
+import {useEffect, useState} from "react";
+import {useParams, useRouter} from "next/navigation";
+import useRequest from "@/hooks/useRequest";
 
-const ImprimirAdvertencia = (id) => {
-  // const {id} = useParams();
+const ImprimirAdvertencia = () => {
+  const params = useParams();
   const router = useRouter();
-  const [advertencia, setAdvertencia] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [advertencia, setAdvertencia] = useState();
+  const {get, loading} = useRequest();
 
   useEffect(() => {
     const fetchAdvertencia = async () => {
       try {
-        const response = await get(`/api/advertencias/${id}`);
+        const response = await get(`api/advertencias/${params.id}`);
         if (!response.data) {
+          setAdvertencia(null);
           console.log("Erro ao buscar advertência");
+        } else {
+          setAdvertencia(response.data);
         }
-
-        console.log("Dados da advertência:", response);
-
-        setAdvertencia(data);
       } catch (error) {
+        setAdvertencia(null);
         console.error("Erro ao buscar advertência:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
-    // fetchAdvertencia();
-  }, [id]);
+    fetchAdvertencia();
+  }, [params]);
 
   return (
     <div className="p-8 bg-white text-black max-w-3xl mx-auto print:p-0 print:m-0 print:max-w-full">
@@ -65,9 +63,9 @@ const ImprimirAdvertencia = (id) => {
         </strong>
         , o(a) aluno(a){" "}
         <strong>{advertencia?.aluno?.nome || "NOME DO ALUNO"}</strong>, turma{" "}
-        <strong>{advertencia?.turma || "___"}</strong>, foi advertido(a) pelo
-        servidor{" "}
-        <strong>{advertencia?.servidor?.nome || "NOME DO SERVIDOR"}</strong>,
+        <strong>{advertencia?.turma?.nome || "___"}</strong>, foi advertido(a)
+        pelo servidor{" "}
+        <strong>{advertencia?.usuario?.nome || "NOME DO SERVIDOR"}</strong>,
         pelos seguintes motivos:
       </p>
 
@@ -120,7 +118,7 @@ const ImprimirAdvertencia = (id) => {
         <p className="font-semibold mb-2">Canhoto do Termo de Advertência</p>
         <div className="flex justify-between">
           <div>Aluno: {advertencia?.aluno?.nome || "NOME DO ALUNO"}</div>
-          <div>Turma: {advertencia?.turma || "___"}</div>
+          <div>Turma: {advertencia?.turma?.nome || "___"}</div>
           <div>
             Data:
             {advertencia?.data
