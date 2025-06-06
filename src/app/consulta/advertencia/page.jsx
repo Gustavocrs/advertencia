@@ -1,5 +1,4 @@
 "use client";
-import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import {Switch} from "@/components/Switch";
 import BaseTableSearch from "@/components/BaseTableSearch";
@@ -90,14 +89,12 @@ const ConsultarAdvertencia = () => {
       },
     },
   ];
-
   const onRowDoubleClick = (row) => {
     if (row.id) {
       setItemId(row.id);
       setOpenDialog(true);
     }
   };
-
   const onRowClick = (row) => {
     console.log(row);
   };

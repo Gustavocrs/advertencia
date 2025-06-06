@@ -11,12 +11,14 @@ export default function BasePage({children, title}) {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-200 text-slate-800 w-full">
+    <div className="flex flex-col md:h-screen bg-zinc-200 text-slate-800 w-full">
       <SideBar user={user} />
       <NavBar user={user} />
       <div className="md:ml-14 mt-14">
         <HeaderH1 title={title} />
-        <div className="flex flex-col h-[90%] ml-4 text-lg">{children}</div>
+        <div className="flex flex-wrap justify-around items-center h-[90%] text-lg">
+          {children}
+        </div>
       </div>
     </div>
   );

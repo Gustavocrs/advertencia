@@ -1,17 +1,10 @@
 import {useState} from "react";
 import {MdHome} from "react-icons/md";
 import {IoMdClose} from "react-icons/io";
-import {MdOutlineSettings} from "react-icons/md";
 import {IoSearchSharp} from "react-icons/io5";
-import {BsDatabaseFillAdd} from "react-icons/bs";
 import {CgMenuGridR} from "react-icons/cg";
-import {BsFileEarmarkBarGraphFill} from "react-icons/bs";
 import {useRouter} from "next/navigation";
-import {
-  VscNewFile,
-  VscGitPullRequestGoToChanges,
-  VscGoToSearch,
-} from "react-icons/vsc";
+import {IoPersonAdd} from "react-icons/io5";
 
 export const SideBar = ({user}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +22,7 @@ export const SideBar = ({user}) => {
     },
     {
       name: "Cadastros",
-      icon: <BsDatabaseFillAdd />,
+      icon: <IoPersonAdd />,
       route: "/cadastro",
     },
     {
@@ -37,11 +30,11 @@ export const SideBar = ({user}) => {
       icon: <IoSearchSharp />,
       route: "/consulta",
     },
-    {
-      name: "Advertências",
-      icon: <BsFileEarmarkBarGraphFill />,
-      route: "/cadastro/advertencia",
-    },
+    // {
+    //   name: "Advertências",
+    //   icon: <BsFileEarmarkBarGraphFill />,
+    //   route: "/cadastro/advertencia",
+    // },
   ];
 
   return (
