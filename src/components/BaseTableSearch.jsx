@@ -36,7 +36,7 @@ const BaseTableSearch = ({
       <div className="md:ml-16 mt-14 ">
         <div className="flex justify-start gap-5 items-center ml-2">
           <IoMdArrowRoundBack
-            className="text-2xl "
+            className="text-2xl cursor-pointer"
             onClick={() => router.back()}
           />
           <FaUserCircle className="text-4xl" />

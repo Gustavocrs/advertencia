@@ -9,7 +9,9 @@ export default function consulta() {
 
   return (
     <BasePage title={"Consultas"}>
-      <div className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4`}>
+      <div
+        className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4 h-min-screen`}
+      >
         <Card
           title={"Usuários"}
           icon={<FaUserCircle />}
@@ -25,11 +27,11 @@ export default function consulta() {
           icon={<FaUserCircle />}
           onClick={() => router.push("consulta/turmas")}
         />
-        <Card
+        {/* <Card
           title={"Advertências"}
           icon={<FaUserCircle />}
           onClick={() => router.push("consulta/advertencia")}
-        />
+        /> */}
       </div>
     </BasePage>
   );

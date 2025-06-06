@@ -14,13 +14,13 @@ const BaseFormPage = ({children, title}) => {
     setUser(JSON.parse(localStorage.getItem("user")));
   }, []);
   return (
-    <div className="flex flex-col h-full min-h-screen bg-zinc-200 w-full">
+    <div className="flex flex-col h-full min-h-screen bg-zinc-200 w-full h-min-screen">
       <SideBar user={user} />
       <NavBar user={user} />
       <div className="md:ml-16 mt-14">
         <div className="flex justify-start gap-5 items-center ml-2">
           <IoMdArrowRoundBack
-            className="text-2xl "
+            className="text-2xl cursor-pointer"
             onClick={() => router.back()}
           />
           <FaUserCircle className="text-4xl" />

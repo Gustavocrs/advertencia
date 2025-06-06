@@ -15,14 +15,14 @@ export const Modulos = ({
 
   return (
     <div
-      className={`md:w-80 w-[90%] h-64 bg-gradient-to-br from-zinc-100 to-zinc-200 rounded-2xl p-4 text-slate-800 shadow-2xl mb-4 ${
+      className={`md:w-80 w-[90%] h-64 bg-gradient-to-br from-slate-300 to-slate-500 rounded-2xl p-4 text-slate-800 shadow-2xl mb-4 ${
         disabled ? "opacity-60 pointer-events-none grayscale" : ""
       }`}
       disabled={disabled}
     >
       <div className="flex justify-center items-center">
         {titleIcon && (
-          <div className="flex justify-center items-center text-4xl text-zinc-600">
+          <div className="flex justify-center items-center text-4xl text-slate-800">
             {titleIcon}
           </div>
         )}
@@ -31,13 +31,13 @@ export const Modulos = ({
         </h1>
       </div>
       <div
-        className={`w-full flex items-center gap-2 bg-zinc-200 rounded-lg py-3 my-4 shadow-md hover:bg-white cursor-pointer transition-colors duration-200 ${
+        className={`w-full flex items-center gap-2 rounded-lg py-3 my-4 shadow-md bg-zinc-200 hover:scale-105 transition-hover duration-200 cursor-pointer ${
           disabled ? "opacity-70 cursor-not-allowed" : ""
         }`}
         onClick={() => !disabled && router.push(route1)}
       >
         {icon1 && (
-          <div className="w-[30%] flex justify-center items-center text-4xl text-zinc-600">
+          <div className="w-[30%] flex justify-center items-center text-4xl text-slate-800 ">
             {icon1}
           </div>
         )}
@@ -48,7 +48,7 @@ export const Modulos = ({
         )}
       </div>
       <div
-        className={`w-full flex items-center gap-2 bg-zinc-200 rounded-lg py-3 my-4 shadow-md hover:bg-white cursor-pointer transition-colors duration-200 ${
+        className={`w-full flex items-center gap-2 rounded-lg py-3 my-4 shadow-md bg-zinc-200 hover:scale-105 transition-hover duration-200 cursor-pointer ${
           disabled ? "opacity-70 cursor-not-allowed" : ""
         }`}
         onClick={() => !disabled && router.push(route2)}

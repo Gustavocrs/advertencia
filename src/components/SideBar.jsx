@@ -39,8 +39,8 @@ export const SideBar = ({user}) => {
 
   return (
     <div
-      className={`bg-slate-400 flex flex-col fixed z-50 md:h-full self-start ${
-        isOpen ? "w-full h-full md:w-[160px] md:h-fit" : "h-14 md:w-14"
+      className={`bg-gradient-to-b from-slate-300 to-slate-500 flex flex-col fixed z-50 md:h-full self-start ${
+        isOpen ? "w-full h-full md:w-[160px] md:h-fit " : "h-14 md:w-14 "
       }text-slate-800 select-none
 
     `}

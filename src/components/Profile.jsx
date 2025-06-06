@@ -49,7 +49,7 @@ export default function Profile({user}) {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <FaUserCircle className="text-2xl text-slate-900" />
+            <FaUserCircle className="text-3xl text-slate-900" />
           </IconButton>
         </Tooltip>
       </Box>

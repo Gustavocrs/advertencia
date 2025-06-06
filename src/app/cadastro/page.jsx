@@ -14,7 +14,9 @@ export default function cadastro() {
   }, []);
   return (
     <BasePage title="Cadastros">
-      <div className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4`}>
+      <div
+        className={`w-full h-full py-4 p-2 md:pl-2 flex flex-wrap gap-4 h-min-screen`}
+      >
         <Card
           title={"Novo Aluno"}
           icon={<FaUserCircle />}

@@ -1,7 +1,7 @@
 export const Card = ({title, icon, onClick, disabled}) => {
   return (
     <div
-      className="md:w-60 w-full h-24 p-6 bg-slate-300 rounded-lg flex items-center justify-between cursor-pointer hover:bg-slate-400 transition-colors duration-200"
+      className="md:w-60 w-full h-24 p-6 bg-gradient-to-br from-slate-300 to-slate-500 rounded-lg flex items-center justify-between cursor-pointer hover:bg-blend-color bg-slate-500 transition-colors duration-200"
       onClick={onClick}
       disabled={disabled || true}
     >
