@@ -12,11 +12,11 @@ export default function consulta() {
       <div
         className={`w-full h-fit py-4 p-2 md:pl-2 flex flex-wrap gap-4 h-min-screen`}
       >
-        <Card
+        {/* <Card
           title={"Usuários"}
           icon={<FaUserCircle />}
           onClick={() => router.push("consulta/usuarios")}
-        />
+        /> */}
         <Card
           title={"Alunos"}
           icon={<FaUserCircle />}

@@ -1,21 +1,16 @@
 "use client";
 
-import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import {Button} from "@/components/Button";
-import {HeaderH1} from "@/components/HeaderH1";
 import {Input} from "@/components/Input";
 import {fetchEstados} from "@/utils/fetchEstados";
 import {fetchMunicipios} from "@/utils/fetchMunicipios";
 import {fetchCepData} from "@/utils/fetchCepData";
-import {NavBar} from "@/components/NavBar";
-import {FaUserCircle} from "react-icons/fa";
-import {SideBar} from "@/components/SideBar";
 import BaseFormPage from "@/components/BaseFormPage";
 import {toast, ToastContainer} from "react-toastify";
+import {PersonAdd} from "@mui/icons-material";
 
 const CadastroUsuario = () => {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -97,7 +92,10 @@ const CadastroUsuario = () => {
   }, [formData.estado, formData.cep]);
 
   return (
-    <BaseFormPage title="Cadastro de Usuário">
+    <BaseFormPage
+      title="Cadastro de Usuário"
+      icon={<PersonAdd fontSize="big" className="text-slate-800 text-4xl" />}
+    >
       <ToastContainer
         position="top-center"
         autoClose={2000}

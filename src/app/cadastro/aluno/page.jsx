@@ -7,6 +7,7 @@ import BaseFormPage from "@/components/BaseFormPage";
 import BaseFormCadastro from "@/components/BaseFormCadastro";
 import useRequest from "@/hooks/useRequest";
 import {Notify, notifySuccess, notifyError} from "@/components/Notify";
+import {PersonAdd} from "@mui/icons-material";
 
 const IncluirAluno = () => {
   const {post, get, error, loading} = useRequest();
@@ -103,7 +104,10 @@ const IncluirAluno = () => {
   };
 
   return (
-    <BaseFormPage title="Cadastro de Aluno">
+    <BaseFormPage
+      title="Cadastro de Aluno"
+      icon={<PersonAdd fontSize="big" className="text-slate-800 text-4xl" />}
+    >
       <Notify />
       <form
         className="flex flex-col items-start justify-between w-full p-2"

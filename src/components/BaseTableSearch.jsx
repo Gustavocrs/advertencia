@@ -21,6 +21,7 @@ const BaseTableSearch = ({
   itemId,
   isPrint,
   url,
+  icon,
   ...props
 }) => {
   const [user, setUser] = useState(null);
@@ -39,7 +40,13 @@ const BaseTableSearch = ({
             className="text-2xl cursor-pointer"
             onClick={() => router.back()}
           />
-          <FaUserCircle className="text-4xl" />
+          {icon ? (
+            icon
+          ) : (
+            <div className="text-4xl">
+              <FaUserCircle />
+            </div>
+          )}
 
           <h1 className="text-2xl p-4 font-bold uppercase text-slate-800 ">
             {title}

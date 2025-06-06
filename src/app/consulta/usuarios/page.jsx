@@ -4,6 +4,7 @@ import useRequest from "@/hooks/useRequest";
 import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
 import {useEffect, useState} from "react";
 import {notifyError} from "@/components/Notify";
+import Settings from "@mui/icons-material/Settings";
 
 const ConsultarUsuario = () => {
   const {get, error, loading} = useRequest();
@@ -73,7 +74,7 @@ const ConsultarUsuario = () => {
     <>
       <BaseTableSearch
         columns={columns}
-        title="Consulta de Usuários"
+        title="Gerenciamento de Usuários"
         rows={rows}
         setRows={setRows}
         loading={loading}
@@ -82,6 +83,7 @@ const ConsultarUsuario = () => {
         setState={setOpenDialog}
         itemId={itemId}
         setReload={setReload}
+        icon={<Settings fontSize="large" className="text-slate-800 text-4xl" />}
       />
     </>
   );

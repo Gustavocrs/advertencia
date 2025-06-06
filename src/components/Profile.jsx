@@ -105,12 +105,12 @@ export default function Profile({user}) {
           </ListItemIcon>
           Adicionar Usuários
         </MenuItem>
-        {/* <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => router.push("consulta/usuarios")}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Configurações
-        </MenuItem> */}
+          Gerenciar Usuários
+        </MenuItem>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />

@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {IoMdArrowRoundBack} from "react-icons/io";
 import {useRouter} from "next/navigation";
 
-const BaseFormPage = ({children, title}) => {
+const BaseFormPage = ({children, title, icon}) => {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
@@ -23,7 +23,7 @@ const BaseFormPage = ({children, title}) => {
             className="text-2xl cursor-pointer"
             onClick={() => router.back()}
           />
-          <FaUserCircle className="text-4xl" />
+          {icon ? icon : <FaUserCircle className="text-4xl" />}
           <h1 className="text-3xl p-4 font-bold uppercase text-slate-800 ">
             {title}
           </h1>
