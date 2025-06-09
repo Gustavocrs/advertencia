@@ -24,6 +24,7 @@ const IncluirAluno = () => {
     cidade: "",
     estado: "",
     celular: "",
+    email: "",
     turma: "",
     matricula: "",
     responsavel: {
@@ -87,6 +88,7 @@ const IncluirAluno = () => {
           cidade: "",
           estado: "",
           celular: "",
+          email: "",
           turma: "",
           matricula: "",
           responsavel: {
@@ -116,6 +118,13 @@ const IncluirAluno = () => {
         <BaseFormCadastro
           otherFields={
             <>
+              <Input
+                label="E-mail"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
               <Input
                 label="Turma"
                 type="select"
