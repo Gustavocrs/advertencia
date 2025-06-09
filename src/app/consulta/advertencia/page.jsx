@@ -95,9 +95,6 @@ const ConsultarAdvertencia = () => {
       setOpenDialog(true);
     }
   };
-  const onRowClick = (row) => {
-    console.log(row);
-  };
 
   return (
     <BaseTableSearch
@@ -107,7 +104,7 @@ const ConsultarAdvertencia = () => {
       setRows={setRows}
       loading={loading}
       onRowDoubleClick={(row) => onRowDoubleClick(row)}
-      onRowClick={(row) => onRowClick(row)}
+      // onRowClick={(row) => onRowClick(row)}
       state={openDialog}
       setState={setOpenDialog}
       itemId={itemId}

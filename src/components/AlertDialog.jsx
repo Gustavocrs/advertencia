@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useRequest from "@/hooks/useRequest";
 import {Notify, notifyError, notifySuccess} from "./Notify";
 import {useRouter} from "next/navigation";
+import {checkPermission} from "@/utils/checkPermission";
 
 export default function AlertDialog({
   state,
@@ -20,24 +21,31 @@ export default function AlertDialog({
 }) {
   const {del, patch, error, loading} = useRequest();
   const router = useRouter();
+  const hasPermission = checkPermission();
 
   const handleClose = () => {
     setState(false);
   };
   const handleEditarRegistro = async (itemId, itemData) => {
-    console.log(itemId, itemData);
-    setState(false);
-    setReload(true);
+    if (hasPermission) {
+      setState(false);
+      setReload(true);
+    } else {
+      notifyError("Você não possui permissões para editar uma Advertência");
+    }
   };
   const handleExcluirRegistro = async (url) => {
     try {
-      const response = await del(`${url}`);
-      // console.log(response.data);
-      setReload(true);
+      if (hasPermission) {
+        const response = await del(`${url}`);
+        setReload(true);
 
-      if (response.data) {
-        setState(false);
-        notifySuccess(response.data.message);
+        if (response.data) {
+          setState(false);
+          notifySuccess(response.data.message);
+        }
+      } else {
+        notifyError("Você não possui permissões para excluir uma Advertência");
       }
     } catch {
       console.error("Erro ao buscar:", error);

@@ -5,51 +5,38 @@ import {ToastContainer, toast} from "react-toastify";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import useRequest from "@/hooks/useRequest";
 
 export default function Home() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const {post, error, loading} = useRequest();
 
   const handleSubmit = async (event) => {
-    setLoading(true);
     event.preventDefault();
 
     if (!event.target.login.value.trim() || !event.target.senha.value.trim()) {
       toast.error("Por favor, preencha todos os campos.");
-      setLoading(false);
-
       return;
     }
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: event.target.login.value,
-            password: event.target.senha.value,
-          }),
-        }
-      );
-      const data = await response.json();
-      if (data && data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.usuario));
+      let data = JSON.stringify({
+        email: event.target.login.value.trim(),
+        password: event.target.senha.value.trim(),
+      });
+      const response = await post(`api/auth`, data);
+
+      console.log("response", response.data);
+
+      if (response.data && response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.usuario));
+        router.push("/principal");
       } else {
         toast.error("Login ou senha inválidos");
-        setLoading(false);
       }
-      if (response.ok) {
-        router.push("/principal");
-      }
-    } catch (error) {
+    } catch {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 

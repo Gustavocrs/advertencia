@@ -60,13 +60,8 @@ const ConsultarUsuario = () => {
     {field: "cargo", headerName: "Cargo", width: 150},
   ];
   const onRowDoubleClick = (row) => {
-    console.log(row.row.cargo);
-
     if (row.id) {
       setItemId(row.id);
-
-      if (row?.row?.cargo === "Desenvolvedor" || row?.row?.cargo === "Diretor")
-        setOpenDialog(true);
     }
   };
 
