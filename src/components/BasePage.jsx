@@ -7,7 +7,9 @@ export default function BasePage({children, title}) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")));
+    if (typeof window !== "undefined") {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
   }, []);
 
   return (

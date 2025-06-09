@@ -29,9 +29,11 @@ export default function Home() {
       console.log("response", response.data);
 
       if (response.data && response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.usuario));
-        router.push("/principal");
+        if (typeof window !== "undefined") {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", JSON.stringify(response.data.usuario));
+          router.push("/principal");
+        }
       } else {
         toast.error("Login ou senha inválidos");
       }

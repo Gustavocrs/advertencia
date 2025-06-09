@@ -7,8 +7,10 @@ import {fetchMunicipios} from "@/utils/fetchMunicipios";
 import {fetchCepData} from "@/utils/fetchCepData";
 import BaseFormPage from "@/components/BaseFormPage";
 import {ToastContainer, toast} from "react-toastify";
+import useRequest from "@/hooks/useRequest";
 
 const MinhaConta = () => {
+  const {get, patch, error, loading} = useRequest();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,35 +34,28 @@ const MinhaConta = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const userStorage = localStorage.getItem("user");
-    if (userStorage) {
-      const userObj = JSON.parse(userStorage);
-      setUser(userObj);
+    if (typeof window !== "undefined") {
+      const userStorage = localStorage.getItem("user");
+      if (userStorage) {
+        const userObj = JSON.parse(userStorage);
+        setUser(userObj);
 
-      const fetchUserData = async () => {
-        const token = localStorage.getItem("token");
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios/${userObj.value}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+        const fetchUserData = async () => {
+          const response = await get(`api/usuarios/${userObj.value}`);
+          if (response.ok) {
+            const data = await response.json();
+            setFormData({
+              ...formData,
+              ...data,
+              data_nascimento: data.data_nascimento
+                ? data.data_nascimento.split("T")[0]
+                : "",
+              password: "",
+            });
           }
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setFormData({
-            ...formData,
-            ...data,
-            data_nascimento: data.data_nascimento
-              ? data.data_nascimento.split("T")[0]
-              : "",
-            password: "",
-          });
-        }
-      };
-      fetchUserData();
+        };
+        fetchUserData();
+      }
     }
   }, []);
 
@@ -68,27 +63,18 @@ const MinhaConta = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
   const handleSubmit = async (e) => {
-    // console.log("FormData", formData);
-    const token = localStorage.getItem("token");
+    if (typeof window !== "undefined") {
+    }
     const userStorage = localStorage.getItem("user");
 
     if (userStorage) {
       const userObj = JSON.parse(userStorage);
 
       e.preventDefault();
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios/${userObj.value}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const data = JSON.stringify(formData);
+      const response = await patch(`/api/usuarios/${userObj.value}`, data);
 
-      if (response.ok) {
+      if (response.data) {
         toast.success("Usuário alterado com sucesso!");
       } else {
         toast.error("Erro ao incluir usuário.");

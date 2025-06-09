@@ -5,7 +5,7 @@ import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
 
 const ConsultarAdvertencia = () => {
-  const {get, loading} = useRequest();
+  const {get, put, loading, error} = useRequest();
   const [rows, setRows] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [itemId, setItemId] = useState("");
@@ -52,32 +52,21 @@ const ConsultarAdvertencia = () => {
         const handleToggle = async () => {
           const newValue =
             params.value === "true" || params.value === true ? "false" : "true";
-          const token = localStorage.getItem("token");
 
           try {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias/${params.id}`,
-              {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({situacao: newValue}),
-              }
-            );
+            const data = JSON.stringify({situacao: newValue});
+            const response = await put(`/api/advertencias/${params.id}`, data);
 
-            if (!response.ok) {
+            if (!response.data) {
               throw new Error("Erro ao atualizar situação");
             }
 
-            // Atualiza o valor localmente após sucesso
             setRows((prevRows) =>
               prevRows.map((row) =>
                 row.id === params.id ? {...row, situacao: newValue} : row
               )
             );
-          } catch (error) {
+          } catch {
             console.error("Erro ao atualizar situação:", error);
           }
         };

@@ -8,8 +8,10 @@ import BasePage from "@/components/BasePage";
 export default function cadastro() {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      router.push("/");
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("token")) {
+        router.push("/");
+      }
     }
   }, []);
   return (

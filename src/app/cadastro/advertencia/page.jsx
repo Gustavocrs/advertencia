@@ -25,7 +25,11 @@ const CriarAdvertencia = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const userStorage = localStorage.getItem("user");
+    const userStorage = "";
+    if (typeof window !== "undefined") {
+      userStorage = localStorage.getItem("user");
+    }
+
     if (userStorage) {
       const userObj = JSON.parse(userStorage);
       setUser(userObj);
@@ -123,22 +127,12 @@ const CriarAdvertencia = () => {
   };
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
-    const token = localStorage.getItem("token");
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/advertencias`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const data = JSON.stringify(formData);
+      const response = await post(`api/advertencias`, data);
 
-      if (response.ok) {
+      if (response.data) {
         notifySuccess("Advertência criada com sucesso!");
         setFormData((prev) => ({
           ...prev,
@@ -157,7 +151,7 @@ const CriarAdvertencia = () => {
       }
     } catch (error) {
       console.error("Erro ao enviar os dados:", error);
-      notifyError("Erro ao criar advertência. Tente novamente mais tarde.");
+      notifyError("Erro ao criar advertência.");
     }
   };
   const optionsAcaoEsperada = [

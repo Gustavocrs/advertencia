@@ -25,8 +25,10 @@ export default function Profile({user}) {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      router.push("/");
+    }
   };
   const getFirstNameAndInitial = (nomeCompleto) => {
     if (!nomeCompleto) return "";

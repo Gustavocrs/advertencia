@@ -9,8 +9,10 @@ import {fetchCepData} from "@/utils/fetchCepData";
 import BaseFormPage from "@/components/BaseFormPage";
 import {toast, ToastContainer} from "react-toastify";
 import {PersonAdd} from "@mui/icons-material";
+import useRequest from "@/hooks/useRequest";
 
 const CadastroUsuario = () => {
+  const {post, error, loading} = useRequest();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -36,22 +38,14 @@ const CadastroUsuario = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
   const handleSubmit = async (e) => {
-    console.log("FormData", formData);
-    const token = localStorage.getItem("token");
     e.preventDefault();
-    const response = await fetch(
+    const data = JSON.stringify(formData);
+    const response = await post(
       `${process.env.NEXT_PUBLIC_API_URL}/api/usuarios`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      }
+      data
     );
 
-    if (response.ok) {
+    if (response.data) {
       toast.success("Usuário incluído com sucesso!");
       setFormData({
         nome: "",
