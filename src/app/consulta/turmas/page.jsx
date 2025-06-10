@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
 import {notifyError, notifySuccess} from "@/components/Notify";
-import AlertDialog from "@/components/AlertDialog";
 
 const ConsultarTurmas = () => {
   const {get, error, loading} = useRequest();
@@ -21,8 +20,8 @@ const ConsultarTurmas = () => {
             id: aluno._id || index,
             nome: aluno.nome || "",
             ano: aluno.ano || "",
+            alunos: Array.isArray(aluno.alunos) ? aluno.alunos : "Sem Alunos",
           }));
-
           setRows(formattedData);
         }
       } catch {
@@ -38,6 +37,14 @@ const ConsultarTurmas = () => {
   const columns = [
     {field: "nome", headerName: "Turma", width: 200},
     {field: "ano", headerName: "Ano", width: 200},
+    {
+      field: "alunos",
+      headerName: "Alunos",
+      width: 150,
+      renderCell: (params) => {
+        return params.row.alunos.length;
+      },
+    },
   ];
 
   const onRowDoubleClick = (row) => {

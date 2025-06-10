@@ -3,7 +3,6 @@ import {Button} from "@/components/Button";
 import {Input} from "@/components/Input";
 import {ToastContainer, toast} from "react-toastify";
 import {useRouter} from "next/navigation";
-import {useState} from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import useRequest from "@/hooks/useRequest";
 
@@ -26,7 +25,7 @@ export default function Home() {
       });
       const response = await post(`api/auth`, data);
 
-      console.log("response", response.data);
+      // console.log("response", response.data);
 
       if (response.data && response.data.token) {
         if (typeof window !== "undefined") {
