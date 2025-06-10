@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Switch} from "@/components/Switch";
 import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
+import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
 
 const ConsultarAdvertencia = () => {
   const {get, put, loading, error} = useRequest();
@@ -22,7 +23,7 @@ const ConsultarAdvertencia = () => {
           motivo: advertencia.motivo || "Motivo não informado",
           usuario: advertencia.usuario?.nome || "Usuario não informado",
           data: advertencia.data
-            ? new Date(advertencia.data).toLocaleDateString("pt-BR")
+            ? convertToBrazilianDate(advertencia.data)
             : "Data não informada",
           situacao: advertencia.situacao === true ? "true" : "false",
         }));
