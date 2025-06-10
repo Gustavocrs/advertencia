@@ -37,10 +37,12 @@ const BaseTableSearch = ({
       <SideBar user={user} />
       <NavBar user={user} />
       <div className="md:ml-16 mt-14 ">
-        <div className="flex justify-start gap-5 items-center ml-2">
+        <div className="flex justify-start gap-5 items-center ml-2 ">
           <IoMdArrowRoundBack
-            className="text-2xl cursor-pointer"
-            onClick={() => router.back()}
+            className="text-2xl cursor-pointer z-50"
+            onClick={(e) => {
+              router.back();
+            }}
           />
           {icon ? (
             icon

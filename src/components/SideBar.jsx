@@ -66,7 +66,8 @@ export const SideBar = ({user}) => {
           <li
             key={index}
             className="flex-col md:w-full flex items-center gap-4 md:flex-row"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               router.push(item.route);
               setIsOpen(false);
             }}

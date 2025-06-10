@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import useRequest from "@/hooks/useRequest";
 
 const CriarAdvertencia = () => {
-  const {get, error} = useRequest();
+  const {get, post, error} = useRequest();
   const [turmas, setTurmas] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [alunos, setAlunos] = useState([]);
@@ -25,7 +25,7 @@ const CriarAdvertencia = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const userStorage = "";
+    let userStorage = "";
     if (typeof window !== "undefined") {
       userStorage = localStorage.getItem("user");
     }
@@ -150,7 +150,7 @@ const CriarAdvertencia = () => {
         notifyError(`Erro ao criar advertência: ${errorData.message}`);
       }
     } catch (error) {
-      console.error("Erro ao enviar os dados:", error);
+      console.log("Erro ao enviar os dados:", error);
       notifyError("Erro ao criar advertência.");
     }
   };
