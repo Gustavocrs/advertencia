@@ -101,6 +101,7 @@ const ConsultarAluno = () => {
         itemId={itemId}
         setReload={setReload}
         url={`api/alunos/${itemId}`}
+        errorMsg="Você não possui permissões para excluir alunos."
       />
     </>
   );

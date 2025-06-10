@@ -101,6 +101,7 @@ const ConsultarAdvertencia = () => {
       setReload={setReload}
       isPrint={true}
       url={`api/advertencias/${itemId}`}
+      errorMsg="Você não possui permissões para excluir uma Advertência"
     />
   );
 };

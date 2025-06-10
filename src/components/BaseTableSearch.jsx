@@ -21,6 +21,7 @@ const BaseTableSearch = ({
   itemId,
   isPrint,
   url,
+  errorMsg,
   icon,
   ...props
 }) => {
@@ -78,6 +79,7 @@ const BaseTableSearch = ({
         setReload={setReload}
         isPrint={isPrint}
         url={url}
+        errorMsg={errorMsg}
       />
     </div>
   );

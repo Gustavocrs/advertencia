@@ -18,6 +18,7 @@ export default function AlertDialog({
   setReload,
   isPrint,
   url,
+  errorMsg = "Você não possui permissões para esta ação",
 }) {
   const {del, patch, error, loading} = useRequest();
   const router = useRouter();
@@ -45,7 +46,7 @@ export default function AlertDialog({
           notifySuccess(response.data.message);
         }
       } else {
-        notifyError("Você não possui permissões para excluir uma Advertência");
+        notifyError(errorMsg);
       }
     } catch {
       console.log("Erro ao buscar:", error);

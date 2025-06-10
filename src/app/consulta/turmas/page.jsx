@@ -68,6 +68,7 @@ const ConsultarTurmas = () => {
         itemId={itemId}
         setReload={setReload}
         url={`api/turmas/${itemId}`}
+        errorMsg="Você não possui permissões para excluir turmas."
       />
     </>
   );
