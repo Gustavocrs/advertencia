@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 import useRequest from "@/hooks/useRequest";
 import {CircularProgress} from "@mui/material";
+import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
 
 const ImprimirAdvertencia = () => {
   const params = useParams();
@@ -65,13 +66,8 @@ const ImprimirAdvertencia = () => {
           </h2>
 
           <p className="mb-4 text-justify leading-7">
-            Aos{" "}
-            <strong>
-              {advertencia?.data
-                ? new Date(advertencia?.data).toLocaleDateString("pt-BR")
-                : "___/___/____"}
-            </strong>
-            , o(a) aluno(a){" "}
+            Aos <strong>{convertToBrazilianDate(advertencia?.data)}</strong>,
+            o(a) aluno(a){" "}
             <strong>{advertencia?.aluno?.nome || "NOME DO ALUNO"}</strong>,
             turma <strong>{advertencia?.turma?.nome || "___"}</strong>, foi
             advertido(a) pelo servidor{" "}
@@ -118,10 +114,7 @@ const ImprimirAdvertencia = () => {
           <div className="mt-12 text-center">
             {/* Local e data formatados para assinatura */}
             <p className="italic">
-              Rio de Janeiro,{" "}
-              {advertencia?.data
-                ? new Date(advertencia?.data).toLocaleDateString("pt-BR")
-                : "___/___/____"}
+              Rio de Janeiro, {convertToBrazilianDate(advertencia?.data)}
             </p>
           </div>
 
@@ -134,9 +127,7 @@ const ImprimirAdvertencia = () => {
               <div>Turma: {advertencia?.turma?.nome || "___"}</div>
               <div>
                 Data:
-                {advertencia?.data
-                  ? new Date(advertencia?.data).toLocaleDateString("pt-BR")
-                  : "___/___/____"}
+                {convertToBrazilianDate(advertencia?.data)}
               </div>
             </div>
             <div>
