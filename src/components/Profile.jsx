@@ -107,7 +107,7 @@ export default function Profile({user}) {
           </ListItemIcon>
           Adicionar Usuários
         </MenuItem>
-        <MenuItem onClick={() => router.push("consulta/usuarios")}>
+        <MenuItem onClick={() => router.push("/consulta/usuarios")}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>

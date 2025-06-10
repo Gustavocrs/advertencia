@@ -22,7 +22,7 @@ const ImprimirAdvertencia = () => {
         }
       } catch (error) {
         setAdvertencia(null);
-        console.error("Erro ao buscar advertência:", error);
+        console.log("Erro ao buscar advertência:", error);
       }
     };
 

@@ -67,7 +67,7 @@ const ConsultarAdvertencia = () => {
               )
             );
           } catch {
-            console.error("Erro ao atualizar situação:", error);
+            console.log("Erro ao atualizar situação:", error);
           }
         };
         return (

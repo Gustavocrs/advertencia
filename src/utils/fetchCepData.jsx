@@ -26,11 +26,11 @@ export const fetchCepData = async (cep, setState, setFormData) => {
         toast.error("CEP não encontrado.");
       }
     } else {
-      console.error("Erro ao buscar o CEP.");
+      console.log("Erro ao buscar o CEP.");
       toast.error("Erro ao buscar o CEP.");
     }
   } catch (error) {
-    console.error("Erro na requisição:", error);
+    console.log("Erro na requisição:", error);
     toast.error("Erro na requisição:", error);
   }
 };

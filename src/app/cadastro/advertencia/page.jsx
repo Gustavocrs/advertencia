@@ -127,7 +127,7 @@ const CriarAdvertencia = () => {
   };
   const handleSubmit = async (e) => {
     console.log("FormData", formData);
-    e.preventDefault(); // Previne o comportamento padrão do formulário
+    e.preventDefault();
     try {
       const data = JSON.stringify(formData);
       const response = await post(`api/advertencias`, data);
@@ -172,7 +172,7 @@ const CriarAdvertencia = () => {
       <Notify />
       <form
         className="flex flex-col items-start justify-between w-full p-2"
-        onSubmit={handleSubmit} // Adicionado o evento onSubmit
+        onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center justify-center w-full h-full p-4 bg-white shadow-lg rounded-lg">
           <Input

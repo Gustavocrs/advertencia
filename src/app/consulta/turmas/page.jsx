@@ -67,6 +67,7 @@ const ConsultarTurmas = () => {
         setState={setOpenDialog}
         itemId={itemId}
         setReload={setReload}
+        url={`api/turmas/${itemId}`}
       />
     </>
   );

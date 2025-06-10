@@ -100,6 +100,7 @@ const ConsultarAluno = () => {
         setState={setOpenDialog}
         itemId={itemId}
         setReload={setReload}
+        url={`api/alunos/${itemId}`}
       />
     </>
   );

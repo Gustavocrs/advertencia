@@ -11,9 +11,9 @@ export const fetchEstados = async (setData) => {
       }));
       setData(estadosFormatados);
     } else {
-      console.error("Erro ao buscar os estados.");
+      console.log("Erro ao buscar os estados.");
     }
   } catch (error) {
-    console.error("Erro na requisição:", error);
+    console.log("Erro na requisição:", error);
   }
 };

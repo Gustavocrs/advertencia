@@ -15,9 +15,9 @@ export const fetchMunicipios = async (estado, setData, setFormData) => {
       }));
       setData(municipiosFormatados);
     } else {
-      console.error("Erro ao buscar os municípios.");
+      console.log("Erro ao buscar os municípios.");
     }
   } catch (error) {
-    console.error("Erro na requisição:", error);
+    console.log("Erro na requisição:", error);
   }
 };

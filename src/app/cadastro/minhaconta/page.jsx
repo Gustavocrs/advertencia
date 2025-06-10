@@ -42,13 +42,11 @@ const MinhaConta = () => {
 
         const fetchUserData = async () => {
           const response = await get(`api/usuarios/${userObj.value}`);
-          if (response.ok) {
-            const data = await response.json();
+          if (response.data) {
             setFormData({
-              ...formData,
-              ...data,
-              data_nascimento: data.data_nascimento
-                ? data.data_nascimento.split("T")[0]
+              ...response.data,
+              data_nascimento: response.data.data_nascimento
+                ? response.data.data_nascimento.split("T")[0]
                 : "",
               password: "",
             });

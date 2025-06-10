@@ -48,7 +48,7 @@ export default function AlertDialog({
         notifyError("Você não possui permissões para excluir uma Advertência");
       }
     } catch {
-      console.error("Erro ao buscar:", error);
+      console.log("Erro ao buscar:", error);
       notifyError(error?.message);
     }
   };

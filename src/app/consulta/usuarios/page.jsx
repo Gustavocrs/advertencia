@@ -79,6 +79,7 @@ const ConsultarUsuario = () => {
         itemId={itemId}
         setReload={setReload}
         icon={<Settings fontSize="large" className="text-slate-800 text-4xl" />}
+        url={`api/usuarios/${itemId}`}
       />
     </>
   );
