@@ -10,6 +10,7 @@ import {Input} from "@/components/Input";
 import {fetchEstados} from "@/utils/fetchEstados";
 import {fetchMunicipios} from "@/utils/fetchMunicipios";
 import {checkPermission} from "@/utils/checkPermission";
+import withAuth from "@/components/withAuth";
 
 const ConsultarUsuario = () => {
   const {get, error, loading} = useRequest();
@@ -290,4 +291,4 @@ const ConsultarUsuario = () => {
   );
 };
 
-export default ConsultarUsuario;
+export default withAuth(ConsultarUsuario);

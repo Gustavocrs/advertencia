@@ -5,8 +5,9 @@ import {Input} from "@/components/Input";
 import {Notify, notifySuccess, notifyError} from "@/components/Notify";
 import useRequest from "@/hooks/useRequest";
 import {useState} from "react";
+import withAuth from "@/components/withAuth";
 
-export default function Turmas() {
+const Turmas = () => {
   const {loading, error, post} = useRequest();
   const [formData, setFormData] = useState({nome: "", ano: ""});
 
@@ -57,4 +58,6 @@ export default function Turmas() {
       </form>
     </BaseFormPage>
   );
-}
+};
+
+export default withAuth(Turmas);

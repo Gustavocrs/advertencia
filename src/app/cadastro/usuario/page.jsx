@@ -10,6 +10,7 @@ import BaseFormPage from "@/components/BaseFormPage";
 import {toast, ToastContainer} from "react-toastify";
 import {PersonAdd} from "@mui/icons-material";
 import useRequest from "@/hooks/useRequest";
+import withAuth from "@/components/withAuth";
 
 const CadastroUsuario = () => {
   const {post, error, loading} = useRequest();
@@ -230,4 +231,4 @@ const CadastroUsuario = () => {
   );
 };
 
-export default CadastroUsuario;
+export default withAuth(CadastroUsuario);

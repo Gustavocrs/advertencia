@@ -8,6 +8,7 @@ import {fetchCepData} from "@/utils/fetchCepData";
 import BaseFormPage from "@/components/BaseFormPage";
 import {ToastContainer, toast} from "react-toastify";
 import useRequest from "@/hooks/useRequest";
+import withAuth from "@/components/withAuth";
 
 const MinhaConta = () => {
   const {get, patch, error, loading} = useRequest();
@@ -224,4 +225,4 @@ const MinhaConta = () => {
   );
 };
 
-export default MinhaConta;
+export default withAuth(MinhaConta);

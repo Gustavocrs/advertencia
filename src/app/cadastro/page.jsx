@@ -4,16 +4,11 @@ import {useRouter} from "next/navigation";
 import {Card} from "@/components/Card";
 import {useEffect} from "react";
 import BasePage from "@/components/BasePage";
+import withAuth from "@/components/withAuth";
 
-export default function cadastro() {
+const cadastro = () => {
   const router = useRouter();
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (!localStorage.getItem("token")) {
-        router.push("/");
-      }
-    }
-  }, []);
+
   return (
     <BasePage title="Cadastros">
       <div
@@ -33,4 +28,6 @@ export default function cadastro() {
       </div>
     </BasePage>
   );
-}
+};
+
+export default withAuth(cadastro);

@@ -3,8 +3,9 @@ import {FaUserCircle} from "react-icons/fa";
 import {useRouter} from "next/navigation";
 import {Card} from "@/components/Card";
 import BasePage from "@/components/BasePage";
+import withAuth from "@/components/withAuth";
 
-export default function consulta() {
+const consulta = () => {
   const router = useRouter();
 
   return (
@@ -35,4 +36,5 @@ export default function consulta() {
       </div>
     </BasePage>
   );
-}
+};
+export default withAuth(consulta);

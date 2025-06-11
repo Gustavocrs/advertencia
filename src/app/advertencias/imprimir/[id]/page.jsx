@@ -4,6 +4,7 @@ import {useParams, useRouter} from "next/navigation";
 import useRequest from "@/hooks/useRequest";
 import {CircularProgress} from "@mui/material";
 import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
+import withAuth from "@/components/withAuth";
 
 const ImprimirAdvertencia = () => {
   const params = useParams();
@@ -156,4 +157,4 @@ const ImprimirAdvertencia = () => {
   );
 };
 
-export default ImprimirAdvertencia;
+export default withAuth(ImprimirAdvertencia);

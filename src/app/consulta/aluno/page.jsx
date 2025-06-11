@@ -6,6 +6,7 @@ import ModalEdit from "@/components/ModalEdit";
 import BaseFormCadastro from "@/components/BaseFormCadastro";
 import {notifyError, notifySuccess} from "@/components/Notify";
 import {Input} from "@/components/Input";
+import withAuth from "@/components/withAuth";
 
 const ConsultarAluno = () => {
   const {get, patch, loading} = useRequest();
@@ -294,4 +295,4 @@ const ConsultarAluno = () => {
   );
 };
 
-export default ConsultarAluno;
+export default withAuth(ConsultarAluno);

@@ -4,8 +4,9 @@ import {IoSearchSharp} from "react-icons/io5";
 import {BsFileEarmarkBarGraphFill} from "react-icons/bs";
 import {IoAddSharp} from "react-icons/io5";
 import {Modulos} from "@/components/Modulos";
+import withAuth from "@/components/withAuth";
 
-export default function Principal() {
+const Principal = () => {
   return (
     <BasePage title={"Módulos SGE"}>
       <Modulos
@@ -73,4 +74,6 @@ export default function Principal() {
       />
     </BasePage>
   );
-}
+};
+
+export default withAuth(Principal);

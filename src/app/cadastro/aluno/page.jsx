@@ -8,6 +8,7 @@ import BaseFormCadastro from "@/components/BaseFormCadastro";
 import useRequest from "@/hooks/useRequest";
 import {Notify, notifySuccess, notifyError} from "@/components/Notify";
 import {PersonAdd} from "@mui/icons-material";
+import withAuth from "@/components/withAuth";
 
 const IncluirAluno = () => {
   const {post, get, error, loading} = useRequest();
@@ -186,4 +187,4 @@ const IncluirAluno = () => {
   );
 };
 
-export default IncluirAluno;
+export default withAuth(IncluirAluno);

@@ -4,6 +4,7 @@ import {Switch} from "@/components/Switch";
 import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
 import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
+import withAuth from "@/components/withAuth";
 
 const ConsultarAdvertencia = () => {
   const {get, put, loading, error} = useRequest();
@@ -106,4 +107,4 @@ const ConsultarAdvertencia = () => {
   );
 };
 
-export default ConsultarAdvertencia;
+export default withAuth(ConsultarAdvertencia);

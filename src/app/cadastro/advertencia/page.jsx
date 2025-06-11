@@ -6,6 +6,7 @@ import {Notify, notifyError, notifySuccess} from "@/components/Notify";
 import {RadioGroup} from "@/components/RadioGroup";
 import {useEffect, useState} from "react";
 import useRequest from "@/hooks/useRequest";
+import withAuth from "@/components/withAuth";
 
 const CriarAdvertencia = () => {
   const {get, post, error} = useRequest();
@@ -251,4 +252,4 @@ const CriarAdvertencia = () => {
   );
 };
 
-export default CriarAdvertencia;
+export default withAuth(CriarAdvertencia);

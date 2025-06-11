@@ -5,6 +5,7 @@ import useRequest from "@/hooks/useRequest";
 import {notifyError, notifySuccess} from "@/components/Notify";
 import ModalEdit from "@/components/ModalEdit";
 import {Input} from "@/components/Input";
+import withAuth from "@/components/withAuth";
 
 const ConsultarTurmas = () => {
   const {get, error, loading} = useRequest();
@@ -156,4 +157,4 @@ const ConsultarTurmas = () => {
   );
 };
 
-export default ConsultarTurmas;
+export default withAuth(ConsultarTurmas);
