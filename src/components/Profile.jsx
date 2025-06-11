@@ -13,6 +13,8 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import {useRouter} from "next/navigation";
 import {FaUserCircle} from "react-icons/fa";
+import {IoPersonAdd, IoSearchSharp} from "react-icons/io5";
+import {CgMenuGridR} from "react-icons/cg";
 
 export default function Profile({user}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -40,8 +42,27 @@ export default function Profile({user}) {
   return (
     <React.Fragment>
       <Box sx={{display: "flex", alignItems: "center", textAlign: "center"}}>
-        {/* <Typography sx={{minWidth: 100}}>Contato</Typography> */}
-        {/* <Typography sx={{minWidth: 100}}>Perfil</Typography> */}
+        <div className="flex gap-4">
+          <div
+            className="cursor-pointer text-3xl hover:scale-150 transform transition-all ease-in-out"
+            onClick={() => router.push("/principal")}
+          >
+            <CgMenuGridR />
+          </div>
+          <div
+            className="cursor-pointer text-3xl hover:scale-150 transform transition-all ease-in-out"
+            onClick={() => router.push("/cadastro")}
+          >
+            <IoPersonAdd />
+          </div>
+          <div
+            className="cursor-pointer text-3xl hover:scale-150 transform transition-all ease-in-out"
+            onClick={() => router.push("/consulta")}
+          >
+            <IoSearchSharp />
+          </div>
+        </div>
+
         <Tooltip title="Gerenciar usuário">
           <IconButton
             onClick={handleClick}

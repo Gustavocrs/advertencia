@@ -35,7 +35,7 @@ const BaseTableSearch = ({
 
   return (
     <div className="flex flex-col h-screen bg-zinc-200 w-full">
-      <SideBar user={user} />
+      {/* <SideBar user={user} /> */}
       <NavBar user={user} />
       <div className="md:ml-16 mt-14 ">
         <div className="flex justify-start gap-5 items-center ml-2 ">
@@ -80,6 +80,7 @@ const BaseTableSearch = ({
         isPrint={isPrint}
         url={url}
         errorMsg={errorMsg}
+        onEdit={props.onEdit}
       />
     </div>
   );

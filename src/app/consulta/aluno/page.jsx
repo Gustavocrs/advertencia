@@ -2,14 +2,38 @@
 import {useEffect, useState} from "react";
 import BaseTableSearch from "@/components/BaseTableSearch";
 import useRequest from "@/hooks/useRequest";
+import ModalEdit from "@/components/ModalEdit";
+import BaseFormCadastro from "@/components/BaseFormCadastro";
+import {notifyError, notifySuccess} from "@/components/Notify";
+import {Input} from "@/components/Input";
 
 const ConsultarAluno = () => {
-  const {get, loading} = useRequest();
+  const {get, patch, loading} = useRequest();
   const [rows, setRows] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [itemId, setItemId] = useState("");
   const [reload, setReload] = useState(false);
+  const [editFormData, setEditFormData] = useState(null);
+  const [editLoading, setEditLoading] = useState(false);
+  const [turmas, setTurmas] = useState([]);
 
+  useEffect(() => {
+    const fetchTurmas = async () => {
+      try {
+        const response = await get("api/turmas");
+        const turmasFormatadas = response.data.data.map((turma) => ({
+          value: turma._id,
+          label: turma.nome,
+        }));
+        setTurmas(turmasFormatadas);
+      } catch {
+        notifyError(`${error?.message}`);
+        console.log("Error: ", error);
+      }
+    };
+    fetchTurmas();
+  }, []);
   useEffect(() => {
     const fetchAlunos = async () => {
       try {
@@ -80,13 +104,99 @@ const ConsultarAluno = () => {
     },
   ];
 
+  const emptyAluno = {
+    nome: "",
+    data_nascimento: "",
+    cpf: "",
+    cep: "",
+    endereco: "",
+    numero: "",
+    complemento: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    celular: "",
+    email: "",
+    turma: "",
+    matricula: "",
+    responsavel: {
+      nome: "",
+      celular1: "",
+      celular2: "",
+      email: "",
+    },
+  };
+
+  const handleEditOpen = async (id) => {
+    try {
+      setEditLoading(true);
+      const response = await get(`api/alunos/${id}`);
+      if (response.data) {
+        setEditFormData({
+          ...emptyAluno,
+          ...response.data,
+          data_nascimento: response.data.data_nascimento
+            ? response.data.data_nascimento.split("T")[0]
+            : "",
+          responsavel: {
+            ...emptyAluno.responsavel,
+            ...(response.data.responsavel || {}),
+          },
+        });
+        setOpenEditModal(true); // <-- aqui!
+      }
+    } catch {
+      notifyError("Erro ao carregar dados do aluno para edição.");
+    } finally {
+      setEditLoading(false);
+    }
+  };
+  const handleEditSave = async (e) => {
+    e.preventDefault();
+    if (!editFormData || !itemId) return;
+    try {
+      setEditLoading(true);
+      const response = await patch(
+        `api/alunos/${itemId}`,
+        JSON.stringify(editFormData)
+      );
+      if (response.data) {
+        notifySuccess("Aluno atualizado com sucesso!");
+        setOpenDialog(false);
+        setReload(true);
+      } else {
+        notifyError("Erro ao atualizar aluno.");
+      }
+    } catch {
+      notifyError("Erro ao atualizar aluno.");
+    } finally {
+      setEditLoading(false);
+    }
+  };
   const onRowDoubleClick = (row) => {
     if (row.id) {
       setItemId(row.id);
       setOpenDialog(true);
     }
   };
-
+  const handleEditChange = (e) => {
+    const {name, value} = e.target;
+    if (name.startsWith("responsavel.")) {
+      const field = name.split(".")[1];
+      setEditFormData((prev) => ({
+        ...prev,
+        responsavel: {
+          ...prev.responsavel,
+          [field]: value,
+        },
+      }));
+    } else {
+      setEditFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
   return (
     <>
       <BaseTableSearch
@@ -102,6 +212,83 @@ const ConsultarAluno = () => {
         setReload={setReload}
         url={`api/alunos/${itemId}`}
         errorMsg="Você não possui permissões para excluir alunos."
+        onEdit={handleEditOpen}
+      />
+      <ModalEdit
+        open={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        onSave={handleEditSave}
+        loading={editLoading}
+        isEdit={true}
+        title="Editar Aluno"
+        form={
+          editFormData && (
+            <form onSubmit={handleEditSave}>
+              <BaseFormCadastro
+                otherFields={
+                  <>
+                    <Input
+                      label="E-mail"
+                      type="email"
+                      name="email"
+                      value={editFormData.email}
+                      onChange={handleEditChange}
+                    />
+                    <Input
+                      label="Turma"
+                      type="select"
+                      name="turma"
+                      value={editFormData.turma}
+                      onChange={handleEditChange}
+                      data={turmas}
+                    />
+                    <Input
+                      label="Matrícula"
+                      type="text"
+                      name="matricula"
+                      value={editFormData.matricula}
+                      onChange={handleEditChange}
+                    />
+                    <div className="mt-4 mb-2 font-bold uppercase text-slate-900 text-xl">
+                      Dados do Responsável
+                    </div>
+                    <Input
+                      label="Nome"
+                      type="text"
+                      name="responsavel.nome"
+                      value={editFormData.responsavel?.nome || ""}
+                      onChange={handleEditChange}
+                    />
+                    <Input
+                      label="Celular 1 (Whatsapp)"
+                      type="cel"
+                      name="responsavel.celular1"
+                      value={editFormData.responsavel?.celular1 || ""}
+                      onChange={handleEditChange}
+                    />
+                    <Input
+                      label="Celular 2"
+                      type="cel"
+                      name="responsavel.celular2"
+                      value={editFormData.responsavel?.celular2 || ""}
+                      onChange={handleEditChange}
+                    />
+                    <Input
+                      label="E-mail"
+                      type="email"
+                      name="responsavel.email"
+                      value={editFormData.responsavel?.email || ""}
+                      onChange={handleEditChange}
+                    />
+                  </>
+                }
+                formData={editFormData}
+                setFormData={setEditFormData}
+                onChange={handleEditChange}
+              />
+            </form>
+          )
+        }
       />
     </>
   );

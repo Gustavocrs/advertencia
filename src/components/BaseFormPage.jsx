@@ -15,7 +15,7 @@ const BaseFormPage = ({children, title, icon}) => {
   }, []);
   return (
     <div className="flex flex-col h-full min-h-screen bg-zinc-200 w-full h-min-screen">
-      <SideBar user={user} />
+      {/* <SideBar user={user} /> */}
       <NavBar user={user} />
       <div className="md:ml-16 mt-14">
         <div className="flex justify-start gap-5 items-center ml-2">

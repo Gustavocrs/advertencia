@@ -19,6 +19,7 @@ export default function AlertDialog({
   isPrint,
   url,
   errorMsg = "Você não possui permissões para esta ação",
+  onEdit,
 }) {
   const {del, patch, error, loading} = useRequest();
   const router = useRouter();
@@ -26,14 +27,6 @@ export default function AlertDialog({
 
   const handleClose = () => {
     setState(false);
-  };
-  const handleEditarRegistro = async (itemId, itemData) => {
-    if (hasPermission) {
-      setState(false);
-      setReload(true);
-    } else {
-      notifyError("Você não possui permissões para editar uma Advertência");
-    }
   };
   const handleExcluirRegistro = async (url) => {
     try {
@@ -79,7 +72,12 @@ export default function AlertDialog({
             Excluir
           </Button>
           <Button
-            onClick={() => handleEditarRegistro(itemId, itemData)}
+            onClick={() => {
+              if (onEdit) {
+                onEdit(itemId);
+                handleClose();
+              }
+            }}
             color="text-slate-900"
           >
             Editar
