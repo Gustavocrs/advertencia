@@ -20,6 +20,17 @@ export default function Principal() {
       />
 
       <Modulos
+        title="Planejamento"
+        texto1="Consultar"
+        icon1={<IoSearchSharp />}
+        route1={"consulta/advertencia"}
+        texto2="Criar"
+        icon2={<BsFileEarmarkBarGraphFill />}
+        route2={"/cadastro/advertencia"}
+        disabled={true}
+      />
+
+      <Modulos
         title="Busca Ativa"
         texto1="Consultar"
         icon1={<IoSearchSharp />}
@@ -52,16 +63,6 @@ export default function Principal() {
       />
       <Modulos
         title="PPI"
-        texto1="Consultar"
-        icon1={<IoSearchSharp />}
-        route1={"consulta/advertencia"}
-        texto2="Criar"
-        icon2={<BsFileEarmarkBarGraphFill />}
-        route2={"/cadastro/advertencia"}
-        disabled={true}
-      />
-      <Modulos
-        title="Planejamento"
         texto1="Consultar"
         icon1={<IoSearchSharp />}
         route1={"consulta/advertencia"}
