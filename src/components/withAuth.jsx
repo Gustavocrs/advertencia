@@ -7,6 +7,7 @@ export default function withAuth(Component) {
   return function ProtectedComponent(props) {
     const router = useRouter();
     const [isAuth, setIsAuth] = useState(null);
+    const [showComponent, setShowComponent] = useState(false);
 
     useEffect(() => {
       const token =
@@ -19,9 +20,16 @@ export default function withAuth(Component) {
       }
     }, [router]);
 
-    if (isAuth === null) {
+    useEffect(() => {
+      if (isAuth) {
+        const timer = setTimeout(() => setShowComponent(true), 1000);
+        return () => clearTimeout(timer);
+      }
+    }, [isAuth]);
+
+    if (isAuth === null || (isAuth && !showComponent)) {
       return (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="w-screen h-screen flex justify-center items-center">
           <CircularProgress />
         </div>
       );
