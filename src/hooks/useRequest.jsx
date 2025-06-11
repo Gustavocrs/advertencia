@@ -1,5 +1,6 @@
 import {useState, useCallback} from "react";
 import axios from "axios";
+import {useRouter} from "next/navigation";
 
 /**
  * Hook unificado para requisições HTTP com configuração dinâmica, autenticação e estados de loading/error.
@@ -16,6 +17,8 @@ export default function useRequest(
 ) {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  const router = useRouter();
 
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -34,6 +37,14 @@ export default function useRequest(
       return domainValue;
     }
     return "";
+  };
+
+  const handle401 = () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      router.push("/");
+    }
   };
 
   const config = {
@@ -74,6 +85,7 @@ export default function useRequest(
           status: response.status,
         };
       } catch (error) {
+        if (error?.response?.status === 401) handle401();
         setError(error?.response?.data);
         throw error?.response?.data;
       } finally {
@@ -94,6 +106,7 @@ export default function useRequest(
         );
         return {data: response.data};
       } catch (error) {
+        if (error?.response?.status === 401) handle401();
         setError(error?.response?.data);
         throw error?.response?.data;
       } finally {
@@ -114,6 +127,7 @@ export default function useRequest(
         );
         return {data: response.data};
       } catch (error) {
+        if (error?.response?.status === 401) handle401();
         setError(error?.response?.data);
         throw error?.response?.data;
       } finally {
@@ -134,6 +148,7 @@ export default function useRequest(
         );
         return {data: response.data};
       } catch (error) {
+        if (error?.response?.status === 401) handle401();
         setError(error?.response?.data);
         throw error?.response?.data;
       } finally {
@@ -153,6 +168,7 @@ export default function useRequest(
         );
         return {data: response.data};
       } catch (error) {
+        if (error?.response?.status === 401) handle401();
         setError(error?.response?.data);
         throw error?.response?.data;
       } finally {
