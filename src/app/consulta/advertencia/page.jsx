@@ -7,7 +7,7 @@ import convertToBrazilianDate from "@/utils/convertToBrazilianDate";
 import withAuth from "@/components/withAuth";
 
 const ConsultarAdvertencia = () => {
-  const {get, put, loading, error} = useRequest();
+  const {get, patch, loading, error} = useRequest();
   const [rows, setRows] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [itemId, setItemId] = useState("");
@@ -57,7 +57,7 @@ const ConsultarAdvertencia = () => {
 
           try {
             const data = JSON.stringify({situacao: newValue});
-            const response = await put(`/api/advertencias/${params.id}`, data);
+            const response = await patch(`api/advertencias/${params.id}`, data);
 
             if (!response.data) {
               throw new Error("Erro ao atualizar situação");
